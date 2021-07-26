@@ -6,6 +6,9 @@
 // │ Licensed under the MIT (http://artkabis.com/license.html) license   │ \\
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
+
+
+
 <a href=""></a>
 <div class="maclass">
     <span id="monid"></span>
@@ -155,8 +158,15 @@ Tiny url  : https://tinyurl.com/yyl8mcz3
 
 *********************************************************************************************************************
 
-
-
+/** Supression du sticky sur desktop ****/
+<script>
+    if($(window).width() >= 1239){
+$('body').removeClass('sticky-header');
+$('#Top_bar').removeClass('is-sticky');
+}else{
+    $('body').addClass('sticky-header');
+}
+</script>
 
 
 
