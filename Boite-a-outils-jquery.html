@@ -289,10 +289,10 @@ const onDomElementIsReady = (elementToWatch)=> {
 function changeProduct(){
 
     console.log('Lancement de la fonction changeProduct');
-    
+     let msgLabel = [],title=[];//déclaration des variables Array comportant les infos label et title
     onDomElementIsReady(".grid__wrap .grid-product").then(element => {
         console.log('grid product trouvé - produits');
-        let msgLabel = [],title=[];
+       
         
         $('.grid__wrap .grid-product').each(function(i,t){
             
