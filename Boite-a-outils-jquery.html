@@ -271,7 +271,75 @@ Un bouton utilisant l'icon pe-7s-volume doit être mis en place dans le slider (
  
 
 
+/************************* Modification de label dans Ecwid - Duda gestion de hashchange et de history.popState ***********************/
+<script>
 
+const onDomElementIsReady = (elementToWatch)=> {
+    return new Promise((res, rej)=> {
+        let idInterval=setInterval(()=>{
+            if($(elementToWatch).length > 0) {
+                clearInterval(idInterval);
+                res($(elementToWatch));
+            }
+        },100);
+    });
+};
+
+
+function changeProduct(){
+
+    console.log('Lancement de la fonction changeProduct');
+     let msgLabel = [],title=[];//déclaration des variables Array comportant les infos label et title
+    onDomElementIsReady(".grid__wrap .grid-product").then(element => {
+        console.log('grid product trouvé - produits');
+       
+        
+        $('.grid__wrap .grid-product').each(function(i,t){
+            
+            if( $(this).find('.grid-product__title-inner').text().includes(' - Message :') ){
+                msgLabel.push( $(this).find('.grid-product__title-inner').text().split(' - Message :')[1] );
+                title.push( $(this).find('.grid-product__title-inner').text().split(' - Message :')[0] );
+                $(this).find('.label__text').text(msgLabel);
+                $(this).find('.grid-product__button-hover span').text(msgLabel);
+                $(this).find('.grid-product__title-inner').text(title);
+            }
+        });
+    });
+    
+    onDomElementIsReady(".product-details > .product-details__sidebar > .product-details__product-title").then(element => {
+        console.log(' product trouvé - produit');
+        let msgLabelP='',titleP='';
+        let titleDOMU = $('.product-details > .product-details__sidebar > .product-details__product-title ');
+        
+        if(titleDOMU.text().includes(' - Message : ')){
+            msgLabelP = titleDOMU.text().split(' - Message : ')[1];
+            titleP = titleDOMU.text().split(' - Message : ')[0];
+            $('.product-details .product-details-module__content .label__text').text(msgLabelP);
+            titleDOMU.text(titleP);
+        }
+    });
+}
+
+$(window).on('hashchange', function(e){
+    console.log('changement de hash >>> ',e);
+    changeProduct();
+});
+window.onpopstate = function (event) {
+  if (event.state) {
+      console.log('hsitory change >> push / replaceState');
+     setTimeout(()=>{changeProduct()},600);// history changed because of pushState/replaceState
+    dmAPI.runOnReady('DMLoadedAfterPopState',function(){
+     console.log('Duda est prêt');
+     //changeProduct();
+    });
+  } else {
+      console.log('hsitory change >> page load');
+     changeProduct();// history changed because of a page load
+  }
+}
+$(window).trigger('hashchange');;
+	
+</script>
 
 
 
