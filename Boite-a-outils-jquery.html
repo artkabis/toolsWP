@@ -9216,9 +9216,34 @@ elem.onclick=(()=>{this.setTimeout(() => console.log("OK"),1000);});
 
 
 
+/**************** Module tabs au survol - gestion affichage avec les classes css active et show *****************/
 
-
-
+<script>
+    //Animation des tabs
+    $('#tabs-nav li:first-child').addClass('active');
+    $('.tab-content:first').addClass('show');
+    
+    $('#tabs-nav li').on('mouseover',function(me){​​​​​​​
+        var id = $(this).find('a').attr('href').split('b')[1];
+        $('.tab-content').removeClass('show');
+        $('#tabs-nav li').removeClass('active');
+        $(this).addClass('active');
+        $('#tab'+id).addClass('show');
+    }​​​​​​​);
+</script>
+        
+ <!--
+<style>   
+    .vc_row .tab-content{​​​​​​​
+        display: none;
+    }​​​​​​​
+    .vc_row .show{​​​​​​​
+        display: flex;
+    }​​​​​​​
+</style>
+ -->     
+    
+    
 
 
 
