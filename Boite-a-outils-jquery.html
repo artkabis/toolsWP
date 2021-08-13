@@ -5620,23 +5620,24 @@ var target;
 ************ Le sytème est basé sur des bouclede row ici >> rowimg
 <script>
 
-
-function equalCol ($param, $img, $text){
-    $param.each(function(){
+// Fonction permettant (pour chaque row) d'attribuer une taille d'image 
+//égale à la taille du contenu en hauteur
+function equalCol ($row, $img, $text){
+    $row.each(function(){
         let img = $(this).find($img),
         coltextH = $(this).find($text).outerHeight();
         img.css({"height" : coltextH+"px", "objectFit" : "cover"});
     }); 
 }
 
- 
-
 
 $('div[id^="click-"]').on('click',function(me){
     let id = $(this).attr('id').split('-')[1];
-    $('div[id^="content-"]').fadeOut(0);
-    $('div[id^="content-'+id+'"]').fadeIn(300);
-    equalCol($(".rowimg"),".colimg img",".coltext");
+    $('div[id^="content-"]').fadeOut(0);//On cache tous les contenus
+    $('div[id^="content-'+id+'"]').fadeIn(300);//On affiche le contenu ciblé (1,2 ou 3)
+    equalCol($(".rowimg"),".colimg img",".coltext");//On relance la fonction qui égalise les colonnes d'une rangée
+    $('div[id^="click-"]').removeClass('activ');//On supprime la class activ de l'ensemble des boutons
+    $(this).addClass('activ');//Le bouton cliqué oprendra la class activ
 });
 setTimeout(()=>{equalCol($(".rowimg"),".colimg img",".coltext");},100);
 
