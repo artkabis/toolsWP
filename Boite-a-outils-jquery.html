@@ -5616,6 +5616,44 @@ var target;
 
 
 
+************ égaliser la hauteur des colonnes ( image et texte ) avec une fonction utilisant des paramètres
+************ Le sytème est basé sur des bouclede row ici >> rowimg
+<script>
+
+
+function equalCol ($param, $img, $text){
+    $param.each(function(){
+        let img = $(this).find($img),
+        coltextH = $(this).find($text).outerHeight();
+        img.css({"height" : coltextH+"px", "objectFit" : "cover"});
+    }); 
+}
+
+ 
+
+
+$('div[id^="click-"]').on('click',function(me){
+    let id = $(this).attr('id').split('-')[1];
+    $('div[id^="content-"]').fadeOut(0);
+    $('div[id^="content-'+id+'"]').fadeIn(300);
+    equalCol($(".rowimg"),".colimg img",".coltext");
+});
+setTimeout(()=>{equalCol($(".rowimg"),".colimg img",".coltext");},100);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -9302,13 +9340,17 @@ elem.onclick=(()=>{this.setTimeout(() => console.log("OK"),1000);});
         
 
 <style> 
-.vc_row .tab-content{
-    display: none;
-}  
-.vc_row .show{
-    display:flex;
-}
+    .vc_row .tab-content{
+        display: none;
+    }  
+    .vc_row .show{
+        display:flex;
+    }
 </style>
+ 
+
+
+
     
     
 
