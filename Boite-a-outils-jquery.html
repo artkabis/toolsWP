@@ -1298,6 +1298,33 @@ $(".pj-prolive-content h5").replaceWith(function () {
     });
 });
 </script>
+	
+
+
+/****************** Restructuration de prolive et reconstruction dans une nouvelle row, chaque colonne comportera le contenu des items Prolive, même le title qui est parfois dissocié de la description ****/
+<script>
+	var cmp=0;
+var titles;
+if($('#pj-prolive-hc-social_post'.length)){
+    $('.rowProlive').css('transform','scale(0)');
+    setTimeout(()=>{
+        $('#pj-prolive-hc-1 .accordion').trigger('click');
+        $('#pj-prolive-hc-2 .accordion').trigger('click');
+        $('.pj-prolive-content .accordion-item').each(function(i,t){
+            titles=$(this).find('.title-content').text();
+            console.log($(this).find('.panel-container').html());
+            cmp++;
+            console.log(titles);
+            $('.containerProlive .colProlive-'+cmp).html($(this).find('.panel-container').html());
+           $('.containerProlive .colProlive-'+cmp).find('.left-column').before(`<div class="content-title"><div class="title">${titles}</div></div>`);
+        });
+
+    },800);
+    setTimeout(()=>{$('.rowProlive').remove();},802);
+}
+	
+	
+</script>
 
 
 
