@@ -1159,6 +1159,20 @@ if(window.location.pathname === '/contact/'){
 
 
 
+/********************** Supprimer du contenu en fonction de l'adresse ip du visiteur *********************/
+<script>
+if(window.location.pathname === '/commandes'){
+	$.getJSON('https://api.db-ip.com/v2/free/self', function(data) {
+		let ipAdress =data['ipAddress']
+	 	console.log(ipAdress);
+	  	if(ipAdress === "78.226.230.77"){
+	    		$('#Content form').remove();
+	  	}
+	});
+}
+</script>
+
+
 
 
 
