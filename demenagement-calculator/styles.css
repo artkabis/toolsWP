@@ -21,3 +21,16 @@ body .gform_wrapper #Tabs .resp-tabs-container > div > div:hover input.qtyvalue 
 .liste ul, .liste2 ul {display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;justify-content: space-between;}
 .liste ul li, .liste2 ul li {width:25%;}
 .gform_previous_button, .gform_next_button, .gform_button {background:#d04090 !important;font-family:urw-din,sans-serif !important;text-transform:uppercase;font-weight:600;font-size:17px;}
+
+
+/* ---------------------------------------------------------------- CONTACT---------------------------------------------------------------- */
+
+div.ginput_container_name span margin-right: 0px}
+div.ginput_container_name span {margin-right:0 !important;}
+.label label {display:none !important;}
+.gform_wrapper ul.gform_fields {display: flex;flex-direction: row;flex-wrap: wrap;}
+.champ50, .legal-notice {width:50%;}
+.champ100 {width:100%;}
+.champ50, .champ100 {padding-top: 11px !important;margin: 0 !important;}
+.legal-notice label {font-size: 15px !important;line-height: 20px !important;}
+
