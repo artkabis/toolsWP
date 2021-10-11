@@ -1,0 +1,23 @@
+/* ---------------------------------------------------------------- STYLISATION CALCULATEUR DE VOLUME---------------------------------------------------------------- */
+#gform_wrapper_41 {font-family:urw-din,sans-serif;}
+body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html .col-menu ul li {list-style-type:none !important;}
+body .gform_wrapper div.gform_body ul.gform_fields li.gfield.gfield_html .col-menu ul li label {font-family:urw-din,sans-serif;text-transform:uppercase;font-weight:600;color:#d04090;font-size:18px;}
+body .gform_wrapper .totalvolume {font-family:urw-din,sans-serif;}
+body .gform_wrapper .totalvolume:after {color: #d04090 !important;}
+body .gform_wrapper #calculateur {border: none;}
+body .gform_wrapper .top_label li .resp-tabs-list {display: flex!important;align-items: center;justify-content: flex-start;}
+body .gform_wrapper .ui-tabs li.ui-tabs-active a {background: #d04090 !important;font-weight: 600 !important;text-transform: uppercase;}
+body .gform_wrapper .ui-tabs .ui-tabs-nav li a {background: #d3d3d3;color: #2a2a2a;font-weight: 600;text-transform: uppercase;}
+body .gform_wrapper .ui-tabs .ui-tabs-nav li a:hover {background: #dc6fab !important;color: #FFF !important;}
+body .gform_wrapper #Tabs .resp-tabs-container > div > div {background: #d3d3d3;border: none;box-shadow: none;color:#2a2a2a;}
+body .gform_wrapper #Tabs .resp-tabs-container > div > div:hover {background: #dc6fab;box-shadow: none;color:#FFF;}
+body .gform_wrapper input.qtyminus, body .gform_wrapper input.qtyplus {background: #ffffff !important;color: #303030;border: 1px solid #d04090 !important;}
+body .gform_wrapper input.qtyminus:hover, body .gform_wrapper input.qtyplus:hover {background: #d3d3d3 !important;color: #2a2a2a;border: 1px solid #2a2a2a !important;}
+body .gform_wrapper #Tabs .resp-tabs-container > div > div input.qtyvalue {color: #2a2a2a;}
+body .gform_wrapper #Tabs .resp-tabs-container > div > div:hover input.qtyvalue {color: #FFF;}
+#Content .ginput_container_address * {margin: 0 !important;padding: 10px !important;}
+.gf_step_label {font-family:urw-din,sans-serif;font-weight:600;color:#d04090;font-size:17px;}
+.liste > label.gfield_label {display:none !important;}
+.liste ul, .liste2 ul {display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;justify-content: space-between;}
+.liste ul li, .liste2 ul li {width:25%;}
+.gform_previous_button, .gform_next_button, .gform_button {background:#d04090 !important;font-family:urw-din,sans-serif !important;text-transform:uppercase;font-weight:600;font-size:17px;}
