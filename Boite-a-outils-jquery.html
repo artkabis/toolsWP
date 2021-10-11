@@ -1,8 +1,7 @@
 /* ┌─────────────────────────────────────────────────────────────────────┐ \\
 // │ Artkabis 1.3 - JavaScript Library                                   │ \\
 // ├─────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright (c) 2015-2020 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
-// │ Copyright (c) 20013-2020 Sencha Labs (http://sencha.com)            │ \\
+// │ Copyright (c) 2015-2021 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
 // │ Licensed under the MIT (http://artkabis.com/license.html) license   │ \\
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
@@ -4938,6 +4937,16 @@ if($("body").find(".woocommerce")){
 			$(this).parent().parent().find('.mask').css({'background-image':'url('+src[i]+')','background-size':'cover'});
 		});
     }
+}
+</script>
+	
+/*********** Woocommerce suppression des redimensionnements implémenté dans les url des images (ex: image-500x500.jpg > image.jpg) *********/
+<script>
+if($("body").find(".woocommerce")){//si Woocommerce est présent
+	$(".product-loop-thumb a img").each(function(){//loop sur les images
+		let newSrc = $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/,'');//remplacement de 000-000 par ''
+		$(this).attr('src',newSrc).attr('srcset',newSrc);//On réapplique les nouvelles urls
+	});
 }
 </script>
 
@@ -10116,6 +10125,63 @@ function detectProlive(){
 </script>
 
 
+
+/******************** Prolive : recontruction complète du module dans une row avec calcule et redimensionnement automatique des items ********/
+
+dans les hook lightbox v2 : <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+dans le head (SEO) : <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script>
+    var cmp=0;
+    var titles;
+    if($('#pj-prolive-hc-social_post'.length)){
+        $('.rowProlive').css('transform','scale(0)');
+        $('.rowProlive').after('<div class="row rowNewProlive"></div>');
+        setTimeout(()=>{
+            $('.pj-prolive-content .accordion-item').each(function(i,t){
+                $('#pj-prolive-hc-'+(i+2)+' .accordion').trigger('click');
+                titles=$(this).find('.title-content').text();
+                cmp++;
+                img = $(this).find('.left-column img');
+                $(this).find('.left-column img').wrap('<a href="'+img.attr('src')+'" data-lightbox="image prolive">');
+                $('.rowNewProlive').append(`<div class="colProlive-${cmp}"></div>`);
+                $('.colProlive-'+cmp).html($(this).find('.panel-container').html());
+                $('.colProlive-'+cmp).find('.left-column').before(`<div class="content-title"><div class="title">${titles}</div></div>`);
+            });
+            lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+            });
+            var children = $('.rowNewProlive > div[class^="colProlive-"]').length;
+            $('.rowNewProlive').css('grid-template-columns', 'calc(100% / '+children+')'+' '+ 'calc(100% / '+children+')'+' '+ 'calc(100% / '+children+')');
+            const size = $('.rowNewProlive .left-column').width();
+            $('.rowNewProlive .title').css('width',size+'px');
+            $('.rowNewProlive .description').css('width',size+'px');
+        },800);
+        setTimeout(()=>{$('.rowProlive').remove();},805);
+    }
+</script>
+
+<style>
+    .rowNewProlive {
+        display: grid;
+        grid-template-rows: 1fr;/* Ceci n'est pas une erreur >< */
+        gap: 0px 2%;
+        grid-template-areas: ". . .";
+    }
+    .rowNewProlive .title {
+        position: relative;
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 1.7rem;
+        padding: 15px 0;
+    }
+    .rowNewProlive .left-column {
+        display: inline-block;
+    }
+</style>
 
 
 
