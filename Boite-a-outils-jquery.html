@@ -1158,6 +1158,31 @@ if(window.location.pathname === '/contact/'){
 
 
 
+
+
+
+
+*******************************************************************************************
+Détecter l'adresse ip de l'utilisateur et supprimer le formulaire de contact si celle-ci est trouvé 
+ip détection
+
+pour la clinique st Didier 00412188
+<script>
+    // Sans limite blocké si adblock est détécté >>
+$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
+  console.log('1er data >> ',data.ip);
+  if(data.ip === "111.222.33.444" && $('.gform_wrapper').length){
+      console.log("ip détécté !!!!");
+      $('.gform_wrapper').remove();
+  }
+});
+
+
+
+
+
+
+
 /********************** Supprimer du contenu en fonction de l'adresse ip du visiteur *********************/
 <script>
 if(window.location.pathname === '/commandes'){
