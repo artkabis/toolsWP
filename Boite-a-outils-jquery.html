@@ -1176,6 +1176,20 @@ $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
       $('.gform_wrapper').remove();
   }
 });
+	
+// Avec l'api de-api.com - >> suppression du form si l'utilisateur est détecté
+if(window.location.pathname === '/commandes'){
+  $.getJSON('https://api.db-ip.com/v2/free/self', function(data) {
+    let ipAdress =data['ipAddress']
+    console.log(ipAdress);
+    if(ipAdress === "111.222.333.444"){
+       $('#Content').remove();
+    }
+  });
+}	
+	
+	
+</script>
 
 
 
