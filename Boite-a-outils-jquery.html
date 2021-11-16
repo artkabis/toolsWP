@@ -1354,27 +1354,71 @@ $(".pj-prolive-content h5").replaceWith(function () {
 
 
 /****************** Restructuration de prolive et reconstruction dans une nouvelle row, chaque colonne comportera le contenu des items Prolive, même le title qui est parfois dissocié de la description ****/
-<script>
-	var cmp=0;
-var titles;
-if($('#pj-prolive-hc-social_post'.length)){
-    $('.rowProlive').css('transform','scale(0)');
-    setTimeout(()=>{
-        $('#pj-prolive-hc-1 .accordion').trigger('click');
-        $('#pj-prolive-hc-2 .accordion').trigger('click');
-        $('.pj-prolive-content .accordion-item').each(function(i,t){
-            titles=$(this).find('.title-content').text();
-            console.log($(this).find('.panel-container').html());
-            cmp++;
-            console.log(titles);
-            $('.containerProlive .colProlive-'+cmp).html($(this).find('.panel-container').html());
-           $('.containerProlive .colProlive-'+cmp).find('.left-column').before(`<div class="content-title"><div class="title">${titles}</div></div>`);
-        });
+Dans les hooks, ajouter lightbox >>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    },800);
-    setTimeout(()=>{$('.rowProlive').remove();},802);
-}
-	
+
+<script>
+
+
+const onDomElementIsReady=(elementToWatch)=>{
+    return new Promise((res, rej)=> {
+        let idInterval = setInterval(()=> {
+            if($(elementToWatch).length>0){
+                clearInterval(idInterval);//suppression de l'interval
+                res($(elementToWatch));//resolution de promise (une fois la pile d'événements terminée)
+            }
+        },100);
+    });
+};
+
+onDomElementIsReady(".pj-prolive-hc #pj-prolive-hc-0 img").then(element => {
+    console.log("Prolive ready");
+    setTimeout(()=>{
+
+        var cmp=0;
+        var titles;
+        if($('#pj-prolive-hc-social_post').length){
+            console.log('social post detected : ',$('#pj-prolive-hc-social_post'.length));
+            $('.rowProlive').css('transform','scale(0)');
+            $('.rowProlive').after('<div class="row rowNewProlive"></div>');
+            $('.pj-prolive-content .accordion-item').each(function(i,t){
+                $('#pj-prolive-hc-'+(i+1)+' .accordion').trigger('click');
+                titles=$(this).find('.title-content').text();
+                cmp++;
+                img = $(this).find('.left-column img');
+                $(this).find('.left-column img').wrap('<a href="'+img.attr('src')+'" data-lightbox="image prolive">');
+                $('.rowNewProlive').append(`<div class="colProlive-${cmp}"></div>`);
+                $('.colProlive-'+cmp).html($(this).find('.panel-container').html());
+                $('.colProlive-'+cmp).find('.left-column').before(`<div class="content-title"><div class="title">${titles}</div></div>`);
+            });
+            
+            lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+            });
+            
+            var children = $('.rowNewProlive > div[class^="colProlive-"]').length;
+            console.log('nb colProlive detected : ',children);
+            var widthGrid = [];
+            for(i=0;i<children;i++){
+                widthGrid.push('calc(100% / '+children+')');
+            }
+            console.log('widthGrid : ',widthGrid, 'string gidSize : ',String(widthGrid).split(',').join(' '));
+
+            $('.rowNewProlive').css('grid-template-columns', String(widthGrid).split(',').join(' '));
+            
+            setTimeout(()=>{
+                console.log('remove initial Prolive');
+                $('.rowProlive').remove();
+                const size = $('.rowNewProlive .left-column').width();
+                $('.rowNewProlive .title').css('width',size+'px');
+                $('.rowNewProlive .description').css('width',size+'px');
+            },150);
+        }
+    },150);
+});
 	
 </script>
 
