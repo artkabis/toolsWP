@@ -18375,13 +18375,8 @@ $('#Content').find('img').each(function(i,t){
 
 //***********************************************************************Remplacement de copyright pj**************************************************************************************
 <script>
-$('.pj-shortcode').each(function() {
-    var text = $(this).text();
-    console.log(text);
-    $(this).text(text.replace('Gelmatic France', 'CS-CONCEPT')); 
-});  
-
-$('.pj-shortcode').after("<a class afterCopyright'>mon new texte</a>");
+const copyright = $('.pj-shortcode').text();
+$('.pj-shortcode').text(copyright.replace('AXA POGGIO ALLAIN', 'AXA POGGIO ALAIN'));
 </script>
 
 
