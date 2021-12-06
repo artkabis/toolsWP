@@ -276,6 +276,112 @@ Un bouton utilisant l'icon pe-7s-volume doit être mis en place dans le slider (
  
 
 
+
+
+
+
+
+/***************** Création d'un slider d'images (4) avec animation de chaque étape : animation des images slide (width) et du background (background-image url) avec passage d'un overlay faisant office de transition entre le changement de chaque image *****/
+//Site utilisé : https://chedhomme202112021140.site-privilege.pagesjaunes.fr/
+//Structure du module : row background puis row dans row pour les quatre colonnes avec les images
+<script>
+
+if($('.subrow-slider').length){
+  const images = ['/wp-content/uploads/sites/10240/2021/12/test2.jpg?id=1172','/wp-content/uploads/sites/10240/2021/01/Casanova-Vaudolon-Le-Mans-1.jpg?id=933','/wp-content/uploads/sites/10240/2021/01/Tango-Petithomme-St-Remy-des-Monts.jpg','/wp-content/uploads/sites/10240/2021/01/Pinia-Leboulleux-Bonnetable-3.jpg'];
+  $('.btn-prev').css({color:'#FFF',pointerEvents:"none"});
+  $('.row-slider > .wpb_column').before('<div class="overlaySlider"></div>');
+  $('.menu-slider a').on('click',function(me){
+    const nav = $(this).attr('class').split('-')[1];
+    console.info('btn >>> ',nav);
+    var colActif = $('.subrow-slider').find('.actif');
+    var numActif = colActif.attr('id').split('-')[1];
+    console.log('colActif >> ',colActif);
+    function arrows($cible){
+      if($cible.attr('id')==='slide-1'){
+        $('.btn-prev').css({color:'#FFF',pointerEvents:"none"});
+      }else{
+        $('.btn-prev').css({color:'#d42128',pointerEvents:"all"});
+      }
+      if($cible.attr('id')==='slide-4'){
+        $('.btn-next').css({color:'#FFF',pointerEvents:"none"});
+      }else{
+        $('.btn-next').css({color:'#d42128',pointerEvents:"all"});
+      }
+    }
+    switch( nav ){
+      case 'next' :
+        var nextActif = colActif.next();
+        $('.col-slide').removeClass('actif');
+        nextActif.addClass('actif');
+        console.log('next > ');
+        console.log('next item : ',nextActif);
+        console.log('----------');
+        arrows(nextActif);
+        $('.overlaySlider').css('width','300%');
+        console.log('num actif for images : ',numActif,' image selected : ',images[numActif]);
+        setTimeout(()=>{
+        $('.row-slider').css('background-image', 'url('+images[numActif]+')');
+        $('.overlaySlider').delay(250).css('width','0%');
+        },250);
+      break;
+      case 'prev' :
+        var prevActif = colActif.prev();
+        $('.col-slide').removeClass('actif');
+        prevActif.addClass('actif');
+        console.log('prev > ');
+        console.log('prev item : ',prevActif);
+        console.log('----------');
+        arrows(prevActif);
+        $('.overlaySlider').css('width','300%');
+        console.log('num actif for images : ',numActif,' image selected : ',images[numActif-2]);
+        setTimeout(()=>{
+        $('.row-slider').css('background-image', 'url('+images[numActif-2]+')');
+        $('.overlaySlider').delay(250).css('width','0%');
+        },250);
+      break;
+    }
+  });
+}
+</script>
+<style>
+.row-slider {padding:50px 0 0 50px;position:relative;background-image:url(/wp-content/uploads/sites/10240/2021/12/test2.jpg?id=1172);}
+.row-slider .overlaySlider {
+position: absolute;background:#2e2e2e;top: 0;
+left: 0;width: 0;height: 100%;transition: all 0.5s;}
+.subrow-slider {flex-direction:row;justify-content:flex-end;}
+.col-slide {width:15%;padding:0 50px 50px 0;min-height:600px;transition: all 1s;}
+.col-slide .vc_column-inner > .wpb_wrapper {height:100%;display:flex;align-items:flex-end;}
+.col-slide.actif {width:40%;}
+.col-slide .txt-slide {
+font-family: 'Raleway';font-weight: 900;font-size: 40px;line-height: 50px;
+padding:30px;color: #FFF !important;text-transform: uppercase;opacity: 0;
+position: absolute;width: calc(100% - 110px);min-width: 600px;transition:all .5s;}
+.shadow {text-shadow:2px 2px 0 #000;color:#FFF;}
+.col-green.actif .vc_column-inner > .wpb_wrapper {background: rgb(170 207 56 / 30%);transition:all 0.5s;}
+.col-red.actif .vc_column-inner > .wpb_wrapper {background:rgb(212 33 40 / 20%);transition:all 0.5s;}
+.col-slide .vc_column-inner > .wpb_wrapper, .col-slide .vc_column-inner > .wpb_wrapper {background:rgb(255 255 255 / 0%);transition:all 0.5s;}
+.col-slide.actif .txt-slide {opacity: 1;transition:all 0.5s;}
+
+
+
+.part-title {
+font-family: 'Nothing You Could Do';text-transform: initial;font-size: 30px;
+line-height:40px;color:#2e2e2e;text-shadow:1px 1px 0 #FFF;}
+
+
+
+.menu-slider {width:85%;margin-left:15%;}
+.menu-slider p {display:flex;}
+.btn-prev, .btn-next {font-size:40px;text-shadow:2px 2px 0 #000;}	
+</style>
+
+
+
+
+
+
+
+
 /************************* Modification de label dans Ecwid - Duda gestion de hashchange et de history.popState ***********************/
 <script>
 
