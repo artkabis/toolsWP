@@ -382,7 +382,119 @@ line-height:40px;color:#2e2e2e;text-shadow:1px 1px 0 #FFF;}
 
 
 
-/************************* Modification de label dans Ecwid - Duda gestion de hashchange et de history.popState ***********************/
+/******************* Gsap -> Slider split content for Solocal : Gestion du mode vertical et horizontal en fonction du matchMedia (change) ****/
+/*** Un exemple que j'ai reconstruit dans un Codepen : https://codepen.io/artkabis/pen/rNGamgb ***/
+<script>
+var id,
+horizon,
+mqls = [
+  window.matchMedia('(min-width: 962px)'),
+  window.matchMedia('(max-width: 962px)'),
+];
+// Écouteurs d'événement change sur les matchMedia
+for (var i = 0; i < mqls.length; i++) {
+  mqls[i].addEventListener('change', mqh);
+} function mqh(entries, observer) {
+  console.log(entries[0]);
+  $('.col-right, .col-left').css('transform', ' '); //reset au change des matchMedia
+  if (mqls[0].matches && entries[0].intersectionRatio > 0) {
+    horizon = false;
+    createdSlider(horizon)(1, horizon);
+    //observe.unobserve(target);
+  } else if (mqls[1].matches && entries[0].intersectionRatio > 0) {
+    horizon = true;
+    createdSlider(horizon)(1, horizon);
+    //observe.unobserve(target);
+  }
+}
+//IntersectionObserver pour la contrction du slider dès que celui-ci est visible dans le DOM (1er pixel)
+const options = {
+  root: null,
+  rootMargin: '0px',
+  threshold: [0.001]
+};
+var observer = new IntersectionObserver(mqh, options); //on lance la fonction pour vérifier les médias query
+const target = document.querySelector('.split-row');
+observer.observe(target);//Observation de l'affichage du slider $('.nav-split li:eq(0) a').addClass('active'); //De base le premier élément est actif //On écoute les boutons du menu
+$('.nav-split li a').on('click', function () {
+  console.log('click trigger');
+  id = Number($(this).attr('href').split('-')[1]); //récupération de l'id unique
+  $('.nav-split li a').removeClass('active'); //suppression de la classe active (si présente)
+  $(this).addClass('active'); //ajout sur la cible cliqué
+  createdSlider(horizon)(id, horizon); //On lance createdSlider avec le paramètre et son closure avec l'id en plus.
+}); //Fonction génératrice du slider
+function createdSlider(horizon) {
+  var isHorizon = horizon ? 'activé' : 'désactivé';
+  console.log('La version horizontale est : ', isHorizon); //Retour du mode horizontal //Création des constantes pour les différents calculs
+  const heightItem = Math.max.apply(null, $('.split-row .main .wpb_content_element > div').map(function () { return $(this).innerHeight(); }).get());
+  var itemsLength = $('.col-left > .vc_column-inner > .wpb_wrapper').children().length;
+  const nbItems = horizon ? itemsLength : itemsLength - 1;
+  const heightTotal = Number(heightItem * nbItems);
+  const widthItem = $('.col-left .left-item-1').width();
+  const widthTotal = Number(widthItem * nbItems); //Si le slider est en mode horizontal
+  if (horizon) {
+    $('.split-row .main > div[class^="col-"]').addClass('horizon');
+    $('.split-row .main > div[class^="col-"].horizon > div > div, .split-row .main > div[class^="col-"].horizon').css('min-width', widthTotal);
+    //On gère la largeur minimale
+    $('.split-row .main').css('min-height', Number($('.col-left').height() + $('.col-right').height()).toFixed(2) + 'px');
+    //Et on attribue à main la hauteur des deux colonnes additionnées
+  } else if (!horizon) {
+    $('.main, .split-row .main .wpb_content_element').css('height', heightItem + 'px');
+    console.log('max height content : ', heightItem);
+    $('.split-row .main > div[class^="col-"]').removeClass('horizon');
+    //Reset des min height et width
+    $('.split-row .main > div[class^="col-"] > div > div, .split-row .main > div[class^="col-"]').css({ minWidth: 'inherit', left: 'inherit' });
+    $('.split-row .main').css('height', heightItem + 'px');
+  }
+  //On retourne le closure qui contient deux attributs : id du bouton cliqué et mode horizontal
+  return function animate(id, horizon) {
+    //On clean
+    gsap.killTweensOf('.col-right,.col-left');
+    gsap.set('.col-right, .col-left', {
+      clearProps: 'top',
+      clearProps: 'left',
+      clearProps: 'y',
+      clearProps: 'x',
+    });
+    //Gestion du positionnement des colonnes right et left en fonction de la variable horizon
+    gsap.set('.col-right', {
+      [horizon ? 'x' : 'y']: horizon ?
+        -(widthTotal - widthItem) :
+        -heightTotal,
+    });
+    gsap.to('.col-left', {
+      duration: 1.3,
+      ease: 'expo.out',
+      [horizon ? 'left' : 'top']: horizon ? -widthItem * (id - 1) : -heightItem * (id - 1),
+    });
+    gsap.to('.col-right', {
+      duration: 1.3,
+      ease: 'expo.out',
+      [horizon ? 'left' : 'top']: horizon ?
+        widthItem * (id - 1) : heightItem * (id - 1),
+    });
+  };
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************* Modification de label de produits dans Ecwid - Duda gestion de hashchange et de history.popState ***********************/
 <script>
 
 const onDomElementIsReady = (elementToWatch)=> {
@@ -9456,129 +9568,6 @@ img{cursor: wait;}
 a, a:hover,a:link, .vc_btn3:hover,button:hover {cursor: url("/wp-content/uploads/sites/5476/2018/03/hand-cursor.png"),auto;}
 </style>
 /*****************************************************************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/******************* Gsap -> Slider split content for Solcoal : Gestion du mode vertical et horizontal en fonction du matchMedia (change) ****/
-/*** Un exemple que j'ai reconstruit dans un Codepen : https://codepen.io/artkabis/pen/rNGamgb ***/
-<script>
-(function ($) {
-  console.log('jquery ready !!!');
-  var id,
-    horizon,
-    mqls = [
-      window.matchMedia('(min-width: 962px)'),
-      window.matchMedia('(max-width: 962px)'),
-    ];
-  // Écouteurs d'événement change sur les matchMedia
-  for (var i = 0; i < mqls.length; i++) {
-    mqls[i].addEventListener('change', mqh);
-  }
-  function mqh() {
-    $('.col-right, .col-left').css('transform', ' '); //reset au change des matchMedia
-    if (mqls[0].matches) {
-      horizon = false;
-      createdSlider(horizon)(1, horizon);
-    } else if (mqls[1].matches) {
-      horizon = true;
-      createdSlider(horizon)(1, horizon);
-    }
-  }
-  mqh(); //on lance la fonction pour vérifier les médias query
-
-  $('.nav-split li:eq(0) a').addClass('active'); //De base le premier élément est actif
-
-  //On écoute les boutons du menu
-  $('.nav-split li a').on('click', function () {
-    id = Number($(this).attr('href').split('-')[1]); //récupération de l'id unique
-    $('.nav-split li a').removeClass('active'); //suppression de la classe active (si présente)
-    $(this).addClass('active'); //ajout sur la cible cliqué
-    createdSlider(horizon)(id, horizon); //On lance createdSlider avec le paramètre et son closure avec l'id en plus.
-  });
-
-  //Fonction génératrice du slider
-  function createdSlider(horizon) {
-    var isHorizon = horizon ? 'activé' : 'désactivé';
-    console.log('La version horizontal est : ', isHorizon); //Retour du mode horizontal
-
-    //Création des constantes pour les différents calculs
-    const heightItem = $('.col-left .left-item-1').height();
-    var itemsLength = $(
-      '.col-left > .vc_column-inner > .wpb_wrapper'
-    ).children().length;
-    const nbItems = horizon ? itemsLength : itemsLength - 1;
-    const heightTotal = Number(heightItem * nbItems);
-    const widthItem = $('.col-left .left-item-1').width();
-    const widthTotal = Number(widthItem * nbItems);
-
-    //Si le slider est en mode horizontal
-    if (horizon) {
-      $('.split-row div[class^="col-"]').addClass('horizon');
-      $(
-        '.split-row div[class*="col-"].horizon > div > div, .split-row div[class*="col-"].horizon'
-      ).css('min-width', widthTotal); //On gère la largeur minimale
-      $('.split-row .main').css(
-        'min-height',
-        Number($('.col-left').height() + $('.col-right').height()).toFixed(2) +
-          'px'
-      ); //Et on attribut à main la hauteur des deux colonnes additionnées
-    } else if (!horizon) {
-      $('.split-row div[class^="col-"]').removeClass('horizon');
-      //Reset des min height et width
-      $(
-        '.split-row div[class*="col-"] > div > div, .split-row div[class*="col-"]'
-      ).css({ minWidth: 'inherit', left: 'inherit' });
-      $('.split-row .main').css('min-height', 'inherit');
-    }
-    //On retourne le closure qui contient deux attributs : id du bouton cliqué et mode horizontal
-    return function animate(id, horizon) {
-      //On clean
-      gsap.killTweensOf('.col-right,.col-left');
-      gsap.set('.col-right, .col-left', {
-        clearProps: 'top',
-        clearProps: 'left',
-        clearProps: 'y',
-        clearProps: 'x',
-      });
-      //Gestion du positionnement des colonnes right et left en fonction de la variable horizon
-      gsap.set('.col-right', {
-        [horizon ? 'x' : 'y']: horizon
-          ? -(widthTotal - widthItem)
-          : -heightTotal,
-      });
-      gsap.to('.col-left', {
-        duration: 1.3,
-        ease: 'expo.out',
-        [horizon ? 'left' : 'top']: horizon
-          ? -widthItem * (id - 1)
-          : -heightItem * (id - 1),
-      });
-      gsap.to('.col-right', {
-        duration: 1.3,
-        ease: 'expo.out',
-        [horizon ? 'left' : 'top']: horizon
-          ? widthItem * (id - 1)
-          : heightItem * (id - 1),
-      });
-    };
-  }
-})(jQuery);
-</script>
-
-
-
 
 
 
