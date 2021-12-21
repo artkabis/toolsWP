@@ -195,6 +195,76 @@ https://codepen.io/artkabis/pen/vYymdZQ
 
 
 
+
+
+/*********************** Slider vc_column avec flèches droite et gauche : comporte une rangée en full-width en fonction du state, le déplacement est géré via flex order ***********************
+************************ Composition dans WP : rown#RowSlider wpb_column.slide (avec id #Slide-1,2,3)
+******* https://www.faamenuiseries.fr/
+<script>
+	
+
+
+const slider = $('#RowSlider');
+if( slider ){
+  setTimeout(()=>{
+
+    const widthLS = $('#Slide-2').width();
+    var slide = $('.slide');
+    var slide1 = $('#Slide-1');
+    var widthSlider = slide1.width() + (widthLS*2);
+    var state = 1;
+    toSlide(1);
+
+    function toSlide($state){
+      slide.css({minWidth:'',order:'1'});
+      $(`div[id^="Slide-${state}"] `).css({minWidth:widthSlider+'px',order:0});
+    }
+
+    $('.arrowSlide').on('click',function(me){
+      switch($(this).attr('id')){
+        case 'RightArrow' :
+          ( state >= 1 && state !== 3)? state++ : state=1 ;
+          toSlide(state);
+        break;
+          case 'LeftArrow' :
+          ( state <= 3 && state !== 1) ? state-- : state=3 ;
+          toSlide(state);
+        break
+      }
+    });
+  },100);
+}
+
+</script>
+<style>
+#RowSlider{
+  display:flex;
+  flex-wrap:nowrap;
+  margin:60px 0;
+  }
+  .itemSlide{
+    min-height:300px;
+  }
+
+  @media screen and (max-width: 767px){
+    #Content .rowSlide {
+      flex-wrap: nowrap;
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
 /******************** Debug lien politique de vie privée GravityForms ***/
 <script>
     if( $('#label_39_5_1 a').attr('href') !== '/protection-de-la-vie-privee/'){
