@@ -193,7 +193,15 @@ https://codepen.io/artkabis/pen/vYymdZQ
 
 
 
-
+/*************** Suppression de colonne vide dans une rangée précise ******************/
+<script>
+    $('.row-detected > div > div > div').each(function(i,t){
+        var isEmpty = $(this).text().length;
+        if(isEmpty === 0){
+            $(this).parents('.wpb_column').remove();
+	}
+    });
+</script>
 
 
 
