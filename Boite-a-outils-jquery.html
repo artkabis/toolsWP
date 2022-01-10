@@ -97,7 +97,11 @@ var TOOLS = {
     updateQueryStringParam: (key, value) =>{var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),urlQueryString = document.location.search,newParam = key + '=' + value,params = '?' + newParam;if (urlQueryString) {keyRegex = new RegExp('([\?&])' + key + '[^&]*');if (urlQueryString.match(keyRegex) !== null) {params = urlQueryString.replace(keyRegex, "$1" + newParam);} else {params = urlQueryString + '&' + newParam;}}window.history.replaceState({}, "", baseUrl + params);},
     getParameterByName:(name)=>{name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");var regexS = "[\\?&]" + name + "=([^&#]*)";var regex = new RegExp(regexS);var results = regex.exec(window.location.search);if(results === null){ return "" }else{ return decodeURIComponent(results[1].replace(/\+/g, " "));}},
     purifyTxt : ($txt,$sep) =>{var newTab =[];newTab = $txt.text().split($sep).replace(/^\s+|\s+$/g,'');for( var i  in newTab ){newTab.push($.trim(newTab[i]));return newTab.join($sep);}},
-    multiplyTabValue : ($arr) =>{return $arr.map(x => x * 2);}
+    multiplyTabValue : ($arr) =>{return $arr.map(x => x * 2);},
+	callbackNodeAdded : (el,callback) =>{var observer = new MutationObserver(function(mutations) {(document.contains(el)) ? call() : console.log(el[0].className+' not working !!!');observer.disconnect();});observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});}  
+});
+
+observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
 };
 
 
