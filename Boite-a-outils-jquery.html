@@ -74,13 +74,14 @@ window.log = function(){
     1°) navig >> navigation vers une url avec ciblage en _blank ou en _self >> TOOLS.navig('/testPage/','_blank')
     2°) minmax >> renvoi une valeur entre min et max >> TOOLS.minmax(10,12); //11
     3°) ready >> joue la fonction si l'élément est bien chargé dans le DOM >> TOOLS.ready($('#Footer'),function(){console.log('DOM Footer Ready')})
-    4°) containStr >> cherche si une chaine comporte une chaine passé en paramètre >> TOOLS.containStr(maChaine,chaine-a-trouver)
-    5°) containsInArray >> cherche si une valeur est presente dans un tableau >> TOOLS.containInArray(monTableau,maValeur)
-    6°) nbFormat >>formate un nombre, s'il est inferieur à 10, il sera implémenté d'un 0, ex 05 >> TOOLS.nbFormat(9); //09
+    4°) containStr >> cherche si une chaîne comporte une chaine passé en paramètre >> TOOLS.containStr(maChaine,chaine-a-trouver)
+    5°) containsInArray >> cherche si une valeur est présente dans un tableau >> TOOLS.containInArray(monTableau,maValeur)
+    6°) nbFormat >>formate un nombre, s'il est inférieur à 10, il sera implémenté d'un 0, ex 05 >> TOOLS.nbFormat(9); //09
     7°) updateQueryStringParam >>// Création d'un paramètre avec clé : test et valeur: yes >> TOOLS.updateQueryStringParam('test','yes');
     8°) getParameterByName >>// renvois la valeur du paramètre : >> TOOLS.getParameterByName('test');//renvois ->> yes
-    9°) purifyTxt >>// renvois la valeur dune chaine de caractères imputé de tout espace et saut de ligne : >> var newTxt =TOOLS.purifyTxt($('.distributeurList'),', ');$('.distributeurList').text(newTxt);
+    9°) purifyTxt >>// renvois la valeur d’une chaîne de caractères imputé de tout espace et saut de ligne : >> var newTxt =TOOLS.purifyTxt($('.distributeurList'),', ');$('.distributeurList').text(newTxt);
     10°) multiplyTabValue >>// renvois la valeur d'un tableau multiplié par deux: >> TOOLS.multiplyTabValue(myArray);
+	11°) callbackNodeAdded >>// détecte si un élément du DOM (ex : $('.elem'){0] ou document.querSelector('.elem') ) est présent est bien chargé >> callbackNodeAdded($('.el')[0],()=>{console.log('loaded')});
 -->
 <script>
     
@@ -98,10 +99,7 @@ var TOOLS = {
     getParameterByName:(name)=>{name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");var regexS = "[\\?&]" + name + "=([^&#]*)";var regex = new RegExp(regexS);var results = regex.exec(window.location.search);if(results === null){ return "" }else{ return decodeURIComponent(results[1].replace(/\+/g, " "));}},
     purifyTxt : ($txt,$sep) =>{var newTab =[];newTab = $txt.text().split($sep).replace(/^\s+|\s+$/g,'');for( var i  in newTab ){newTab.push($.trim(newTab[i]));return newTab.join($sep);}},
     multiplyTabValue : ($arr) =>{return $arr.map(x => x * 2);},
-	callbackNodeAdded : (el,callback) =>{var observer = new MutationObserver(function(mutations) {(document.contains(el)) ? call() : console.log(el[0].className+' not working !!!');observer.disconnect();});observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});}  
-});
-
-observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+	callbackNodeAdded : (el,call) =>{var observer = new MutationObserver(function(mutations) {(document.contains(el)) ? call() : console.log(el[0].className+' not working !!!');observer.disconnect();});observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});}  
 };
 
 
