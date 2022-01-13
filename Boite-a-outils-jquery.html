@@ -126,6 +126,69 @@ TOOLS.ready($('#Header'),function(){
 
 
 
+<script>
+
+var CRYPTO = { 
+_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+encode: function(a) {
+                var b = "", e, f, c, n, p, l, s = 0;
+                for (a = d.CRYPTO._utf8_encode(a); s < a.length; )
+                    e = a.charCodeAt(s++),
+                    f = a.charCodeAt(s++),
+                    c = a.charCodeAt(s++),
+                    n = e >> 2,
+                    e = (e & 3) << 4 | f >> 4,
+                    p = (f & 15) << 2 | c >> 6,
+                    l = c & 63,
+                    isNaN(f) ? p = l = 64 : isNaN(c) && (l = 64),
+                    b = b + this._keyStr.charAt(n) + this._keyStr.charAt(e) + this._keyStr.charAt(p) + this._keyStr.charAt(l);
+                return b
+            },
+            decode: function(a) {
+                var b = "", e, f, c, n, p, l = 0;
+                for (a = a.replace(/[^A-Za-z0-9\+\/\=]/g, ""); l < a.length; )
+                    e = this._keyStr.indexOf(a.charAt(l++)),
+                    f = this._keyStr.indexOf(a.charAt(l++)),
+                    n = this._keyStr.indexOf(a.charAt(l++)),
+                    p = this._keyStr.indexOf(a.charAt(l++)),
+                    e = e << 2 | f >> 4,
+                    f = (f & 15) << 4 | n >> 2,
+                    c = (n & 3) << 6 | p,
+                    b += String.fromCharCode(e),
+                    64 != n && (b += String.fromCharCode(f)),
+                    64 != p && (b += String.fromCharCode(c));
+                return b = CRYPTO._utf8_decode(b)
+            },
+            _utf8_encode: function(a) {
+                a = a.replace(/\r\n/g, "\n");
+                for (var b = "", e = 0; e < a.length; e++) {
+                    var f = a.charCodeAt(e);
+                    128 > f ? b += String.fromCharCode(f) : (127 < f && 2048 > f ? b += String.fromCharCode(f >> 6 | 192) : (b += String.fromCharCode(f >> 12 | 224),
+                    b += String.fromCharCode(f >> 6 & 63 | 128)),
+                    b += String.fromCharCode(f & 63 | 128))
+                }
+                return b
+            },
+            _utf8_decode: function(a) {
+                for (var b = "", e = 0, f, c, d; e < a.length; )
+                    f = a.charCodeAt(e),
+                    128 > f ? (b += String.fromCharCode(f),
+                    e++) : 191 < f && 224 > f ? (c = a.charCodeAt(e + 1),
+                    b += String.fromCharCode((f & 31) << 6 | c & 63),
+                    e += 2) : (c = a.charCodeAt(e + 1),
+                    d = a.charCodeAt(e + 2),
+                    b += String.fromCharCode((f & 15) << 12 | (c & 63) << 6 | d & 63),
+                    e += 3);
+                return b
+            }
+     }
+CRYPTO._utf8_decode("SC673e42c316c222ff011857c826c5e847");
+
+</script>
+
+
+
+
 
 
 
