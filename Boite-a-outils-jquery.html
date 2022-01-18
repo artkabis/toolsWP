@@ -192,6 +192,7 @@ CRYPTO._utf8_decode("SC673e42c316c222ff011857c826c5e847");
 
 
 
+
 plugin jquery toggle text >> permet de modifier un texte par un autre rapidement via $.toggleHtml('Texte 1', '<strong>Texte 2</strong>.')
 <script>
 $.fn.extend({
@@ -230,6 +231,33 @@ $('#Top_bar').removeClass('is-sticky');
     $('body').addClass('sticky-header');
 }
 </script>
+
+
+
+
+
+
+
+
+
+********************************* SLM : Modifier les notifications "demandes client" afin de les passer en read (et non no-read class). ****************************
+<script>
+
+var row = document.querySelectorAll('slm-quotations-item .not-read');
+console.log(row.classList);
+var doc = document.querySelector('body');
+row.forEach((t)=>{
+	console.log('clean : ',t);
+	t.click();
+	setTimeout(()=>{doc.click();},20);
+})
+</script>
+
+
+
+
+
+
 
 
 
