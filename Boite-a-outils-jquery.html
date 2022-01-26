@@ -355,6 +355,32 @@ if( slider ){
 
 
 
+/******* ts-image-gallery (ts galerie d'image) debug lors de l'ajout de catégorie visible ou non : lors d'un display none, d'un overflow hidden, etc, 
+l'extension ne peut calculer le sizing des images. Une solution possible est de positionner la galerie en absolute avec un lest de la taille du cointeneur (en négatif)
+lorsque l'élément doit être caché, voici le fix : 
+***/
+<script>
+$(window).on('load',function(){
+   $('.galerieWrapper').css('width',($('.contenerWrapper').width()-30+"px"));//-0 si padding de 15
+   $('.galerieWrapper').css('position','absolute');
+   $('.galerieWrapper').css('left',-$('.contenerWrapper').width()+'px');//Déplacement en dehors du conteneur
+   $('.tabs-link').on('click',function(e){
+      let temp=$(this).find('a').attr('href')+"Wrapper";
+      if($(temp).hasClass('active')){
+         $(temp).removeClass('active')
+     }else{
+         $('.active').removeClass('active');
+         $(temp).addClass('active')
+     }
+});	
+</script>
+<style>
+/** la position relative en important permet de forcer la version absolute lorsque l'élément n'est pas actif. **/
+.galerieWrapper.active {
+   position: relative !important;
+   left: unset !important;
+}
+</style>
 
 
 
