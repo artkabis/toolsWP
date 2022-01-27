@@ -1,4 +1,4 @@
-# Usage Calculator csv to json
+# Usage Calculator XLSX to json
 
 ## Déploiement
 
