@@ -221,9 +221,13 @@ jQuery(function ($) {
                   $('.result-volume-a-calculer textarea').val(temp + $(this).text().replace(',', '\n'));
                   $('.listTotalNotif textarea').val('');
                   $('.listTotalNotif textarea').val(temp + $(this).text().replace(',', '\n'));
+                  console.log('list : ',$('.listTotalNotif textarea').val(),'  total  :',$("#grandTotal").text());
+                  var contentLocal = {'list': $('.listTotalNotif textarea').val(),'total':$("#grandTotal").text()};
+                  console.log(JSON.stringify(contentLocal));
+                  window.localStorage.setItem('calculator',JSON.stringify(contentLocal));
                   temp = $('.result-volume-a-calculer textarea').val();
               });
-              recalc();
+              //recalc();
           });
 
 
@@ -264,9 +268,12 @@ jQuery(function ($) {
                   $('.result-volume-a-calculer textarea').val(temp + $(this).text().replace(',', '\n'));
                   $('.listTotalNotif textarea').val('');
                   $('.listTotalNotif textarea').val(temp + $(this).text().replace(',', '\n'));
-                  temp = $('.result-volume-a-calculer textarea').val();
+                  console.log('list : ',$('.listTotalNotif textarea').val(),'  total  :',$("#grandTotal").text());
+                  var contentLocal = {'list': $('.listTotalNotif textarea').val(),'total':$("#grandTotal").text()};
+                  console.log(JSON.stringify(contentLocal));
+                  window.localStorage.setItem('calculator',JSON.stringify(contentLocal));                  temp = $('.result-volume-a-calculer textarea').val();
               });
-              recalc();
+              //recalc();
           });
 
           /***Reset calc forms***/
