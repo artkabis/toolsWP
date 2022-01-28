@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="/wp-content/plugins/pj-prolive/assets/css/font-awesome.min.css?ver=4.7.0" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  #pj-wrapper {
+    margin: 30px 0;
+}
+#pj-wrapper > div{
+    text-align:right;
+}
+#PJ-review-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align:left;
+}
+.new-review {
+    background-color: #ffd800;
+    padding: 18px;
+    color: #222;
+    margin-right: 8.7rem;
+}
+
+div[class^="pj-content-"] {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-bottom: solid 2px #ffd800;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background-color: #f1f0fa;
+    flex-grow: 2;
+    width: calc(100% - 20rem);
+}
+.pj-category {
+    font-size: 2em;
+    margin: 15px 0;
+}
+
+div[class^="pj-comment-"] {
+    position:relative;
+    padding: 30px;
+}
+div[class^="pj-comment-"]:after {
+    content: '\e909';
+    font-family: "mfn-icons";
+    font-size: 65px;
+    position: absolute;
+    left: -25px;
+    top: 20px;
+    color: rgba(0,0,0,.1);
+    font-size: 52px;
+}
+.fa-star:before {
+    content: "\f005";
+}
+.dn{display:none;}
+
+
+.pj-date, .content-rating, .pj-rating {
+    display: inline-block;
+    float: left;
+}
+.pj-head {
+    display: flex;
+    align-items: center;
+}
+
+/** Rating : 
+**/
+.content-rating {
+    position: relative;
+    margin: 0 0 0 10px;
+    display: inline-block;
+    z-index: 1;
+    height: 16px;
+    line-height: 21px;
+}
+.pj-rating {
+    margin: 0 0 0 20px;
+}
+.norating {
+    position: relative;
+    top: -21px;
+    width: 100px;
+    height: 16px;
+    left: 0;
+    z-index: -1;
+}
+.filled {
+    color: #ffd800;
+    margin: 0 2px;
+}
+.norating .filled {
+    z-index: 0;
+    color: #333;
+}
+/***/
+
+
+.pj-category h2 {
+    margin: 0!important;
+    line-height: 1;
+}
+.pj-category h2 a{
+   color:#222;
+}
+</style>
+
+<div id="PJ-review-container"></div>
+
+<script type="text/javascript">
+(function ($) {
+/*** Gestion de la récupération des avis via l'epj rattaché à pagesjaunes pro (celui-ci différe est ne permet pas la récuoération des avis de notre client) ***/
+
+
+//Gestion des avis du lus récent au plus ancien
+function custom_sort(a, b) {
+    return new Date(a.date_creation).getTime() - new Date(b.date_creation).getTime();
+}
+//API call request to return data reviens
+function api_get(api_call) {
+    var result = null;
+    $.ajax({
+        async: false,
+        url: api_call,
+        dataType: "json",
+         headers: {"x-apikey": "xxxxxxxx"},
+        success: function(data) {
+            result = data;
+        },
+        error: function(xhr) {
+            var error_msg = JSON.stringify(xhr.responseJSON.detail);
+            console.log("Error : "+error_msg);
+        }
+    });
+    
+    return result;
+}
+
+$('#PJ-review-container').before('<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/04761024" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>');
+rest_object.guard ='xxxxxxxx';
+const api_call = "https://api.pagesjaunes.fr/v1/pros/" + rest_object.guard + "/reviews";
+const json_data = api_get(api_call);
+const reviews = json_data.reviews.sort(custom_sort);
+    
+for(var i=0;i<json_data.reviews.length;i++){
+    console.log(reviews.length,reviews);
+    var contentRating="";
+    for(var j=0;j<Number(reviews[i].overall_rating);j++){
+        contentRating += '<span class="filled fa fa-star"></span>';
+    }
+    $('#PJ-review-container').append('<div class="pj-content-'+i+'"><div class="pj-head"><div class="pj-date">Publié le <strong>'+reviews[i].date_creation+'</strong></div><div class="pj-rating">'+reviews[i].overall_rating+'/5 </div><div class="content-rating">'+contentRating+'<div class="norating"><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span></div></div></div><div class="pj-category"><h2 class="title"><a href="https://www.pagesjaunes.fr/pros/04761024#Avis-'+reviews[i].id+'">'+reviews[i].category_name+'</h2></div></a>'+'<div class="pj-comment-'+i+'">'+reviews[i].comment+'</div></div>');
+}
+})(jQuery);
+</script>
