@@ -146,7 +146,6 @@ const json_data = api_get(api_call);
 const reviews = json_data.reviews.sort(custom_sort);
     
 for(var i=0;i<json_data.reviews.length;i++){
-    console.log(reviews.length,reviews);
     var contentRating="";
     for(var j=0;j<Number(reviews[i].overall_rating);j++){
         contentRating += '<span class="filled fa fa-star"></span>';
