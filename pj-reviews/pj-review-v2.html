@@ -112,45 +112,45 @@ div[class^="pj-comment-"]:after {
 
 <script type="text/javascript">
 (function ($) {
-/*** Gestion de la récupération des avis via l'epj rattaché à pages jaunes pro (celui-ci diffère est ne permet pas la récupération des avis de notre client) ***/
+  /*** Gestion de la récupération des avis via l'epj rattaché à pages jaunes pro (celui-ci diffère est ne permet pas la récupération des avis de notre client) ***/
   if($('#PJ-review-container').length){
-    //Gestion des avis du plus récent au plus ancien
-    function custom_sort(a, b) {
-        return new Date(a.date_creation).getTime() - new Date(b.date_creation).getTime();
-    }
-    //API call request to return data reviens
-    function api_get(api_call) {
-        var result = null;
-        $.ajax({
-            async: false,
-            url: api_call,
-            dataType: "json",
-             headers: {"x-apikey": "xxxxxxxx"},/*Attention indiquez ici la clé API **/
-            success: function(data) {
-                result = data;
-            },
-            error: function(xhr) {
-                var error_msg = JSON.stringify(xhr.responseJSON.detail);
-                console.log("Error : "+error_msg);
-            }
-        });
+      //Gestion des avis du plus récent au plus ancien
+      function custom_sort(a, b) {
+          return new Date(a.date_creation).getTime() - new Date(b.date_creation).getTime();
+      }
+      //API call request to return data reviens
+      function api_get(api_call) {
+          var result = null;
+          $.ajax({
+              async: false,
+              url: api_call,
+              dataType: "json",
+               headers: {"x-apikey": "aoCYbV2bu8Gllj33DWqa6ECc1I6vrRQA"},
+              success: function(data) {
+                  result = data;
+              },
+              error: function(xhr) {
+                  var error_msg = JSON.stringify(xhr.responseJSON.detail);
+                  console.log("Error : "+error_msg);
+              }
+          });
+          return result;
+      }
 
-        return result;
-    }
+      $('#PJ-review-container').before('<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/04761024" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>');
+      rest_object.guard ='04761024';
+      const api_call = "https://api.pagesjaunes.fr/v1/pros/" + rest_object.guard + "/reviews";
+      const json_data = api_get(api_call);
+      const reviews = json_data.reviews.sort(custom_sort);
 
-    $('#PJ-review-container').before('<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/04761024" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>');
-    rest_object.guard ='xxxxxxxx';//Attention, Veuillez indiquer l'epj rattaché à la bonne fiche PagesJaunes/pro
-    const api_call = "https://api.pagesjaunes.fr/v1/pros/" + rest_object.guard + "/reviews";
-    const json_data = api_get(api_call);
-    const reviews = json_data.reviews.sort(custom_sort);
-
-    for(var i=0;i<json_data.reviews.length;i++){
-        var contentRating="";
-        for(var j=0;j<Number(reviews[i].overall_rating);j++){
-            contentRating += '<span class="filled fa fa-star"></span>';
-        }
-        $('#PJ-review-container').append('<div class="pj-content-'+i+'"><div class="pj-head"><div class="pj-date">Publié le <strong>'+reviews[i].date_creation+'</strong></div><div class="pj-rating">'+reviews[i].overall_rating+'/5 </div><div class="content-rating">'+contentRating+'<div class="norating"><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span></div></div></div><div class="pj-category"><h2 class="title"><a href="https://www.pagesjaunes.fr/pros/04761024#Avis-'+reviews[i].id+'">'+reviews[i].category_name+'</h2></div></a>'+'<div class="pj-comment-'+i+'">'+reviews[i].comment+'</div></div>');
-    }
+      for(var i=0;i<json_data.reviews.length;i++){
+          var contentRating="";
+          for(var j=0;j<Number(reviews[i].overall_rating);j++){
+              contentRating += '<span class="filled fa fa-star"></span>';
+          }
+          const title =(reviews[i].title) ? '<h2 class="title"><a href="https://www.pagesjaunes.fr/pros/04761024#Avis-'+reviews[i].id+'">'+reviews[i].title+'</h2></a>' : "";
+          $('#PJ-review-container').append('<div class="pj-content-'+i+'"><div class="pj-head"><div class="pj-date">Publié le <strong>'+reviews[i].date_creation+'</strong></div><div class="pj-rating">'+reviews[i].overall_rating+'/5 </div><div class="content-rating">'+contentRating+'<div class="norating"><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span></div></div></div><div class="pj-category">'+title+'</div>'+'<div class="pj-comment-'+i+'">'+reviews[i].comment+'</div></div>');
+      }
   }
 })(jQuery);
 </script>
