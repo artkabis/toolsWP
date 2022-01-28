@@ -17,3 +17,10 @@ Cette nouvelle version permet désormais d'embarquer la liste des commentaires p
 
 Si vous rencontrez un problème concernant l'affichage des icônes "star", n'hésitez pas à ajouter une icône vide de type FontAwesome  dans la page, 
 Si vous n'avez pas de visuel concernant l'icône "citation", veuillez ajouter ceci dans le shortcode de la page : <blockquote>
+
+### !!! Attention !!!
+Vous avez deux éléments qui doivent être modifiés (visible via "xxxxxxx") : 
+  - L'API key (pour l'autorisation de la requête (dans le header de celle-ci)
+  - L'epj du client concerné
+
+
