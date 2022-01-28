@@ -1,7 +1,7 @@
 # PJ-Reviews V2
 
 ## Déploiement : 
-- Dans votre page, veuillez intégrer un élément de type "structure" > "HTML Brute". 
+- Dans votre page, veuillez intégrer un élément de type "structure" > "HTML Brut". 
 - Sur ce composant, ajouter l'id : pj-wrapper
 - Cette structure comportera ceci :
 ```html
