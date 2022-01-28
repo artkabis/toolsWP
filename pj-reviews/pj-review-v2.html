@@ -122,13 +122,8 @@ div[class^="pj-comment-"]:after {
               url: api_call,
               dataType: "json",
                headers: {"x-apikey": "aoCYbV2bu8Gllj33DWqa6ECc1I6vrRQA"},
-              success: function(data) {
-                  result = data;
-              },
-              error: function(xhr) {
-                  var error_msg = JSON.stringify(xhr.responseJSON.detail);
-                  console.log("Error : "+error_msg);
-              }
+              success: (data) =>result = data,
+              error: (xhr) =>{console.log("Error : "+JSON.stringify(xhr.responseJSON.detail));}
           });
           return result;
       }
