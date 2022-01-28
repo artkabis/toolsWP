@@ -21,9 +21,9 @@
 }
 
 div[class^="pj-content-"] {
+  position:relative;
     margin: 20px 0;
     padding: 10px 0;
-    border-bottom: solid 2px #ffd800;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -32,6 +32,16 @@ div[class^="pj-content-"] {
     background-color: #f1f0fa;
     flex-grow: 2;
     width: calc(100% - 20rem);
+}
+div[class^="pj-content-"]:after {
+  content:"";
+  position:absolute;
+  height:2px;
+  bottom:0;
+  border-bottom: solid 2px #ffd800;
+  border-left: solid 150px transparent;
+  border-right: solid 150px transparent;
+  width:calc(100% - 20rem);
 }
 .pj-category {
     font-size: 2em;
