@@ -27,8 +27,7 @@ Vous avez deux éléments qui doivent être modifiés (visible via "xxxxxxx") :
 - Récupération des reply de chaque commentaire : 
 ```javascript
         //Si besoin du retour client sur le commentaire ciblé ->
-        var reply_review = [];
-        var date_reply_review = [];
+        var reply_review = [], date_reply_review = [];
         console.log('reeply >>> ',reviews[i].right_of_reply);
         
         if(reviews[i].right_of_reply !== undefined){
