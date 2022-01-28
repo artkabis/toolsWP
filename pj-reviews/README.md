@@ -23,4 +23,16 @@ Vous avez deux éléments qui doivent être modifiés (visible via "xxxxxxx") :
   - L'API key (pour l'autorisation de la requête (dans le header de celle-ci)
   - L'epj du client concerné
 
-
+### Axes d'améliorations possibles : 
+- Récupération des reply de chaque commentaire : 
+```javascript
+        //Si besoin du retour client sur le commentaire ciblé ->
+        var reply_review = [];
+        var date_reply_review = [];
+        console.log('reeply >>> ',reviews[i].right_of_reply);
+        
+        if(reviews[i].right_of_reply !== undefined){
+            for(var k =0; k<reviews[i].right_of_reply.length;k++ ){reply_review.push(reviews[i].right_of_reply[k].comment);date_reply_review.push(reviews[i].right_of_reply[k].date_creation);}
+        }
+        console.log(reply_review,date_reply_review);      
+```
