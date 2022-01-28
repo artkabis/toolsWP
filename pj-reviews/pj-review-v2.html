@@ -114,10 +114,6 @@ div[class^="pj-comment-"]:after {
 (function ($) {
   /*** Gestion de la récupération des avis via l'epj rattaché à pages jaunes pro (celui-ci diffère est ne permet pas la récupération des avis de notre client) ***/
   if($('#PJ-review-container').length){
-      //Gestion des avis du plus récent au plus ancien
-      function custom_sort(a, b) {
-          return new Date(a.date_creation).getTime() - new Date(b.date_creation).getTime();
-      }
       //API call request to return data reviens
       function api_get(api_call) {
           var result = null;
@@ -149,7 +145,7 @@ div[class^="pj-comment-"]:after {
               contentRating += '<span class="filled fa fa-star"></span>';
           }
           const title =(reviews[i].title) ? '<h2 class="title"><a href="https://www.pagesjaunes.fr/pros/04761024#Avis-'+reviews[i].id+'">'+reviews[i].title+'</h2></a>' : "";
-          $('#PJ-review-container').append('<div class="pj-content-'+i+'"><div class="pj-head"><div class="pj-date">Publié le <strong>'+reviews[i].date_creation+'</strong></div><div class="pj-rating">'+reviews[i].overall_rating+'/5 </div><div class="content-rating">'+contentRating+'<div class="norating"><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span></div></div></div><div class="pj-category">'+title+'</div>'+'<div class="pj-comment-'+i+'">'+reviews[i].comment+'</div></div>');
+          $('#PJ-review-container').append('<div class="pj-content-'+i+'"><div class="pj-head"><div class="pj-date">Publié le <strong>'+reviews[i].date_creation.split("-").reverse(reviews[i].date_creation).join("/")+'</strong></div><div class="pj-rating">'+reviews[i].overall_rating+'/5 </div><div class="content-rating">'+contentRating+'<div class="norating"><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span><span class="filled fa fa-star"></span></div></div></div><div class="pj-category">'+title+'</div>'+'<div class="pj-comment-'+i+'">'+reviews[i].comment+'</div></div>');
       }
   }
 })(jQuery);
