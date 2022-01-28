@@ -125,7 +125,7 @@ div[class^="pj-comment-"]:after {
             async: false,
             url: api_call,
             dataType: "json",
-             headers: {"x-apikey": "xxxxxxxx"},
+             headers: {"x-apikey": "xxxxxxxx"},/*Attention indiquez ici la clé API **/
             success: function(data) {
                 result = data;
             },
@@ -139,7 +139,7 @@ div[class^="pj-comment-"]:after {
     }
 
     $('#PJ-review-container').before('<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/04761024" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>');
-    rest_object.guard ='xxxxxxxx';
+    rest_object.guard ='xxxxxxxx';//Attention, Veuillez indiquer l'epj rattaché à la bonne fiche PagesJaunes/pro
     const api_call = "https://api.pagesjaunes.fr/v1/pros/" + rest_object.guard + "/reviews";
     const json_data = api_get(api_call);
     const reviews = json_data.reviews.sort(custom_sort);
