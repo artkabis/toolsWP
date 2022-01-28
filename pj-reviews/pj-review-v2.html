@@ -132,9 +132,9 @@ div[class^="pj-comment-"]:after {
       rest_object.guard ='04761024';
       const api_call = "https://api.pagesjaunes.fr/v1/pros/" + rest_object.guard + "/reviews";
       const json_data = api_get(api_call);
-      const reviews = json_data;
+      const reviews = json_data.reviews;
 
-      for(var i=0;i<json_data.reviews.length;i++){
+      for(var i=0;i<reviews.length;i++){
           var contentRating="";
           for(var j=0;j<Number(reviews[i].overall_rating);j++){
               contentRating += '<span class="filled fa fa-star"></span>';
