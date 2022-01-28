@@ -12,7 +12,7 @@
 - Dans Composium -> Custom JS, injectez le JavaScript présent dans le fichier HTML rattaché à ce repo.
 - Faites de même pour la partie CSS, que vous pouvez déposer dans la page.
 
-##Infos complémentaires :
+## Infos complémentaires :
 Cette nouvelle version permet désormais d'embarquer la liste des commentaires pj-pro via n'importe quel epj.
 
 Si vous rencontrez un problème concernant l'affichage des icônes "star", n'hésitez pas à ajouter une icône vide de type FontAwesome  dans la page, 
