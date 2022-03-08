@@ -20,7 +20,7 @@ Si vous n'avez pas de visuel concernant l'icône "citation", veuillez ajouter ce
 
 ### !!! Attention !!!
 Vous avez deux éléments qui doivent être modifiés (visible via "xxxxxxx") : 
-  - L'API key (pour l'autorisation de la requête (dans le header de celle-ci)
+  - L'API key (pour l'autorisation de la requête (dans le header de celle-ci), vous devez me la demander soit par Teams, soit par mail
   - L'epj du client concerné
 
 ### Axes d'améliorations possibles : 
