@@ -191,6 +191,63 @@ CRYPTO._utf8_decode("SC673e42c316c222ff011857c826c5e847");
 
 
 
+Gestionnaire de menu WP reprenant la liste des items du sous-menu (sub-menu wp) afin de reconstruire un fil d'ariane relié uniquement avec la catégorie principale. 
+Prise en charge du sticky.
+Ex si la page en cours fait partie des urls des liens du submenu, alors le fil d'ariane construit reprendra de ce dernier.
+<script>
+(function($) {
+    $('.the_content_wrapper').prepend(`<div class="wpb_text_column wpb_content_element pageMenu"><div class="wpb_wrapper"><ul></ul>`);
+    let observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutationRecord) {
+            (mutationRecord.target.className === "is-sticky") ? $('.pageMenu').addClass('is-sticky'): $('.pageMenu').removeClass('is-sticky');
+        });
+    });
+
+    let target = document.querySelector("#Header #Top_bar");
+
+    observer.observe(target, {
+        attributes: true,
+        attributeFilter: ['style', 'className']
+    });
+
+    var menu = {},
+        activeMenu;
+    var id, finalLink, tabLinks = [];
+    const checker = $('.menu > li > .sub-menu > li').each(function(i, t) {
+        const link = $(this).find('a').attr('href');
+        const page = window.location.pathname;
+        var finalLink = link.includes('http') ? link.split('/')[3] : link.includes('#') ? link.split('#')[0] : link;
+        tabLinks.push(finalLink);
+        if (finalLink.includes(page)) {
+            id = $(this).parents('li').attr('id');
+        } else if (page.length < 2 || page.includes('contact')) {
+            $('.pageMenu').remove();
+        }
+    });
+    $('.menu > #' + id + ' > .sub-menu > li').each(function(i, t) {
+        const ahref = tabLinks[i];
+        const path = window.location.pathname;
+        menu['a-' + i] = [$(this).find('a').attr('href'), $(this).find('a').text()];
+    });
+    $.each(menu, function(i, v) {
+        const uuid = v[0].split('-')[1];
+        $('.pageMenu ul').append('<li><a href="' + tabLinks[uuid] + '">' + v[1] + '</a></li>')
+    });
+    // [END] PAGE MENU
+})(jQuery);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 plugin jquery toggle text >> permet de modifier un texte par un autre rapidement via $.toggleHtml('Texte 1', '<strong>Texte 2</strong>.')
