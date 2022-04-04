@@ -1,0 +1,74 @@
+<div class="questionnaire">
+	<form action="/" method="get">
+		<div class="slider_input" name="input2">
+			<span>Surface à chauffer (en M²)</span>
+			<input type="range" min="35" max="250" value="50" class="input1">
+			<div class="valueSlider" id="first">50</div>
+		</div>
+		<div class="slider_input" name="input2">
+			<span>Hauteur de plafond (en M)</span>
+			<input type="range" step="0.1" min="1" max="6" value="2" class="input2">
+			<div class="valueSlider" id="second">2</div>
+		</div>
+		<div class="desc_calc">Indice d'isolation</div>
+		<select class="insolation input3">
+			<option value="30">Bon (30)</option>
+			<option value="35">Moyen (35)</option>
+			<option value="40">Mauvais (40)</option>
+		</select>
+		<input type="submit" value="Conseillez moi !">
+	</form type="submit">
+</div>
+
+<div class="result result1">Ici le produit 1</div><!-- une row avec le produit woocommerce -->
+<div class="result result2">Ici le produit 2</div>
+<div class="result result3">Ici le produit 3</div>
+
+<script>
+	$( ".slider_input" ).on('input', function() {
+		let val = $(this).children("input").val();
+		$(this).children( ".valueSlider" ).text(val);
+	});
+    function clean(){$('div[class*=result]:not(.resultVisible)').hide();}
+    clean();
+	$('.questionnaire form input[type="submit"]').click(function(e) {
+		e.preventDefault();
+        clean();
+		let input1 = $('.input1').val();
+		let input2 = $('.input2').val();
+		let input3 = $('.input3').val();
+		let calc = input1 * input2 * input3 * 0.9;
+
+		if ( input1 === '' || input2 === '' || input3 === '' ) {
+			if ( $( ".erreur_form" ).length > 0 ) {
+			} else {
+				$('.questionnaire form select.insolation').after("<p class='erreur_form'>complétez tous les champs pour continuer</p>");
+			}
+		} else {
+			$( ".erreur_form" ).remove();
+			$( ".row_calculateur > div > div > div").addClass("resultVisible");
+			switch (true) {
+				case calc >= 0 && calc <= 7000 :
+                clean();			
+                $( ".result1" ).show();
+				break;
+				case calc >= 7001 && calc <= 8500 :
+                clean();
+				$( ".result2" ).show();
+				break;
+				case calc >= 8501 && calc <= 10000 :
+                clean();
+				$( ".result3" ).show();
+				break;
+				case calc >= 10000 && calc <= 12000 :
+                clean();
+				$( ".result4" ).show();
+				break;
+				case calc >= 12001 :
+                clean();
+				$( ".result5" ).show();
+				break;
+			}
+		}
+	});
+</script>
