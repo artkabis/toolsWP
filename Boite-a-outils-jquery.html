@@ -637,6 +637,49 @@ line-height:40px;color:#2e2e2e;text-shadow:1px 1px 0 #FFF;}
 
 
 
+/********************** Animation de plusieurs svg lorsque le conteneur est visible dans le viewport - géré avec IintersectionObserver ***********************/
+// on écoute tous les scrollArea celles-ci ont un id unique area-1, area-2, ...
+Lors de l'intersection nous vérifions l'id renvoyé via target.id et déclenchons l'animation en ciblant l'id puis le svg enfant $('#'+target.id+' svg')
+
+<script>
+const options = {
+root: null,//null pour une écoute global de window
+rootMargin: '0px',
+threshold: 0.5
+};
+function callback(entries, observer) {
+entries.forEach(entry => {
+var target = entry.target;
+const ratio = entry.intersectionRatio;
+console.log('id row target : ',target.id);
+if(target.id == "area-1"){
+console.log('entre 1 > ',target.id);
+(ratio>0) ? $('#'+target.id+' .wrapper svg').addClass('active') : "";
+}
+if(entry.target.id == "area-2"){
+console.log('entre 1 > ',target.id);
+(ratio>0) ? $('#'+entry.target.id+' .wrapper svg').addClass('active'):"";
+}
+});
+};
+
+
+
+
+var observer = new IntersectionObserver(callback, options);
+//observer.observe(document.querySelectorAll('main div'));
+let target = '.scrollArea';
+document.querySelectorAll(target).forEach((entry) => {
+if (entry) {
+observer.observe(entry);
+}
+});
+</script>
+
+
+
+
+
 
 
 
