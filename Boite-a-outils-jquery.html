@@ -122,9 +122,27 @@ var TOOLS = {
 TOOLS.ready($('#Header'),function(){
     console.log('DOM Footer Ready');
 });
+
 </script>
 
 
+
+
+
+
+
+
+  /*** Debug du module barre de contact (des antislashs apparaissent lors de l'utilisation de guillemets simples)
+ * ***/
+<script>
+function cleaner($el){
+	$el.contents().filter(function() {return this.nodeType === 3;}).replaceWith(function(){ return this.nodeValue.replace(/\\/g, '')});
+}
+cleaner($('.wpr-popup-body p'));
+cleaner($('.wpr-popup-title'));
+</script>
+  
+ 
 
 <script>
 
@@ -18773,28 +18791,7 @@ $('img').attr('src').contents().filter(function() {
 
 
 
-  /*** Debug du module barre de contact (des antislashs apparaissent lors de l'utilisation de guillemets simples)
- * ***/
-<script>
 
- $('body :not(script)').contents().filter(function() {
-    var title = $(this).find('.wpr-contact-button');
-    return this.nodeType === 3;
-  }).replaceWith(function() {
-     return this.nodeValue.replace(/\\/g, '');
-     $(this).find('.wpr-contact-button a').attr('title').replace(/\\/g, '');
-  });
-/** correction des titles ***/
-  $('.wpr-contact-button a').each(function(i,t){
-      $(this).attr('title',$(this).attr('title').replace(/\\/g, ''));
-  });
-</script>
-  
-  
-
-  
-  
-  
   
   
   
