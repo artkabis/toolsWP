@@ -6973,13 +6973,11 @@ $(".home a[title|='ALERTE'] + div > div > div .wpb_single_image").append('<div i
 ********************** Ouverture d'une popup au centre de la fenêtre celle-ci est géré sur mobile  ********************************
 ****************************************** elle fonctionne aussi avec le module clickRDV ******************************************
 <script>
+const link="https://www.google.com/search?q=adworks&rlz=1C1GCEA_enFR1000FR1001&sxsrf=APq-WBuzqIEtZ9xIxwBvaw0MHiQVG_tQ5A%3A1650956241680&ei=0ZdnYtSHKYiYlwSuyqfIBw&ved=0ahUKEwiUtMyik7H3AhUIzIUKHS7lCXkQ4dUDCA4&uact=5&oq=adworks&gs_lcp=Cgdnd3Mtd2l6EAMyBAgjECcyBAgjECcyCwguEIAEEMcBEK8BMgoILhDHARCvARBDMgsILhCABBDHARCvATINCC4QgAQQxwEQrwEQCjIFCAAQgAQyCwguEIAEEMcBEK8BMgsILhCABBDHARCvATILCC4QgAQQxwEQrwE6BwgjELADECc6BwgAEEcQsAM6EgguEMcBEKMCEMgDELADEEMYAUoECEEYAEoECEYYAFCUCFicCWC-CmgCcAF4AIABc4gBzwGSAQMxLjGYAQCgAQHIAQvAAQHaAQQIARgI&sclient=gws-wiz#lrd=0x47e677d86bce52e5:0x75efc2a281f6fc2d,1,,,";
 function PopupCenter(url, title, w, h) {
   var userAgent = navigator.userAgent,
-      mobile = function() {
-        return /\b(iPhone|iP[ao]d)/.test(userAgent) ||
-          /\b(iP[ao]d)/.test(userAgent) ||
-          /Android/i.test(userAgent) ||
-          /Mobile/i.test(userAgent);
+      mobile = ()=> {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       },
       screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
       screenY = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop,
@@ -6991,27 +6989,22 @@ function PopupCenter(url, title, w, h) {
       left = parseInt(V + (outerWidth - targetWidth) / 2, 10),
       right = parseInt(screenY + (outerHeight - targetHeight) / 2.5, 10),
       features = [];
-      
-  if (targetWidth !== null) {features.push('width=' + targetWidth);}
-  if (targetHeight !== null) {features.push('height=' + targetHeight);}
+  (targetWidth !== null) ? features.push('width=' + targetWidth) : "";
+  (targetHeight !== null) ? features.push('height=' + targetHeight) : "";
   features.push('left=' + left);
   features.push('top=' + right);
   features.push('scrollbars=1');
-
   var newWindow = window.open(url, title, features.join(','));
-
-  if (window.focus) {newWindow.focus();}
+  (window.focus) ? newWindow.focus() : "";
   return newWindow;
 }
-setTimeout(function(){
-    $('.clicrdv-widget-link ').attr('target','_blank');//gestion du target
-    $('.clicrdv-widget-link ').attr('href','');// on vide le href pour ne pas ouvrir de nouveau lien
-    $('.clicrdv-widget-link ').on('click',function(me){
-      // au clic on ouvre la popup via la fonction popupCenter
-        PopupCenter('https://www.clicrdv.com/au-chapeau-gris?clicrdv_widget=1&widget_width=800&websource=https%3A%2F%2Fwww.restaurant-auchapeaugris.fr','Réserver une table','600','500');
-    });
+    //La classe btn-google doit être soit le <button> soit le <a>
+    $('.btn-google').attr('target','_blank');//gestion du target
+    $('.btn-google').attr('href','');// on vide le href pour ne pas ouvrir de nouveau lien
+    $('.btn-google').on('click',function(me){
+        PopupCenter(link,'Avis Google Adworks','600','500');
 });
-
+//Exemple de lien avec l'ouverture du widget clickRDV : https://www.clicrdv.com/au-chapeau-gris?clicrdv_widget=1&widget_width=800&websource=https%3A%2F%2Fwww.restaurant-auchapeaugris.fr
 </script>
 le bouton html lié au clickRDV -->
 <script type="text/javascript" src="//clicrdv-assets.s3.amazonaws.com/lib/clicrdv-widgets-v1/clicrdv-widgets-min.js"></script>
