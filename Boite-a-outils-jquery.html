@@ -133,13 +133,16 @@ TOOLS.ready($('#Header'),function(){
 
 
   /*** Debug du module barre de contact (des antislashs apparaissent lors de l'utilisation de guillemets simples)
+** Fonctionne aussi pour un replacement standard de texte avec ajout par exemple d'une classe. Remplacement complet de NODE DOM de type texte (type === 3)
  * ***/
 <script>
-function cleaner($el){
-	$el.contents().filter(function() {return this.nodeType === 3;}).replaceWith(function(){ return this.nodeValue.replace(/\\/g, '')});
+function cleaner($el,$search,$replace){
+	$el.contents().filter(function() {return this.nodeType === 3;}).replaceWith(function(){ return this.nodeValue.replace($search, $replace)});
 }
-cleaner($('.wpr-popup-body p'));
-cleaner($('.wpr-popup-title'));
+cleaner($('.wpr-popup-body p'),/\\/g,'');
+cleaner($('.wpr-popup-title'),/\\/g,'');
+//Exemple de remplacement global dans WP afin d'ajouter une classe à un mot uniquement
+cleaner($('#Wrapper *'),'Pierre PIGNARD SAS', 'Pierre PIGNARD <span class="sas">SAS</span>');//#Wrapper * permet de faire un remplacement global sur l'ensemble du site (#Content, #Header, #Footer) et dans ce cas qu'une partie du texte soit wrap avec une classe. 
 </script>
   
  
@@ -261,6 +264,57 @@ $.each(menu, function(i, v) {
 // [END] PAGE MENU
 })(jQuery);
 </script>
+
+
+
+
+
+
+//Gestion du blocage des commentaires liés au registre de condoléances, un mot de passe est désormais nécessaire. Celui-ci reprend les deux premiers caractères du name + le code postal du siège social de l'entreprise.
+
+<script>
+$( "#condolence_message textarea" ).attr( "placeholder", "N'oubliez pas de donner vos coordonnées (nom, prénom, mail) pour la famille" );
+    const condoleances = $('.single-pj_cdl_book .messages');
+    condoleances.prepend('<a class="openCondo">Consulter les messages de condoléances<br><strong>[Réservé à la famille]</strong></a>');
+    const a = $('#condolence_book .content .name').text().substring(1,3).toLowerCase();
+    $('#condolence_book .openCondo').after('<div class="privateCondo"><span class="overlay"></span><div class="privateCondoElem"><input class="inputCondo" type="password" placeholder="Entrez le mot de passe" /><button class="condoBtn">Valider</button></div>');
+    $('.privateCondo').fadeOut(0);
+    console.log(a);
+    $('.openCondo').on('click',function(me){
+        console.log('click btnCondo');
+        $('.privateCondo').fadeToggle(300).toggleClass('active');
+    });
+        $('.condoBtn').on('click',function(me){
+            const inCondo = $('.inputCondo');
+            console.log('value input : ',inCondo.val());
+            if(inCondo.val()!==""  && $('.commentlist li').length>=1){
+                console.log('input valide value');
+                console.log('secret pass condo match', "62480"+a,'is valide : ', inCondo.val().includes("62480"+a));
+                if(String(inCondo.val()) == String("62480"+a)){
+                    console.log('secret pass condo match', "62480"+a);
+                    $('.single-pj_cdl_book #messages_list').fadeToggle(300);
+                    $('.privateCondo').fadeOut(0);
+                }
+            }
+    });
+    $('.overlay').on('click',function(me){
+        if($('.privateCondo').hasClass('active')){
+            $('.privateCondo').fadeToggle(300).toggleClass('active');
+        }
+    });
+</script>
+CSS du gestionnaire de commentaire registre de condoléances
+<style>
+.single-pj_cdl_book #messages_list {display:none;}
+.openCondo  {font-size: 14px;padding: 14px 20px;background: #c6003d;color: #ffffff;display: block;width: fit-content;width: -moz-fit-content;margin-bottom: 30px;text-decoration:none;transition:all 0.5s;text-align:center;}
+span.overlay {position: fixed;cursor:pointer;width: 100%;height: 100%;background: rgb(0 0 0 / 62%);top: 0;left: 0;z-index: 205;}
+.openCondo:hover  {background: #666;color: #ffffff;text-decoration:none;}
+.privateCondoElem {position: fixed;top: 50%;left: 50%;width: 300px;flex-direction: column;align-items: center;justify-content: center;background: #FFF;padding: 40px;box-shadow: 0 0 5px #000;transform: translate(-50%, -50%);z-index:206}
+.privateCondo button {margin:0;width:100%;}
+.privateCondo input {width:100%;}
+
+</style>
+
 
 
 
