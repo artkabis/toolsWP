@@ -211,7 +211,16 @@ CRYPTO._utf8_decode("SC673e42c316c222ff011857c826c5e847");
 
 
 
-
+/******* Fix sub menu WP link relative only (no prepub) >> SMS debug****/
+<script>
+/* fix menu ***/
+$('#menu-main-menu li').each(function(i,t){
+	const href = $(this).find('a').attr('href');
+	if(href !== undefined && href.includes('privilege.pagesjaunes.fr')){
+		(href.includes('https')) && link.attr('href','/'+href.split('/')[3]);
+	}
+});
+</script>
 
 
 
