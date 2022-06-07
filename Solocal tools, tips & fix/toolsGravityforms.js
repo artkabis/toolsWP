@@ -11,6 +11,9 @@ if(location.pathname === '/devis/'){
 }
 
 
+/******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
+
 
 
 
@@ -19,6 +22,11 @@ if(location.pathname === '/devis/'){
 // BTN-UX (desktop & mobile
 $('.logo').append('<div class="btn-ux-container"><a class="btn-ux" href="tel:0442188585"><i class="fa fa-phone"></i><p class="txt-btn-ux">Nous appeler <br><span class="second-line">au 04 42 18 85 85</span></p></a><a class="btn-ux" href="/demande-brochure/"><i class="fa fa-paperclip"></i><p class="txt-btn-ux">Demande <br><span class="second-line">de brochure</span></p></a><a id="btnVisite" class="btn-ux" href="/contact/"><i class="fa fa-hand-o-right"></i><p class="txt-btn-ux">Visiter <br><span class="second-line">la résidence</span></p></a></div>');
 $('body').prepend('<div class="btn-ux-container-mob"><a class="btn-ux-mob" href="tel:0442188585"><i class="fa fa-phone"></i>Nous appeler <br><span class="second-line">au 04 42 18 85 85</span></a><a id="btnVisite" class="btn-ux-mob" href="/contact/"><i class="fa fa-hand-o-right"></i>Visiter <br><span class="second-line">la résidence</span></a>');
+
+
+/******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
+
 
 
 /**** Gestion des conditions logiques du gravityform (formulaire) checkbox automatisé en fonction du lien cliqué : visite ou contact (si visite > formulaire lié à cette catégorie) ***/
@@ -45,4 +53,14 @@ if($('a#btnVisite').length >0){
             $('#choice_35_12_0').trigger('click').attr('checked','checked');
         }
     }
+}
+
+/******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
+
+
+/******************** Debug lien politique de vie privée GravityForms (vous devez modifier l'id comportant votre lien) ***/
+    if( $('#label_39_5_1 a').attr('href') !== '/protection-de-la-vie-privee/'){
+    $('#label_39_5_1 a').remove();
+    $('#label_39_5_1').append('<a href="/protection-de-la-vie-privee/" target="_blan" rel="noopener noreferrer">politique de protection de la vie privée du site</a>');
 }
