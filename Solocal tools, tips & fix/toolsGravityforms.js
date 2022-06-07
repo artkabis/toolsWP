@@ -64,3 +64,31 @@ if($('a#btnVisite').length >0){
     $('#label_39_5_1 a').remove();
     $('#label_39_5_1').append('<a href="/protection-de-la-vie-privee/" target="_blan" rel="noopener noreferrer">politique de protection de la vie privée du site</a>');
 }
+
+
+
+
+
+/********************** Woocommerce : détection des prix valant 0 € ajout d'un bouton demande de devis dans le shop et sauvegarde du titre du produit dans le Gravityforms *****************************/
+    var t,tt,title;
+    if(window.location.href.indexOf("/shop/") === -1){
+        $('.woocommerce-Price-amount').each(function(i,t){
+            t = $(this);
+            tt =t.text();
+            if($(this).text().includes('0,00')){
+                title = $(this).parents('.isotope-item').find('.desc a').text();
+                $(this).find('.image_frame a').on('click',function(me){
+                    localStorage.setItem('produit', title);
+                });
+                $(this).closest('.product_tag-prix').append('<div class="infoPrice"> <i class="ts-awesome-phone-square"></i>Demander votre Devi</div>');
+                $(this).closest('.price').remove();
+            }
+        });
+    }
+
+    if(window.location.href.indexOf("/shop/") > -1 && $('.summary .price .amount').text().includes('0,00')){
+        localStorage.setItem('produit', $('.product_title').text());
+        $('.product_title').after('<div class="btn-rs"><a class="my-btn" href="/devis/"><i class="ts-awesome-phone-square"></i>Demander votre Devis</a></div>');
+        $('.summary .price').remove();
+    }
+    (location.pathname === '/devis/' && localStorage.getItem("produit") !== null) && $('#input_38_14').val(localStorage.getItem('produit'));
