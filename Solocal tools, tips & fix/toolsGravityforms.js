@@ -92,3 +92,35 @@ if($('a#btnVisite').length >0){
         $('.summary .price').remove();
     }
     (location.pathname === '/devis/' && localStorage.getItem("produit") !== null) && $('#input_38_14').val(localStorage.getItem('produit'));
+
+
+
+
+
+
+
+
+/******************** Gravityforms Blocage des mails en fonction du numéro de téléphone, si le numéro est au format valide français le mail est envoyé, sinon une redirection est faite sur la page d'accueil ********************/
+if($('.gform_wrapper').find('.gform_button[type="submit"]')){
+    var phone,$form=$('.gform_wrapper'), btn =  $form.find('.gform_button[type="submit"]'), saveFuncClick = btn.attr('onclick'), saveFuncKeyP =  btn.attr('onkeypress');
+    btn.attr('onkeypress':'','onclick':''));
+    /***** Bloquer un seul numéro lors de l'envoi du formulaire ***************/
+    if(window.location.pathname === '/contact/'){
+        var phone,$form=$('.gform_wrapper');
+        var btn =  $form.find('.gform_button[type="submit"]');
+        var saveFuncClick = btn.attr('onclick');
+        var saveFuncKeyP =  btn.attr('onkeypress');
+        btn.attr('onkeypress','');
+        btn.attr('onclick','');
+        $('.ginput_container_phone input').on('input',function(){
+            phone = String($(this).val());
+            firstN = phone.replace(/\D/g, ""); 
+
+            //Blocage d'un numéro spécifique >>
+            (phone.includes('555-555-1212') || phone.includes('555 555 1212') ) ? btn.on('click',function(){window.location.pathname="/";}) : btn.attr({'onkeypress':saveFuncKeyP,'onclick',saveFuncClick);
+
+            //Vérification de la validité du format de numéro téléphone indiqué >>
+            (phone.length === 10 && firstN[0] === '0' && !phone.includes('-')|| phone.length === 13 && !phone.includes('-') && phone.includes('+33') ) ? btn.attr('onkeypress':saveFuncKeyP,'onclick':saveFuncClick,'type':'submit') : btn.attr('onkeypress':'','onclick':'','type':'button').on('click',function(){window.location.pathname="/"});                                                                                                                                    
+        });
+    }
+}
