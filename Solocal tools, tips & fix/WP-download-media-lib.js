@@ -20,10 +20,9 @@ linksArray.forEach(linkEl => {
   const img = linkEl.getAttribute("src");
   const last = img.lastIndexOf('-');
   const last2 = img.lastIndexOf('/');
-    const ext = img.substring(img.lastIndexOf('.'),img.length);
-    console.log('extension : ',ext);
+  const ext = img.substring(img.lastIndexOf('.'),img.length);
   const finalImg = window.location.origin+img.substring(0,last)+ext;
   const name = String(img.substring(last2,img.length).split(ext)[0].substring(0,img.substring(last2,img.length).split(ext)[0].lastIndexOf('-'))).replace('/','');
-  console.log(name,finalImg);
+  console.log('name : ',name,'  link final image : ',finalImg,'  extension : ',ext);
   downloadImage(finalImg,name)
 });
