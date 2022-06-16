@@ -130,3 +130,18 @@ if($('.gform_wrapper').find('.gform_button[type="submit"]')){
 }
 /******************************************************************************************************************************************************************/
 /******************************************************************************************************************************************************************/
+
+
+
+
+/***** Correctif pour les formulaires à plusieurs pages (étapes), si seul le recaptcha n'est pas validé, une erreur empêche de reprendre l'édition du gform ****/
+(function($){
+    const NAME_PAGE = 'simulation-en-ligne';
+    const GFORM_ID = '#gform_38';
+    //Test de l'url de la page liée au formulaire
+    if(window.location.pathname.includes(NAME_PAGE)){
+        // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
+        const isVal = $(GFORM_ID+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');  
+        isVal && $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le REcaptcha)
+    }
+})(jQuery)
