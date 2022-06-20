@@ -145,3 +145,45 @@ if($('.gform_wrapper').find('.gform_button[type="submit"]')){
         isVal && $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le REcaptcha)
     }
 })(jQuery)
+/******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
+
+
+
+
+
+/*** Gestion des forumaires Gravityform avec routage d'emails - ceux-ci ne sont plus pris en charge par SLM ****/
+/**** Gestionnaire de formulaire avec gestion des agences en routage - condition logique avec plusieurs mails d'envois (pour corriger le non-envoi des notifications vers le SLM du client) ****/
+if($('.pj-quote-gravityform').length >2){
+    const allForms = $('#cannes,#frejus,#carros,#versailles');//Tous les forms
+    allForms.fadeOut(0);//On cache tous les forms
+    function open($name,$pos){
+    $($name).fadeIn(300);//Affichage du form en fonction de l'id cliqué
+    //pos 1 : première option selected, pos 2 : le second (on choisit le bon selected et on le verrouille)
+    ($pos===1) ? $($name+' .gform_body select option:first-child').attr('selected','selected').parent().css('pointer-events','none') : $($name+' .gform_body select option:last-child').attr('selected','selected').parent().css('pointer-events','none');
+    }
+     //On écoute les boutons rattachés à openForm qui les contient
+     $('.openForm a').on('click',function(){
+        allForms.fadeOut(0);//Au click on cache l'ensemble des forms
+        const name = $(this).attr('href');//on garde en mémoire les href (qui sont liés à l'id des row de chaque form)
+        switch(name){
+            case "#carros" ://carros étant dans le même form mais avec le 2eme selected 
+                open('#cannes',2);
+            break
+            case "#cannes" :
+                open('#cannes',1);
+            break
+            case "#versailles" :
+                open('#versailles',1);
+            break
+            case "#issy-les-moulineaux" ://issy-les-moulineaux étant dans le même form que Versailles on utilise la seconde option mais avec le 2eme selected 
+                open('#versailles',2);
+            break
+            default :
+                open(name);
+        }
+    });
+}
+
+
+
