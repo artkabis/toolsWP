@@ -1,4 +1,6 @@
 
+/**** Woocommerce : isotope en mode slider horizontal avec gestion next & prev (boutons) *****/
+
 /***** CSS a intégrer avant l'utilisation de ce script 
 .products_wrapper.isotope_wrapper {
     display: flex;
