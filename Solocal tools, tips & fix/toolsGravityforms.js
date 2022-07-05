@@ -160,7 +160,9 @@ if($('.pj-quote-gravityform').length >2){
     function open($name,$pos){
     $($name).fadeIn(300);//Affichage du form en fonction de l'id cliqué
     //pos 1 : première option selected, pos 2 : le second (on choisit le bon selected et on le verrouille)
-    ($pos===1) ? $($name+' .gform_body select option:first-child').attr('selected','selected').parent().css('pointer-events','none') : $($name+' .gform_body select option:last-child').attr('selected','selected').parent().css('pointer-events','none');
+
+    //Attention si vous avez plusieurs select dans vos formulaires, veuillez indiquer une classe pour le select ayant les villes (depuis GF), exemple ici : selectCity
+    ($pos===1) ? $($name+' .gform_body .selectCity .select option:first-child').attr('selected','selected').parent().css('pointer-events','none') : $($name+' .gform_body .selectCity select option:last-child').attr('selected','selected').parent().css('pointer-events','none');
     }
      //On écoute les boutons rattachés à openForm qui les contient
      $('.openForm a').on('click',function(){
