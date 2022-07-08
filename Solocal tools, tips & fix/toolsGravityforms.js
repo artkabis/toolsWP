@@ -189,3 +189,32 @@ if($('.pj-quote-gravityform').length >2){
 
 
 
+/**** Gestion des erreurs et de la progress bar négative
+Ajout du titre dans les textes de progression
+Gestion des retours arrière après erreur sur dernière page
+ ***/
+    const NAME_PAGE = 'simulation-rachat-credit';
+    const GFORM_ID = '#gform_34';
+    //Test de l'url de la page liée au formulaire
+    if(window.location.pathname.includes(NAME_PAGE)){
+        var maxStep = Number($('.gf_progressbar_title').text().split(' ')[3]);
+        var targetStep = Number($('.gf_progressbar_title').text().split(' ')[1]);
+        const title = $('#gform_page_34_'+targetStep+' .gsection_title').text();
+        //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$',title);
+        $('.gf_progressbar_title').text($('.gf_progressbar_title').text()+' : '+title);
+        // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
+        const isVal = $(GFORM_ID+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');  
+        //console.log('erreur : ',isVal, ' isVal : ',isVal, 'target === maxStep = ',(isVal && targetStep === maxStep));
+        
+        if(isVal && targetStep === maxStep){
+            $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le REcaptcha)
+        }else if(targetStep !== maxStep){
+            //console.log('on ne debloque pas la derniere page car : ',isVal && targetStep === maxStep);
+        }
+        //console.log('targetstep : ',targetStep, 'max step : ',maxStep);
+        if(( isVal &&  targetStep === maxStep)){
+            $('#gform_page_34_'+maxStep).css('display','block');
+            $('.gf_progressbar_title').text('Etape '+ maxStep +' de '+maxStep+' : '+ $('#gform_page_34_'+maxStep+' .gsection_title').text());
+            $('.gf_progressbar_percentage span').text('100%');
+        } 
+    }
