@@ -193,28 +193,21 @@ if($('.pj-quote-gravityform').length >2){
 Ajout du titre dans les textes de progression
 Gestion des retours arrière après erreur sur dernière page
  ***/
-    const NAME_PAGE = 'simulation-rachat-credit';
-    const GFORM_ID = '#gform_34';
+    const NAME_PAGE = 'simulation-rachat-credit';//Pathname de la page
+    const GFORM_ID = '#gform_34';//ID du Gravity Form
     //Test de l'url de la page liée au formulaire
     if(window.location.pathname.includes(NAME_PAGE)){
-        var maxStep = Number($('.gf_progressbar_title').text().split(' ')[3]);
-        var targetStep = Number($('.gf_progressbar_title').text().split(' ')[1]);
-        const title = $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+targetStep+' .gsection_title').text();
-        //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$',title);
-        $('.gf_progressbar_title').text($('.gf_progressbar_title').text()+' : '+title);
-        // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
-        const isVal = $(GFORM_ID+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');  
-        //console.log('erreur : ',isVal, ' isVal : ',isVal, 'target === maxStep = ',(isVal && targetStep === maxStep));
-        
-        if(isVal && targetStep === maxStep){
-            $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le REcaptcha)
-        }else if(targetStep !== maxStep){
-            //console.log('on ne debloque pas la derniere page car : ',isVal && targetStep === maxStep);
-        }
-        //console.log('targetstep : ',targetStep, 'max step : ',maxStep);
+        var maxStep = Number($('.gf_progressbar_title').text().split(' ')[3]);//Nombre maximum d'étapes
+        var targetStep = Number($('.gf_progressbar_title').text().split(' ')[1]);//Numéro de l'étape en cours
+        const title = $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+targetStep+' .gsection_title').text();//Titre de l'étape
+        $('.gf_progressbar_title').text($('.gf_progressbar_title').text()+' : '+title);//Ajout du titre
+        // Vérification du message d'erreur dans le last .validation_error rattaché au formulaire
+        const isVal = $(GFORM_ID+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');    
+        (isVal && targetStep === maxStep) $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le REcaptcha)
+        //Si une erreur est détectée à la dernière étape
         if(( isVal &&  targetStep === maxStep)){
-            $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+maxStep).css('display','block');
-            $('.gf_progressbar_title').text('Etape '+ maxStep +' de '+maxStep+' : '+ $('#gform_page_34_'+maxStep+' .gsection_title').text());
+            $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+maxStep).css('display','block');//On affiche le contenu de la dernière étape
+            $('.gf_progressbar_title').text('Etape '+ maxStep +' de '+maxStep+' : '+ $('#gform_page_34_'+maxStep+' .gsection_title').text());//Recontruction du texte de la progressbar avec titre de l'étape
             $('.gf_progressbar_percentage span').text('100%');
         } 
     }
