@@ -199,7 +199,7 @@ Gestion des retours arrière après erreur sur dernière page
     if(window.location.pathname.includes(NAME_PAGE)){
         var maxStep = Number($('.gf_progressbar_title').text().split(' ')[3]);
         var targetStep = Number($('.gf_progressbar_title').text().split(' ')[1]);
-        const title = $('#gform_page_34_'+targetStep+' .gsection_title').text();
+        const title = $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+targetStep+' .gsection_title').text();
         //console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$',title);
         $('.gf_progressbar_title').text($('.gf_progressbar_title').text()+' : '+title);
         // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
@@ -213,7 +213,7 @@ Gestion des retours arrière après erreur sur dernière page
         }
         //console.log('targetstep : ',targetStep, 'max step : ',maxStep);
         if(( isVal &&  targetStep === maxStep)){
-            $('#gform_page_34_'+maxStep).css('display','block');
+            $('#gform_page_'+GFORM_ID.split('_')[1]+'_'+maxStep).css('display','block');
             $('.gf_progressbar_title').text('Etape '+ maxStep +' de '+maxStep+' : '+ $('#gform_page_34_'+maxStep+' .gsection_title').text());
             $('.gf_progressbar_percentage span').text('100%');
         } 
