@@ -14,7 +14,7 @@ $( ".grey-aide a").on( "click", function(){
 
 $(window).on("load", function (event) {
   if(sessionStorage.getItem('formIsVisible') !== null){
-      (sessionStorage.getItem('formIsVisible')=="true") ? sessionStorage.setItem('formIsVisible',false) : sessionStorage.setItem('formIsVisible',true);
+      sessionStorage.setItem('formIsVisible',!JSON.parse(sessionStorage.getItem('formIsVisible')));
       $( ".grey-aide a" ).trigger( "click");
   }
 });
