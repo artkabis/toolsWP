@@ -1,4 +1,4 @@
-# popup sur un formulaire Gravityforms avec étape (et donc reload de la page)
+# popup sur un formulaire Gravityforms avec étapes (et donc reload de la page)
 
 
 ## Exemple d'intégration : [https://www.systemfroid.fr](https://www.systemfroid.fr/)
