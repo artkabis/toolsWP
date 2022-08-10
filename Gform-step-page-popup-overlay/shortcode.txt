@@ -1,0 +1,11 @@
+[09:30] Jordan LABAT
+[vc_row][vc_column el_class="form-devis" el_id="devis"][vc_column_text el_class="faux-titre"]Testez votre éligibilité aux aides de l'État[/vc_column_text][gravityform id="38" title="false" description="false" ajax="false"][/vc_column][vc_column el_class="overlay" el_id="overlay"][/vc_column][/vc_row][vc_row full_width="stretch_row" equal_height="yes" ts_row_bg_effects="image" ts_row_bg_image="526" ts_row_overlay_use="true" ts_row_overlay_color="rgba(0,0,0,0.25)"][vc_column el_class="col-slider"][vc_column_text el_class="accroche col"]
+<p style="text-align: center;">Dépannage et installation de</p>
+[/vc_column_text][vc_row_inner][vc_column_inner el_class="col-act"][vc_column_text el_class="bloc-slider froid"]
+<p style="text-align: center;">climatisation</p>
+[/vc_column_text][vc_column_text el_class="grey-aide"]
+<p style="text-align: center;"><a>Testez votre éligibilité aux aides de l'État</a></p>
+[/vc_column_text][vc_column_text el_class="bloc-slider chaud"]
+<p style="text-align: center;">pompes à chaleur</p>
+[/vc_column_text][/vc_column_inner][/vc_row_inner][vc_single_image image="536" img_size="full" alignment="center" onclick="custom_link" el_class="scroll" link="#below"][/vc_column][/vc_row][vc_row el_class="row-qualif"][vc_column width="1/4" el_class="col-qualif"][vc_single_image image="594" img_size="full" alignment="center" onclick="custom_link" el_class="qualif" link="/eligibilite-aux-aides-de-letat/"][/vc_column][vc_column width="1/4" el_class="col-qualif"][vc_single_image image="586" img_size="full" alignment="center" onclick="custom_link" el_class="qualif" link="/eligibilite-aux-aides-de-letat/"][/vc_column][vc_column width="1/4" el_class="col-qualif"][vc_single_image image="589" img_size="full" alignment="center" onclick="custom_link" el_class="qualif" link="/eligibilite-aux-aides-de-letat/"][/vc_column][vc_column width="1/4" el_class="col-qualif"][vc_single_image image="591" img_size="full" alignment="center" onclick="custom_link" el_class="qualif" link="/eligibilite-aux-aides-de-letat/"][/vc_column][/vc_row][
+
