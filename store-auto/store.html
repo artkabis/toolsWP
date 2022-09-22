@@ -1,5 +1,348 @@
 <style>
+:root {
+    --sombre: #000;
+    --interm: #09ADE8;
+    --clair: #A6BFD8;
+    --pictoEnergie: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/gas.png");
+    --pictoKms: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/tachometer.png");
+    --pictoMec: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/calendar.png");
+    --pictoPuissance: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/bolt.png");
+    --pictoPuissanceReelle: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/fire.png");
+    --pictoCouleur: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/fill.png");
+    --pictoBoite: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/cogs.png");
+    --pictoPortes: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/cars.png");
+    --pictoGarantie: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/award.png");
+    --pictoQualiteAir: url("https://www.garage-peugeot-gayout.fr/wp-content/uploads/sites/1553/2021/09/wind.png");
+   }
+.annonceAuto {
+   width: 90%;
+    margin:auto;
+  box-shadow: 0 0 10px -2px #555;
+    transition:0.5s;
+    margin-bottom:25px;
+  }
+.row1 ul.marqueVersion {
+    padding-bottom:5px;
+    text-transform:uppercase;
+}
+  .row1 ul .marqueModele {
+    list-style: none outside;
+    font-size:25px;
+    font-weight:bold;
+    color: var(--sombre);
+   }
 
+.row1 ul .marqueModele ul li {
+    display: inline;
+  }
+
+.row1 .version {
+    color: var(--clair);
+    text-transform: uppercase;
+    font-size: 20px;
+    list-style: none outside;
+  }
+.row1 ul.enKmMec li {
+    list-style:none outside;
+    display:inline;
+  }
+
+  .row1 .infos {
+      display:flex;
+      flex-direction: column;
+  }
+  
+  .row1:hover {
+        background: #f5f5f5;
+      box-shadow: 1px 1px 8px 1px #d5d5d5;
+      cursor:pointer;
+  }
+  
+  .row1, .head {
+    display:flex;
+    flex-direction:row;
+  }
+
+  .row1 .listeEquip {
+      font-size:12px;
+      line-height:15px;
+      text-transform: none;
+  }
+  
+  .row1 .head {
+    justify-content: space-between;
+  }
+  
+  .row1 .photo {
+    width:30%;
+    padding:0;
+  }
+  
+  .row1 .resume {
+    width:70%;
+    padding:20px;
+    box-sizing:border-box;
+  }
+  .row1 {
+      transition: all 0.5s;
+  }
+  .row1 .photo img {
+    width:100%;
+  }
+
+  .row1 .head .energie, .row1 .head .kms, .row1 .head .annee {
+    font-size:20px;
+    line-height:20px;
+    margin-top:10px;
+    margin-right:20px;
+    color: var(--interm);
+  }
+  
+  .row1 .prix {
+    color:var(--interm);
+    font-size:35px;
+    font-weight:bold;
+    white-space: nowrap;
+  }
+  
+  .row1 .equipement {
+    margin-top:20px;
+  }
+
+  .row1 .ref {
+  margin-top: 15px;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+  
+  .row1 .equipement .title {
+    text-transform:uppercase;
+    font-weight: bold;
+    padding-bottom:5px;
+    display:inline-block;
+  }
+  
+  .pictoEnergie::before {
+    content: var(--pictoEnergie);
+  }
+  
+  .pictoKms::before {
+    content: var(--pictoKms);  
+  }
+  
+  .pictoMec::before {
+    content: var(--pictoMec);
+  }
+  
+  .pictoPuissance::before {
+    content: var(--pictoPuissance);
+  }
+  
+  .pictoPuissanceReelle::before {
+    content: var(--pictoPuissanceReelle);
+  }
+  
+  .pictoCouleur::before {
+    content: var(--pictoCouleur);
+  }
+  
+  .pictoBoite::before {
+    content: var(--pictoBoite);
+  }
+  
+  .pictoPortes::before {
+    content: var(--pictoPortes);
+  }
+  
+  .pictoGarantie::before {
+    content: var(--pictoGarantie);
+  }
+  
+  .pictoQualiteAir::before {
+    content: var(--pictoQualiteAir);
+  }
+  
+  
+  .ic {
+  width:20px!important;
+  height:27px!important;
+    display:inline-block;
+    margin-right:10px;
+    transform: translateY(3px);
+  }
+ .row2 {
+     display:flex;
+     flex-direction:row;
+ }
+
+ .row2 .col2 {
+     padding:20px;
+ }
+ .row2 ul.marqueVersion {
+    padding-bottom:5px;
+    text-transform:uppercase;
+}
+.row2 ul.marqueVersion li {
+    list-style: none outside;
+}
+
+.row2 .ref {
+    font-size:0.8em;
+    opacity:0.7;
+}
+
+  .row2 ul .marqueModele {
+    list-style: none outside;
+    font-size:25px;
+    font-weight:bold;
+    color: var(--sombre);
+   }
+
+   .row2 li.modele {
+       font-size:1.2em;
+       line-height: 20px;
+       opacity:0.8;
+       padding-bottom:15px;
+   }
+.row2 .headCol2 {
+    display:flex;
+    justify-content: space-between;
+}
+.row2 .prix {
+    color:var(--interm);
+    font-size:35px;
+    font-weight:bold;
+    white-space: nowrap;
+  }
+  .row2 .prix .taxe {
+      font-size:20px;
+      font-weight:400;
+      position:relative;
+   }
+
+  .row2 .taxe::after {
+      content:"Hors frais d'immatriculation et de carburant";
+      font-size: 12px;
+      font-weight:400;
+      color:var(--clair);
+      position:absolute;
+      bottom:-14px;
+      right:0;
+      text-align: right;;
+   }
+
+.row2 .version {
+    color: var(--clair);
+    text-transform: uppercase;
+    font-size: 20px;
+    list-style: none outside;
+  }
+  .row2 .col1, .row2 .col2 {
+      width:50%;
+      box-sizing:border-box;
+  }
+  .row2 .photo, .row2 .photo img {
+    width:100%;
+    padding:0;
+  }
+.row2 .equipements {
+    padding:20px;
+    column-count: 2;
+}
+  .row2 .equipements ul {
+    list-style: disc;
+    font-size:13px;
+    padding-left:10px;
+  }
+  .row2 .equipements ul li::marker {
+      color: var(--clair);
+  }
+
+  .row2 .details {
+    margin-top: 25px;
+}
+
+  .row2 .lineDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #ccc;
+    padding: 8px 0 8px 0;
+    font-size:18px;
+}
+
+.row2 .detailsCol1 {
+    font-weight:100;
+}
+
+.row2 .detailsCol2 {
+    color: var(--interm);
+}
+  
+ 
+  .annonceAuto {
+    overflow:hidden;
+  }
+ .row1 {
+  height:0;
+  overflow:hidden;
+}
+
+.row2 .contact {
+  display: flex;
+    justify-content: center;
+    padding: 35px 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact a {
+  text-decoration: none;
+    font-weight: bold;
+}
+.contact a:nth-child(1) {
+  color:grey;
+padding-bottom:5px;
+}
+.contact a:nth-child(2) {
+color:red;
+font-size:2em;
+}
+
+  @media all and (max-width:959px) {
+
+.row2 .equipements {
+display:none;
+}
+  .row1, .row2 {
+    flex-direction:column;
+  }
+  .row1 .photo, .row1 .resume {
+      width: 100%;
+  }
+  .row1 ul.enKmMec li {
+    display: block;
+}
+
+  .row1 .prix {
+    padding-top: 15px;
+}
+  .row1 .head {
+    flex-direction:column;
+  }
+  .row2 .col1, .row2 .col2 {
+    width:100%;
+}
+
+.row2 .headCol2 {
+  flex-direction:column;
+}
+
+.row2 .prix {
+  text-align:right;
+}
+
+  }
 .updated {
     display:none;
 }
