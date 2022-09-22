@@ -1,0 +1,324 @@
+<!-- Menu des différents filtres de l'app -->
+
+<p class="filtreTitre">Recherchez une voiture :</p>
+<div id="filterWrapper">
+
+  <div class="wrapperBornes divPrix">
+    <input type="text" placeholder="Prix minimum" id="PrixMin">
+    <input type="text" placeholder="Prix maximum" id="PrixMax">
+  </div>
+  <div class="wrapperSelect">
+    <select name="selectEnergie" id="selectEnergie">
+      <option value="Essence">Essence</option>
+      <option value="Diesel">Diesel</option>
+      <option value="Hybride">Hybride</option>
+    </select>
+    <select name="selectBoite" id="selectBoite">
+      <option value="Automatique">Automatique</option>
+      <option value="Manuelle">Manuelle</option>
+    </select>
+  </div>
+  <div class="wrapperBranding">
+    <div class="wrapperMarques">
+      <div class="multiSelect">
+        <select> <option>Choisir une marque</option> </select>
+        <div class="checkboxContainer">
+          <span class="valid">Valider</span>
+        </div>
+      </div>
+      <div class="marqueDepot"></div>
+    </div>
+    <div class="wrapperModeles">
+      <div class="multiSelect">
+        <select> <option>Choisir un modèle</option> </select>
+        <div class="checkboxContainer">
+          <span class="valid">Valider</span>
+        </div>
+      </div>
+      <div class="modeleDepot"></div>
+    </div>
+  </div>
+  <div class="wrapperBornes divChevaux">
+    <input type="text" placeholder="Puissance minimum" id="chevauxMin">
+    <input type="text" placeholder="Puissance maximum" id="chevauxMax">
+  </div>
+  <div class="wrapperBornes divKilometrage">
+    <input type="text" placeholder="Kilométrage minimum" id="kilomMin">
+    <input type="text" placeholder="Kilométrage maximum" id="kilomMax">
+  </div>
+  <div class="wrapperBornes divDate">
+    <input type="text" placeholder="Date minimum" id="dateMin">
+    <input type="text" placeholder="Date maximum" id="dateMax">
+  </div>
+</div>
+
+
+<!-- Conteneur des annonces -->
+<div id="panelAnnonces"></div>
+
+
+
+
+/*** Injection des nodes xml principaux dans le DOM ***/
+<script>
+
+/***** APP Auto filtering ***/
+
+  (function($){  
+    $(window).on('load',function(){
+      
+        const criteres = {0:"/wp-content/uploads/sites/1553/2021/10/critair_0.png",1:"/wp-content/uploads/sites/1553/2021/10/critair_1.png",2:"/wp-content/uploads/sites/1553/2021/10/critair_2.png",3:"/wp-content/uploads/sites/1553/2021/10/critair_3.png",4:"/wp-content/uploads/sites/1553/2021/10/critair_4.png",5:"/wp-content/uploads/sites/1553/2021/10/critair_5.png"};
+        const criteresArr = ["/wp-content/uploads/sites/1553/2021/10/critair_0.png","/wp-content/uploads/sites/1553/2021/10/critair_1.png","/wp-content/uploads/sites/1553/2021/10/critair_2.png","/wp-content/uploads/sites/1553/2021/10/critair_3.png","/wp-content/uploads/sites/1553/2021/10/critair_4.png","/wp-content/uploads/sites/1553/2021/10/critair_5.png"];
+        $(document).ready(function () {
+          var images=[],img1,img2,imgString="";
+          $.ajax({
+                  type: 'GET',
+                  url: 'https://gayout-sarl.tec3h.net/uploads/vehicules/vehicules.xml',    // The file path.
+                  dataType: 'xml',
+                  success: function(xml) {
+                      constructDom(xml);
+                  }
+              });
+        
+          function constructDom(xml){
+            console.log(xml);
+              let descArray=[];
+              var cmp=0;
+              $(xml).find('vehicule').each(function() {
+                  cmp++;
+                  var imgString = $(this).find('photo').text();
+        
+                var iEquipement=0;
+                var arrayEquipement = [];
+                $(this).find('equipement').each(function() {
+                  arrayEquipement[iEquipement] = $(this).text();
+                  iEquipement = iEquipement+1;
+                });
+        
+                function listeEquipement(a) {
+                  let listeComplete = "";
+                  for (let i = 0; i < arrayEquipement.length; i++) {
+                    const element = arrayEquipement[i];
+        
+                    if (i != arrayEquipement.length - 1) {
+                      listeComplete = listeComplete + element + ", ";
+                    }
+                    else {
+                      listeComplete = listeComplete + element + ".";
+                    }
+                  }
+                  return listeComplete.substr(0, a);
+                }
+        
+                function listeEquipementPuces() {
+                  let listeComplete = "";
+                  for (let i = 0; i < arrayEquipement.length; i++) {
+                    const element = arrayEquipement[i];
+                    listeComplete = listeComplete + "<li>" + element + "</li>";
+                  }
+                  return listeComplete;
+                }
+                var crit = String($(this).find('vignette_critair').text().substr(0, 1));
+                var critFinal = criteresArr[crit];
+                console.log('image critere : ',critFinal);
+                images = imgString.split('.jpg');
+                $('#panelAnnonces').append(
+                  `<div class="annonceAuto">
+                      <div class="row2">
+                        <div class="col1">
+                          <div class="photo"><img src="${$(this).find('photo').text().split('.jpg')[0]+'.jpg'}"></div>
+                          <div class="equipements">
+                            <ul>
+                              ${listeEquipementPuces()}
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col2"><div class="headCol2">
+                          <div class="infos">
+                            <ul class="marqueVersion">
+                              <li class="marqueModele"><ul><li class="marque">${$(this).find('marque').text()}</li><li class="modele">${$(this).find('modele').text()}</li></ul></li>
+                              <li class="version">${$(this).find('version').text()}</li>
+                            </ul>
+                            <div class="ref">Réf : ${$(this).find('reference').text()}</div>
+                          </div>
+                          <div class="prix">${$(this).find('prix').text()} €<span class="taxe"> TTC</span></div>
+                        </div>
+                        <div class="details">
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoMec"></i>Mise en circulation</div><div class="detailsCol2 valDateMeC">${$(this).find('mise_en_circulation').text()}</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoEnergie"></i>Energie</div><div class="detailsCol2 valNRJ">${$(this).find('energie').text()}</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoKms"></i>Kilométrage</div><div class="detailsCol2 valKilom">${$(this).find('kilometrage').text()} kms</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissance"></i>Puissance</div><div class="detailsCol2 valChevFisc">${$(this).find('puissance_fiscale').text()} cv</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissanceReelle"></i>Puissance réelle</div><div class="detailsCol2 valChev">${$(this).find('puissance_reelle').text()} ch</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoCouleur"></i>Couleur</div><div class="detailsCol2 valColor">${$(this).find('couleur').text()}</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoBoite"></i>Boîte de vitesse</div><div class="detailsCol2 valBV">${$(this).find('boite_de_vitesse').text()}</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPortes"></i>Nombre de portes</div><div class="detailsCol2">${$(this).find('nb_places').text()}</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoGarantie"></i>Garantie</div><div class="detailsCol2">${$(this).find('garantie').text()} mois</div></div>
+                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoQualiteAir"></i>Certificat qualité de l'air</div><div class="detailsCol2">`+'<img src="'+critFinal+'" />'+`</div></div>
+                        </div>
+                        <div class="contact"><a href="tel:+33247538453">Contactez-nous pour en savoir plus</a><a href="tel:+33247538453">02 47 53 84 53</a></div>
+                    </div></div>
+                    </div>`);
+                    });
+                    fillFilters();
+                }
+            
+           
+          function fillFilters(){
+               console.log('checkBoxContainer >>>>> ',$('.wrapperModeles .checkboxContainer').html());
+              $('.marqueModele > ul > .marque').each(function() {
+                let temp = '#' + $(this).text();
+                console.log('temp marque : ',temp,' temp.length',$(temp).length);
+                if ($(temp).length<1){
+                    console.log('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
+                    console.log('container checkbox : ',$('.wrapperMarques .checkboxContainer').length);
+                  $('.wrapperMarques .checkboxContainer').append('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
+                }
+              });
+              $('.marqueModele > ul > .modele').each(function(){
+                  let temp = "#" + $(this).text().split(' ')[0];
+                  console.log('temp model : ',temp,' temp.length',$(temp).length);
+                  if ($(temp).length<1){
+                  $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).text().split(' ')[0] +'" />' + $(this).text().split(' ')[0] +'</label>');
+                  }
+              });
+          }
+       });
+        
+    });
+})(jQuery);
+}
+
+
+
+
+
+/***************************** Gestionnaire des filtres *********************************************/
+
+
+
+
+  var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , kilMin , kilMax , dateMin , dateMax=toString(new Date().getFullYear()), Marques=[], Modeles = [];
+
+          $('.multiSelect > select').click(function(){
+              ($(this).next().hasClass('actif')) && $(this).next().removeClass('actif');
+              (!$(this).next().hasClass('actif')) && $(this).next().addClass('actif');
+          });
+          $('.multiSelect .valid').click(function(){
+            $(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
+          });
+        
+        
+          function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$kilMin,$kilMax,$dateMin,$dateMax){
+            $('.annonceAuto').each(function(i,t){
+              $(this).removeClass('filtred');
+
+              ($PrixMin && $(this).find('.prix').text().replace(/[^\d.-]/g, '') < $PrixMin ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
+              ($PrixMax && $(this).find('.prix').text().replace(/[^\d.-]/g, '') > $PrixMax )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
+              ($Energie && $(this).find('.valNRJ').text() != $Energie) &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
+              ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+              ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && $(this).addClass('filtred'); 
+              ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && $(this).addClass('filtred');
+              ($HPMin && $(this).find('.valChev').text().split(' ')[0] < $HPMin ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+              ($HPMax && $(this).find('.valChev').text().split(' ')[0] > $HPMax ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
+              ($kilMin && $(this).find('.valKilom').text().split(' ')[0] < $kilMin ) &&  ($(this).addClass('filtred'), kilMin=$kilMin);
+              ($kilMax && $(this).find('.valKilom').text().split(' ')[0] > $kilMax ) &&  ($(this).addClass('filtred'), kilMax=$kilMax);
+              ($dateMin && $(this).find('.valDateMeC').text().split('/')[2] < $dateMin ) &&  ($(this).addClass('filtred'), dateMin=$dateMin);
+              ($dateMax && $(this).find('.valDateMeC').text().split('/')[2] > $dateMax ) &&  ($(this).addClass('filtred'), dateMax=$dateMax);
+              
+               /*
+
+              */
+        
+            });
+          }
+          function fillModeles($Marques){
+            $('.wrapperModeles .checkboxContainer').html('');
+            for (i = 0; i < $Marques.length; ++i) {
+              let selec = '.marqueModele > ul > .marque:contains(' + $Marques[i] +')';
+              Marques.push( $Marques[i]);
+              console.log('fillModeles - $Marques : ',$Marques,'   Marque var : ',Marques);
+            }
+              $(selec).each(function() {
+                let temp = '#' + $(this).closest('ul').find('.modele').text().split(' ')[0];
+                if ($(temp).length < 1){
+                  $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'" checked />' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'</label>');
+                }
+              });
+              $('.wrapperModeles input:checkbox:checked').each(function(){
+                Modeles.push($(this).attr('id'));
+                console.log('FillModele  Modeles var Array : ',Modeles);
+              });
+              console.log('all vars : ',PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            
+          }
+        
+            $('#PrixMin').change(function() {
+              PrixMin = $('#PrixMin').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#PrixMax').change(function() {
+              PrixMax = $('#PrixMax').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#selectEnergie').change(function() {
+              Energie = $('#selectEnergie option:selected').text();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#selectBoite').change(function() {
+              Boite = $('#selectBoite option:selected' ).text();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('.wrapperMarques .checkboxContainer').on('click', function(){
+              Marques = [];
+              $('.wrapperMarques input:checkbox:checked').each(function(){
+                Marques.push($(this).attr('id'));
+              });
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+              //fillModeles(Marques);
+            });
+        
+            $('.wrapperModeles .checkboxContainer').on('click', function(){
+              console.log('modeles click');
+              Modeles = [];
+              $('.wrapperModeles input:checkbox:checked').each(function(){
+                Modeles.push($(this).attr('id'));
+                console.log("Models >>>>>>>>>>< ",Modeles);
+              });
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#chevauxMin').change(function() {
+              HPmin = $('#chevauxMin').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#chevauxMax').change(function() {
+              HPmax = $('#chevauxMax').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#kilomMin').change(function() {
+              kilMin = $('#kilomMin').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#kilomMax').change(function() {
+              kilMax = $('#kilomMax').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#dateMin').change(function() {
+              dateMin = $('#dateMin').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+        
+            $('#dateMax').change(function() {
+              dateMax = $('#dateMax').val();
+              filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+            });
+</script>
