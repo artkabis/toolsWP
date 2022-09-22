@@ -510,12 +510,10 @@ span.valid {
 
 
 
-/*** Injection des nodes xml principaux dans le DOM ***/
+
 <script>
-
-/***** APP Auto filtering ***/
-
-  (function($){  
+/*** Injection des nodes xml principaux dans le DOM ***/
+(function($){  
     $(window).on('load',function(){
       
         const criteres = {0:"/wp-content/uploads/sites/1553/2021/10/critair_0.png",1:"/wp-content/uploads/sites/1553/2021/10/critair_1.png",2:"/wp-content/uploads/sites/1553/2021/10/critair_2.png",3:"/wp-content/uploads/sites/1553/2021/10/critair_3.png",4:"/wp-content/uploads/sites/1553/2021/10/critair_4.png",5:"/wp-content/uploads/sites/1553/2021/10/critair_5.png"};
@@ -640,129 +638,146 @@ span.valid {
 
 
 
-
-
     /***************************** Gestionnaire des filtres *********************************************/
 
 
 
-    var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , kilMin , kilMax , dateMin , dateMax=toString(new Date().getFullYear()), Marques=[], Modeles = [];
-    $('.multiSelect > select').click(function(){
-      ($(this).next().hasClass('actif')) && $(this).next().removeClass('actif');
-      (!$(this).next().hasClass('actif')) && $(this).next().addClass('actif');
-    });
-    $('.multiSelect .valid').click(function(){
-    $(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
-    });
+
+var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , kilMin , kilMax , dateMin , dateMax=toString(new Date().getFullYear()), Marques=[], Modeles = [];
+$('.multiSelect > select').click(function(){
+  ($(this).next().hasClass('actif')) && $(this).next().removeClass('actif');
+  (!$(this).next().hasClass('actif')) && $(this).next().addClass('actif');
+});
+$('.multiSelect .valid').click(function(){
+$(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
+});
 
 
-    function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$kilMin,$kilMax,$dateMin,$dateMax){
-    $('.annonceAuto').each(function(i,t){
-      $(this).removeClass('filtred');
+function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$kilMin,$kilMax,$dateMin,$dateMax){
+$('.annonceAuto').each(function(i,t){
+  $(this).removeClass('filtred');
+  console.log('marques :: ',$Marques, "condition rempli si -1 >> ",Marques.indexOf($(this).find('.marque').text()));
+  console.log('modeles :: ',$Modeles);
 
-      ($PrixMin && $(this).find('.prix').text().replace(/[^\d.-]/g, '') < $PrixMin ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
-      ($PrixMax && $(this).find('.prix').text().replace(/[^\d.-]/g, '') > $PrixMax )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
-      ($Energie && $(this).find('.valNRJ').text() != $Energie) &&  ($(this).addClass('filtred'), Energie=$Energie);
-      ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
-      ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && $(this).addClass('filtred'); 
-      ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && $(this).addClass('filtred');
-      ($HPMin && $(this).find('.valChev').text().split(' ')[0] < $HPMin ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
-      ($HPMax && $(this).find('.valChev').text().split(' ')[0] > $HPMax ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
-      ($kilMin && $(this).find('.valKilom').text().split(' ')[0] < $kilMin ) &&  ($(this).addClass('filtred'), kilMin=$kilMin);
-      ($kilMax && $(this).find('.valKilom').text().split(' ')[0] > $kilMax ) &&  ($(this).addClass('filtred'), kilMax=$kilMax);
-      ($dateMin && $(this).find('.valDateMeC').text().split('/')[2] < $dateMin ) &&  ($(this).addClass('filtred'), dateMin=$dateMin);
-      ($dateMax && $(this).find('.valDateMeC').text().split('/')[2] > $dateMax ) &&  ($(this).addClass('filtred'), dateMax=$dateMax);
-    });
+  ($PrixMin && $(this).find('.prix').text().replace(/[^\d.-]/g, '') < $PrixMin ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
+  ($PrixMax && $(this).find('.prix').text().replace(/[^\d.-]/g, '') > $PrixMax )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
+  ($Energie && $(this).find('.valNRJ').text() != $Energie) &&  ($(this).addClass('filtred'), Energie=$Energie);
+  ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+  ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && ($(this).addClass('filtred'), Marques = $Marques); 
+  ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && ($(this).addClass('filtred'), Modeles =$Modeles);
+  ($HPMin && $(this).find('.valChev').text().split(' ')[0] < $HPMin ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+  ($HPMax && $(this).find('.valChev').text().split(' ')[0] > $HPMax ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
+  ($kilMin && $(this).find('.valKilom').text().split(' ')[0] < $kilMin ) &&  ($(this).addClass('filtred'), kilMin=$kilMin);
+  ($kilMax && $(this).find('.valKilom').text().split(' ')[0] > $kilMax ) &&  ($(this).addClass('filtred'), kilMax=$kilMax);
+  ($dateMin && $(this).find('.valDateMeC').text().split('/')[2] < $dateMin ) &&  ($(this).addClass('filtred'), dateMin=$dateMin);
+  ($dateMax && $(this).find('.valDateMeC').text().split('/')[2] > $dateMax ) &&  ($(this).addClass('filtred'), dateMax=$dateMax);
+});
+}
+function fillModeles($Marques){
+$('.wrapperModeles .checkboxContainer').html('');
+for (i = 0; i < $Marques.length; ++i) {
+  let selec = '.marqueModele > ul > .marque:contains(' + $Marques[i] +')';
+  Marques.push( $Marques[i]);
+  console.log('--------------------fillModeles - $Marques : ',$Marques,'   Marque var : ',Marques);
+}
+  $(selec).each(function() {
+    let temp = '#' + $(this).closest('ul').find('.modele').text().split(' ')[0];
+    if ($(temp).length < 1){
+      $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'" checked />' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'</label>');
     }
-    function fillModeles($Marques){
-    $('.wrapperModeles .checkboxContainer').html('');
-    for (i = 0; i < $Marques.length; ++i) {
-      let selec = '.marqueModele > ul > .marque:contains(' + $Marques[i] +')';
-      Marques.push( $Marques[i]);
-      console.log('fillModeles - $Marques : ',$Marques,'   Marque var : ',Marques);
-    }
-      $(selec).each(function() {
-        let temp = '#' + $(this).closest('ul').find('.modele').text().split(' ')[0];
-        if ($(temp).length < 1){
-          $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'" checked />' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'</label>');
-        }
-      });
-      $('.wrapperModeles input:checkbox:checked').each(function(){
-        Modeles.push($(this).attr('id'));
-        console.log('FillModele  Modeles var Array : ',Modeles);
-      });
-      console.log('all vars : ',PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+  });
+  $('.wrapperModeles input:checkbox:checked').each(function(){
+    Modeles.push($(this).attr('id'));
+    //console.log('FillModele  Modeles var Array : ',Modeles);
+  });
+  //console.log('all vars : ',PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
 
-    }
+}
 
-    $('#PrixMin').change(function() {
-      PrixMin = $('#PrixMin').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+function initStart(){
+$('.wrapperMarques .checkboxContainer input').each(function(i,t){
+    console.log("add marques to array >> ",$(this).attr('id'));
+    Marques.push($(this).attr('id'));
+  });
+  $('.wrapperModeles .checkboxContainer input').each(function(i,t){
+    console.log("add marques to array >> ",$(this).attr('id'));
+    Modeles.push($(this).attr('id'));
+  });
+}
+//Ajout de toutes les marques et modéles à l'init :
+setTimeout(()=>{
+    console.log(" input  des marques >>>>>>>>>>>>>>>>>><< ",$('.wrapperMarques .checkboxContainer input'));
+    initStart();
+},1500);
 
-    $('#PrixMax').change(function() {
-      PrixMax = $('#PrixMax').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#PrixMin').change(function() {
+  PrixMin = $('#PrixMin').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#selectEnergie').change(function() {
-      Energie = $('#selectEnergie option:selected').text();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#PrixMax').change(function() {
+  PrixMax = $('#PrixMax').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#selectBoite').change(function() {
-      Boite = $('#selectBoite option:selected' ).text();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#selectEnergie').change(function() {
+  Energie = $('#selectEnergie option:selected').text();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('.wrapperMarques .checkboxContainer').on('click', function(){
-      Marques = [];
-      $('.wrapperMarques input:checkbox:checked').each(function(){
-        Marques.push($(this).attr('id'));
-      });
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-      //fillModeles(Marques);
-    });
+$('#selectBoite').change(function() {
+  Boite = $('#selectBoite option:selected' ).text();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('.wrapperModeles .checkboxContainer').on('click', function(){
-      console.log('modeles click');
-      Modeles = [];
-      $('.wrapperModeles input:checkbox:checked').each(function(){
-        Modeles.push($(this).attr('id'));
-        console.log("Models >>>>>>>>>>< ",Modeles);
-      });
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('.wrapperMarques .checkboxContainer').on('click', function(){
+  Marques = [];
+  $('.wrapperMarques input:checkbox:checked').each(function(){
+    Marques.push($(this).attr('id'));
+  });
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+  //fillModeles(Marques);
+});
 
-    $('#chevauxMin').change(function() {
-      HPmin = $('#chevauxMin').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('.wrapperModeles .checkboxContainer').on('click', function(){
+  //console.log('modeles click');
+  Modeles = [];
+  $('.wrapperModeles input:checkbox:checked').each(function(){
+    Modeles.push($(this).attr('id'));
+   // console.log("Models >>>>>>>>>>< ",Modeles);
+  });
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#chevauxMax').change(function() {
-      HPmax = $('#chevauxMax').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#chevauxMin').change(function() {
+  HPmin = $('#chevauxMin').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#kilomMin').change(function() {
-      kilMin = $('#kilomMin').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#chevauxMax').change(function() {
+  HPmax = $('#chevauxMax').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#kilomMax').change(function() {
-      kilMax = $('#kilomMax').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#kilomMin').change(function() {
+  kilMin = $('#kilomMin').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#dateMin').change(function() {
-      dateMin = $('#dateMin').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#kilomMax').change(function() {
+  kilMax = $('#kilomMax').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 
-    $('#dateMax').change(function() {
-      dateMax = $('#dateMax').val();
-      filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-    });
+$('#dateMin').change(function() {
+  dateMin = $('#dateMin').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
+
+$('#dateMax').change(function() {
+  dateMax = $('#dateMax').val();
+  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+});
 })(jQuery)
 </script>
