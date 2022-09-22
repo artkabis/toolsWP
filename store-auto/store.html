@@ -1,3 +1,111 @@
+<style>
+
+.updated {
+    display:none;
+}
+
+.row3 {
+    display:flex;
+    justify-content: flex-end !important;
+}
+
+select {
+    margin:auto;
+}
+
+/*
+html .woocommerce-content > div, html .woocommerce-content > p, html .woocommerce-content > form {
+    display: none!important;
+}
+widget-area.clearfix {
+    min-height: inherit!important;
+}
+.with_aside .sidebar.columns {
+    position: absolute;
+    width: 23%;
+    top: 23%;
+    right: 0;
+}
+*/
+
+.annonceAuto ul li ul {
+    margin-top:0;
+}
+
+.annonceAuto ul li {
+    margin-bottom:0;
+}
+
+.annonceAuto ul {
+    margin:0;
+}
+
+.marqueModele ul li {
+    padding-bottom:10px;
+}
+
+/*  ==============================  */
+
+.filtresWrapperContainer{
+    background-color: #2d4366;
+    padding:40px;
+}
+.filtreTitre{
+    font-family: "Open Sans", Arial, Tahoma, sans-serif;
+    font-size: 21px;
+    line-height: 25px;
+    font-weight: 700;
+    color:#fff;
+    margin-bottom:22px;
+}
+#filterWrapper{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:0;
+}
+#filterWrapper > div, #filterWrapper > select {
+    display: inline-block;
+    width: 15%;
+}
+#filterWrapper select{
+    margin-bottom:20px;
+}
+.multiSelect {
+    position: relative;
+}
+.checkboxContainer:not(.actif){
+    display: none;
+}
+.checkboxContainer.actif {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #e8edeb;
+    padding: 6px;
+    font-size: 14px;
+    position: absolute;
+    top: 41px;
+    z-index:100;
+}
+.multiSelect select > option{
+    display:none !important;
+    box-shadow:none !important;
+}
+span.valid {
+    float: right;
+    margin-right: 6px;
+    cursor: pointer;
+}
+.annonceAuto{
+    display:block;
+    transition:display 400ms ease;
+}
+.annonceAuto.filtred{
+    display:none;
+}
+
+</style>
+
 <!-- Menu des différents filtres de l'app -->
 
 <p class="filtreTitre">Recherchez une voiture :</p>
