@@ -637,11 +637,6 @@ span.valid {
 
 
 
-
-    /***************************** Gestionnaire des filtres *********************************************/
-
-
-
 /******************************* Gestionnaire de filtrage du store auto ***************************************/
 var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , KilMin , KilMax , DateMin , DateMax, Marques=[], Modeles = [];
 $('.multiSelect > select').click(function(){
@@ -651,24 +646,26 @@ $('.multiSelect .valid').click(function(){
     $(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
 });
 
-
+function onlyNum($num){
+    return Number($num.replace(/\D/g, ''));
+}
 function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$KilMin,$KilMax,$DateMin,$DateMax){
     //loop sur l'ensemble des annonces
     $('.annonceAuto').each(function(i,t){
       $(this).removeClass('filtred');//reset des éléments filtrés
       //Gestion du filtrage et de l'attribution des variables globales
-      ($PrixMin && Number($(this).find('.prix').text().split(' €')[0]) <= Number($PrixMin) ) && ($(this).addClass('filtred'), PrixMin=$PrixMin,console.log('prix min dom : ',$(this).find('.prix').text().split(' €')[0]));
-      ($PrixMax && Number($(this).find('.prix').text().split(' €')[0]) >= Number($PrixMax) )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax,console.log('prix max dom : ',$(this).find('.prix').text().split(' €')[0]));
-      ($Energie && Number($(this).find('.valNRJ img').attr('src').split('_')[1].split('.')[0]) != Number($Energie)) &&  ($(this).addClass('filtred'), Energie=$Energie,console.log('Energie dom : ',Number($(this).find('.valNRJ img').attr('src').split('_')[1].split('.')[0])));
-      ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+      ($PrixMin && onlyNum($(this).find('.prix').text()) <= Number($PrixMin) ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
+      ($PrixMax && onlyNum($(this).find('.prix').text()) >= Number($PrixMax) )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
+      ($Energie && Number($(this).find('.valNRJ img').attr('src').split('_')[1].split('.')[0]) != Number($Energie)) &&  ($(this).addClass('filtred'), Energie=$Energie);
+      ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), Boite=$Boite);
       ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && ($(this).addClass('filtred'), Marques = $Marques); 
       ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && ($(this).addClass('filtred'), Modeles =$Modeles);
-      ($HPMin && Number($(this).find('.valChev').text().split(' cv')[0]) <= Number($HPMin) ) &&  ($(this).addClass('filtred'), HPMin=$HPMin,console.log($(this).find('.valChev').text().split(' cv')[0]));
-      ($HPMax && Number($(this).find('.valChev').text().split(' cv')[0]) >= Number($HPMax) ) &&  ($(this).addClass('filtred'), HPMax=$HPMax,console.log($(this).find('.valChev').text().split(' cv')[0]));
+      ($HPMin && Number($(this).find('.valChev').text().split(' ')[0]) <= Number($HPMin) ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+      ($HPMax && Number($(this).find('.valChev').text().split(' ')[0]) >= Number($HPMax) ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
       ($KilMin &&  Number($(this).find('.valKilom').text().split(' ')[0]) <=  Number($KilMin) ) &&  ($(this).addClass('filtred'), KilMin=$KilMin);
       ($KilMax &&  Number($(this).find('.valKilom').text().split(' ')[0]) >=  Number($KilMax) ) &&  ($(this).addClass('filtred'), KilMax=$KilMax);
       ($DateMin &&  Number($(this).find('.valDateMeC').text().split('/')[2]) <=  Number($DateMin) ) &&  ($(this).addClass('filtred'), DateMin=$DateMin);
-      ($DateMax &&  Number($(this).find('.valDateMeC').text().split('/')[2]) >=  Number($DateMax) ) &&  ($(this).addClass('filtred'), DateMax=$DateMax,console.log('date max dom : ',Number($(this).find('.valDateMeC').text().split('/')[2]),'   date max data : ',$DateMax));
+      ($DateMax &&  Number($(this).find('.valDateMeC').text().split('/')[2]) >=  Number($DateMax) ) &&  ($(this).addClass('filtred'), DateMax=$DateMax);
     });
 }
 function fillModeles($Marques){
@@ -688,12 +685,12 @@ function fillModeles($Marques){
 }
 //Init permettant de prendre en compte l'ensemble des modéles et marques dès la première recherche (sans paramètre depuis les filtres)
 function initStart(){
-$('.wrapperMarques .checkboxContainer input').each(function(i,t){
-    Marques.push($(this).attr('id'));
-  });
-  $('.wrapperModeles .checkboxContainer input').each(function(i,t){
-    Modeles.push($(this).attr('id'));
-  });
+    $('.wrapperMarques .checkboxContainer input').each(function(i,t){
+        Marques.push($(this).attr('id'));
+    });
+    $('.wrapperModeles .checkboxContainer input').each(function(i,t){
+        Modeles.push($(this).attr('id'));
+    });
 }
 //Ajout de toutes les marques et modéles à l'init : le setTimeout permet d'attendre que les dats soient implémentées
 setTimeout(()=>{
@@ -717,11 +714,10 @@ $('.wrapperMarques .checkboxContainer').on('click', function(){
 
 $('#PrixMin, #PrixMax, #selectEnergie, #selectBoite, #chevauxMin, #chevauxMax, #kilomMin, #kilomMax, #dateMin, #dateMax').on('input',function() {
     const id = $(this).attr('id');
-    console.log("id : ",id);
     (id==="PrixMin") && (PrixMin = $(this).val(),console.log('input PrixMin >> ',PrixMin));
     (id==="PrixMax") && (PrixMax = $(this).val(),console.log('input PrixMax >> ',PrixMax));
-    (id==="selectEnergie") && (Energie =  $(this).find(' option:selected').text(),console.log('input Energie >> ',Energie));
-    (id==="selectBoite") && (Boite =  $(this).find(' option:selected').text(),console.log('input Boite >> ',Boite));
+    (id==="selectEnergie") && (Energie =  $(this).find(' option:selected').text());
+    (id==="selectBoite") && (Boite =  $(this).find(' option:selected').text());
     (id==="chevauxMin") && (HPmin = $(this).val(),console.log('input chevauxMax : ',HPmin));
     (id==="chevauxMax") && (HPmax = $(this).val(),console.log('input chevauxMax : ',HPmax));
     (id==="kilomMin") && (KilMin = $(this).val(),console.log('input kilomMin : ',KilomMin));
