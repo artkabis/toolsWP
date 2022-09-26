@@ -592,7 +592,7 @@ span.valid {
                               <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoBoite"></i>Boîte de vitesse</div><div class="detailsCol2 valBV">${$(this).find('boite_de_vitesse').text()}</div></div>
                               <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPortes"></i>Nombre de portes</div><div class="detailsCol2">${$(this).find('nb_places').text()}</div></div>
                               <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoGarantie"></i>Garantie</div><div class="detailsCol2">${$(this).find('garantie').text()} mois</div></div>
-                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoQualiteAir"></i>Certificat qualité de l'air</div><div class="detailsCol2">`+'<img src="'+critFinal+'" />'+`</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoQualiteAir"></i>Certificat qualité de l'air</div><div class="detailsCol2">`+'<img data-id="'+cmp+'" src="'+critFinal+'" />'+`</div></div>
                             </div>
                             <div class="contact"><a href="tel:+33247538453">Contactez-nous pour en savoir plus</a><a href="tel:+33247538453">02 47 53 84 53</a></div>
                         </div></div>
@@ -624,6 +624,7 @@ span.valid {
            });
 
         });
+
 
 
 
@@ -694,7 +695,7 @@ span.valid {
           $('.wrapperModeles input:checkbox:checked').each(function(){
             Modeles.push($(this).attr('id'));
           });
-          filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+          filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
         });
         $('.wrapperMarques .checkboxContainer').on('click', function(){
           Marques = [];
@@ -712,7 +713,7 @@ span.valid {
             (id==="selectBoite") && (Boite =  $(this).find(' option:selected').text());
             (id==="chevauxMin") && (HPmin = $(this).val(),console.log('input chevauxMax : ',HPmin));
             (id==="chevauxMax") && (HPmax = $(this).val(),console.log('input chevauxMax : ',HPmax));
-            (id==="kilomMin") && (KilMin = $(this).val(),console.log('input kilomMin : ',KilomMin));
+            (id==="kilomMin") && (KilMin = $(this).val(),console.log('input kilomMin : ',KilMin));
             (id==="kilomMax") && (KilMax = $(this).val(),console.log('input kilMax : ',KilMax));
             (id==="dateMin") && (DateMin = $(this).val(),console.log('input DateMin : ',DateMin));
             (id==="dateMax") && (DateMax = $(this).val(),console.log('input DateMax : ',DateMax));
