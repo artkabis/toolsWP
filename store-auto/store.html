@@ -1,3 +1,8 @@
+<!--
+-
+- Application finalisée visible à cette adresse : https://garage-gayout.site-privilege.pagesjaunes.fr/vehicules-occasions/
+-
+-->
 <style>
 :root {
     --sombre: #000;
@@ -356,21 +361,6 @@ select {
     margin:auto;
 }
 
-/*
-html .woocommerce-content > div, html .woocommerce-content > p, html .woocommerce-content > form {
-    display: none!important;
-}
-widget-area.clearfix {
-    min-height: inherit!important;
-}
-.with_aside .sidebar.columns {
-    position: absolute;
-    width: 23%;
-    top: 23%;
-    right: 0;
-}
-*/
-
 .annonceAuto ul li ul {
     margin-top:0;
 }
@@ -512,220 +502,222 @@ span.valid {
 
 
 <script>
-/*** Injection des nodes xml principaux dans le DOM ***/
-(function($){  
-    $(window).on('load',function(){
-      
-        const criteres = {0:"/wp-content/uploads/sites/1553/2021/10/critair_0.png",1:"/wp-content/uploads/sites/1553/2021/10/critair_1.png",2:"/wp-content/uploads/sites/1553/2021/10/critair_2.png",3:"/wp-content/uploads/sites/1553/2021/10/critair_3.png",4:"/wp-content/uploads/sites/1553/2021/10/critair_4.png",5:"/wp-content/uploads/sites/1553/2021/10/critair_5.png"};
-        const criteresArr = ["/wp-content/uploads/sites/1553/2021/10/critair_0.png","/wp-content/uploads/sites/1553/2021/10/critair_1.png","/wp-content/uploads/sites/1553/2021/10/critair_2.png","/wp-content/uploads/sites/1553/2021/10/critair_3.png","/wp-content/uploads/sites/1553/2021/10/critair_4.png","/wp-content/uploads/sites/1553/2021/10/critair_5.png"];
-        $(document).ready(function () {
-          var images=[],img1,img2,imgString="";
-          $.ajax({
-                  type: 'GET',
-                  url: 'https://gayout-sarl.tec3h.net/uploads/vehicules/vehicules.xml',    // The file path.
-                  dataType: 'xml',
-                  success: function(xml) {
-                      constructDom(xml);
-                  }
-              });
-        
-          function constructDom(xml){
-            console.log(xml);
-              let descArray=[];
-              var cmp=0;
-              $(xml).find('vehicule').each(function() {
-                  cmp++;
-                  var imgString = $(this).find('photo').text();
-        
-                var iEquipement=0;
-                var arrayEquipement = [];
-                $(this).find('equipement').each(function() {
-                  arrayEquipement[iEquipement] = $(this).text();
-                  iEquipement = iEquipement+1;
-                });
-        
-                function listeEquipement(a) {
-                  let listeComplete = "";
-                  for (let i = 0; i < arrayEquipement.length; i++) {
-                    const element = arrayEquipement[i];
-        
-                    if (i != arrayEquipement.length - 1) {
-                      listeComplete = listeComplete + element + ", ";
-                    }
-                    else {
-                      listeComplete = listeComplete + element + ".";
-                    }
-                  }
-                  return listeComplete.substr(0, a);
-                }
-        
-                function listeEquipementPuces() {
-                  let listeComplete = "";
-                  for (let i = 0; i < arrayEquipement.length; i++) {
-                    const element = arrayEquipement[i];
-                    listeComplete = listeComplete + "<li>" + element + "</li>";
-                  }
-                  return listeComplete;
-                }
-                var crit = String($(this).find('vignette_critair').text().substr(0, 1));
-                var critFinal = criteresArr[crit];
-                console.log('image critere : ',critFinal);
-                images = imgString.split('.jpg');
-                $('#panelAnnonces').append(
-                  `<div class="annonceAuto">
-                      <div class="row2">
-                        <div class="col1">
-                          <div class="photo"><img src="${$(this).find('photo').text().split('.jpg')[0]+'.jpg'}"></div>
-                          <div class="equipements">
-                            <ul>
-                              ${listeEquipementPuces()}
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="col2"><div class="headCol2">
-                          <div class="infos">
-                            <ul class="marqueVersion">
-                              <li class="marqueModele"><ul><li class="marque">${$(this).find('marque').text()}</li><li class="modele">${$(this).find('modele').text()}</li></ul></li>
-                              <li class="version">${$(this).find('version').text()}</li>
-                            </ul>
-                            <div class="ref">Réf : ${$(this).find('reference').text()}</div>
-                          </div>
-                          <div class="prix">${$(this).find('prix').text()} €<span class="taxe"> TTC</span></div>
-                        </div>
-                        <div class="details">
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoMec"></i>Mise en circulation</div><div class="detailsCol2 valDateMeC">${$(this).find('mise_en_circulation').text()}</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoEnergie"></i>Energie</div><div class="detailsCol2 valNRJ">${$(this).find('energie').text()}</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoKms"></i>Kilométrage</div><div class="detailsCol2 valKilom">${$(this).find('kilometrage').text()} kms</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissance"></i>Puissance</div><div class="detailsCol2 valChevFisc">${$(this).find('puissance_fiscale').text()} cv</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissanceReelle"></i>Puissance réelle</div><div class="detailsCol2 valChev">${$(this).find('puissance_reelle').text()} ch</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoCouleur"></i>Couleur</div><div class="detailsCol2 valColor">${$(this).find('couleur').text()}</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoBoite"></i>Boîte de vitesse</div><div class="detailsCol2 valBV">${$(this).find('boite_de_vitesse').text()}</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPortes"></i>Nombre de portes</div><div class="detailsCol2">${$(this).find('nb_places').text()}</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoGarantie"></i>Garantie</div><div class="detailsCol2">${$(this).find('garantie').text()} mois</div></div>
-                          <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoQualiteAir"></i>Certificat qualité de l'air</div><div class="detailsCol2">`+'<img src="'+critFinal+'" />'+`</div></div>
-                        </div>
-                        <div class="contact"><a href="tel:+33247538453">Contactez-nous pour en savoir plus</a><a href="tel:+33247538453">02 47 53 84 53</a></div>
-                    </div></div>
-                    </div>`);
+    /*** Injection des nodes xml principaux dans le DOM ***/
+    (function($){  
+        $(window).on('load',function(){
+
+            const criteres = {0:"/wp-content/uploads/sites/1553/2021/10/critair_0.png",1:"/wp-content/uploads/sites/1553/2021/10/critair_1.png",2:"/wp-content/uploads/sites/1553/2021/10/critair_2.png",3:"/wp-content/uploads/sites/1553/2021/10/critair_3.png",4:"/wp-content/uploads/sites/1553/2021/10/critair_4.png",5:"/wp-content/uploads/sites/1553/2021/10/critair_5.png"};
+            const criteresArr = ["/wp-content/uploads/sites/1553/2021/10/critair_0.png","/wp-content/uploads/sites/1553/2021/10/critair_1.png","/wp-content/uploads/sites/1553/2021/10/critair_2.png","/wp-content/uploads/sites/1553/2021/10/critair_3.png","/wp-content/uploads/sites/1553/2021/10/critair_4.png","/wp-content/uploads/sites/1553/2021/10/critair_5.png"];
+            $(document).ready(function () {
+              var images=[],img1,img2,imgString="";
+              $.ajax({
+                      type: 'GET',
+                      url: 'https://gayout-sarl.tec3h.net/uploads/vehicules/vehicules.xml',    // The file path.
+                      dataType: 'xml',
+                      success: function(xml) {
+                          constructDom(xml);
+                      }
+                  });
+
+              function constructDom(xml){
+                console.log(xml);
+                  let descArray=[];
+                  var cmp=0;
+                  $(xml).find('vehicule').each(function() {
+                      cmp++;
+                      var imgString = $(this).find('photo').text();
+
+                    var iEquipement=0;
+                    var arrayEquipement = [];
+                    $(this).find('equipement').each(function() {
+                      arrayEquipement[iEquipement] = $(this).text();
+                      iEquipement = iEquipement+1;
                     });
-                    fillFilters();
-                }
-            
-           
-          function fillFilters(){
-               console.log('checkBoxContainer >>>>> ',$('.wrapperModeles .checkboxContainer').html());
-              $('.marqueModele > ul > .marque').each(function() {
-                let temp = '#' + $(this).text();
-                console.log('temp marque : ',temp,' temp.length',$(temp).length);
-                if ($(temp).length<1){
-                    console.log('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
-                    console.log('container checkbox : ',$('.wrapperMarques .checkboxContainer').length);
-                  $('.wrapperMarques .checkboxContainer').append('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
-                }
-              });
-              $('.marqueModele > ul > .modele').each(function(){
-                  let temp = "#" + $(this).text().split(' ')[0];
-                  console.log('temp model : ',temp,' temp.length',$(temp).length);
-                  if ($(temp).length<1){
-                  $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).text().split(' ')[0] +'" />' + $(this).text().split(' ')[0] +'</label>');
-                  }
-              });
-          }
-       });
-        
-    });
+
+                    function listeEquipement(a) {
+                      let listeComplete = "";
+                      for (let i = 0; i < arrayEquipement.length; i++) {
+                        const element = arrayEquipement[i];
+
+                        if (i != arrayEquipement.length - 1) {
+                          listeComplete = listeComplete + element + ", ";
+                        }
+                        else {
+                          listeComplete = listeComplete + element + ".";
+                        }
+                      }
+                      return listeComplete.substr(0, a);
+                    }
+
+                    function listeEquipementPuces() {
+                      let listeComplete = "";
+                      for (let i = 0; i < arrayEquipement.length; i++) {
+                        const element = arrayEquipement[i];
+                        listeComplete = listeComplete + "<li>" + element + "</li>";
+                      }
+                      return listeComplete;
+                    }
+                    var crit = String($(this).find('vignette_critair').text().substr(0, 1));
+                    var critFinal = criteresArr[crit];
+                    console.log('image critere : ',critFinal);
+                    images = imgString.split('.jpg');
+                    $('#panelAnnonces').append(
+                      `<div class="annonceAuto">
+                          <div class="row2">
+                            <div class="col1">
+                              <div class="photo"><img src="${$(this).find('photo').text().split('.jpg')[0]+'.jpg'}"></div>
+                              <div class="equipements">
+                                <ul>
+                                  ${listeEquipementPuces()}
+                                </ul>
+                              </div>
+                            </div>
+                            <div class="col2"><div class="headCol2">
+                              <div class="infos">
+                                <ul class="marqueVersion">
+                                  <li class="marqueModele"><ul><li class="marque">${$(this).find('marque').text()}</li><li class="modele">${$(this).find('modele').text()}</li></ul></li>
+                                  <li class="version">${$(this).find('version').text()}</li>
+                                </ul>
+                                <div class="ref">Réf : ${$(this).find('reference').text()}</div>
+                              </div>
+                              <div class="prix">${$(this).find('prix').text()} €<span class="taxe"> TTC</span></div>
+                            </div>
+                            <div class="details">
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoMec"></i>Mise en circulation</div><div class="detailsCol2 valDateMeC">${$(this).find('mise_en_circulation').text()}</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoEnergie"></i>Energie</div><div class="detailsCol2 valNRJ">${$(this).find('energie').text()}</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoKms"></i>Kilométrage</div><div class="detailsCol2 valKilom">${$(this).find('kilometrage').text()} kms</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissance"></i>Puissance</div><div class="detailsCol2 valChevFisc">${$(this).find('puissance_fiscale').text()} cv</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPuissanceReelle"></i>Puissance réelle</div><div class="detailsCol2 valChev">${$(this).find('puissance_reelle').text()} ch</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoCouleur"></i>Couleur</div><div class="detailsCol2 valColor">${$(this).find('couleur').text()}</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoBoite"></i>Boîte de vitesse</div><div class="detailsCol2 valBV">${$(this).find('boite_de_vitesse').text()}</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoPortes"></i>Nombre de portes</div><div class="detailsCol2">${$(this).find('nb_places').text()}</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoGarantie"></i>Garantie</div><div class="detailsCol2">${$(this).find('garantie').text()} mois</div></div>
+                              <div class="lineDetails"><div class="detailsCol1"><i class="ic pictoQualiteAir"></i>Certificat qualité de l'air</div><div class="detailsCol2">`+'<img src="'+critFinal+'" />'+`</div></div>
+                            </div>
+                            <div class="contact"><a href="tel:+33247538453">Contactez-nous pour en savoir plus</a><a href="tel:+33247538453">02 47 53 84 53</a></div>
+                        </div></div>
+                        </div>`);
+                        });
+                        fillFilters();
+                    }
+
+
+              function fillFilters(){
+                   console.log('checkBoxContainer >>>>> ',$('.wrapperModeles .checkboxContainer').html());
+                  $('.marqueModele > ul > .marque').each(function() {
+                    let temp = '#' + $(this).text();
+                    console.log('temp marque : ',temp,' temp.length',$(temp).length);
+                    if ($(temp).length<1){
+                        console.log('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
+                        console.log('container checkbox : ',$('.wrapperMarques .checkboxContainer').length);
+                      $('.wrapperMarques .checkboxContainer').append('<label for="' + $(this).text() +'"> <input type="checkbox" id="' + $(this).text() +'" />' + $(this).text() +'</label>');
+                    }
+                  });
+                  $('.marqueModele > ul > .modele').each(function(){
+                      let temp = "#" + $(this).text().split(' ')[0];
+                      console.log('temp model : ',temp,' temp.length',$(temp).length);
+                      if ($(temp).length<1){
+                      $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).text().split(' ')[0] +'" />' + $(this).text().split(' ')[0] +'</label>');
+                      }
+                  });
+              }
+           });
+
+        });
 
 
 
-/******************************* Gestionnaire de filtrage du store auto ***************************************/
-var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , KilMin , KilMax , DateMin , DateMax, Marques=[], Modeles = [];
-$('.multiSelect > select').click(function(){
-    $(this).next().toggleClass('actif');
-});
-$('.multiSelect .valid').click(function(){
-    $(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
-});
 
-function onlyNum($num){
-    return Number($num.replace(/\D/g, ''));
-}
-function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$KilMin,$KilMax,$DateMin,$DateMax){
-    //loop sur l'ensemble des annonces
-    $('.annonceAuto').each(function(i,t){
-      $(this).removeClass('filtred');//reset des éléments filtrés
-      //Gestion du filtrage et de l'attribution des variables globales
-      ($PrixMin && onlyNum($(this).find('.prix').text()) <= Number($PrixMin) ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
-      ($PrixMax && onlyNum($(this).find('.prix').text()) >= Number($PrixMax) )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
-      ($Energie && Number($(this).find('.valNRJ img').attr('src').split('_')[1].split('.')[0]) != Number($Energie)) &&  ($(this).addClass('filtred'), Energie=$Energie);
-      ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), Boite=$Boite);
-      ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && ($(this).addClass('filtred'), Marques = $Marques); 
-      ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && ($(this).addClass('filtred'), Modeles =$Modeles);
-      ($HPMin && Number($(this).find('.valChev').text().split(' ')[0]) <= Number($HPMin) ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
-      ($HPMax && Number($(this).find('.valChev').text().split(' ')[0]) >= Number($HPMax) ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
-      ($KilMin &&  Number($(this).find('.valKilom').text().split(' ')[0]) <=  Number($KilMin) ) &&  ($(this).addClass('filtred'), KilMin=$KilMin);
-      ($KilMax &&  Number($(this).find('.valKilom').text().split(' ')[0]) >=  Number($KilMax) ) &&  ($(this).addClass('filtred'), KilMax=$KilMax);
-      ($DateMin &&  Number($(this).find('.valDateMeC').text().split('/')[2]) <=  Number($DateMin) ) &&  ($(this).addClass('filtred'), DateMin=$DateMin);
-      ($DateMax &&  Number($(this).find('.valDateMeC').text().split('/')[2]) >=  Number($DateMax) ) &&  ($(this).addClass('filtred'), DateMax=$DateMax);
-    });
-}
-function fillModeles($Marques){
-    $('.wrapperModeles .checkboxContainer').html('');
-    for (i = 0; i < $Marques.length; ++i) {
-      let selec = '.marqueModele > ul > .marque:contains(' + $Marques[i] +')';//Select comportant les marques passées en arguments
-      Marques.push( $Marques[i]);
-    }
-    $(selec).each(function() {
-        let temp = '#' + $(this).closest('ul').find('.modele').text().split(' ')[0];
-        ($(temp).length < 1) && $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'" checked />' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'</label>');
-    });
-    $('.wrapperModeles input:checkbox:checked').each(function(){
-     Modeles.push($(this).attr('id'));
-    });
-    filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
-}
-//Init permettant de prendre en compte l'ensemble des modéles et marques dès la première recherche (sans paramètre depuis les filtres)
-function initStart(){
-    $('.wrapperMarques .checkboxContainer input').each(function(i,t){
-        Marques.push($(this).attr('id'));
-    });
-    $('.wrapperModeles .checkboxContainer input').each(function(i,t){
-        Modeles.push($(this).attr('id'));
-    });
-}
-//Ajout de toutes les marques et modéles à l'init : le setTimeout permet d'attendre que les dats soient implémentées
-setTimeout(()=>{
-    initStart();
-},1500);
 
-$('.wrapperModeles .checkboxContainer').on('click', function(){
-  Modeles = [];
-  $('.wrapperModeles input:checkbox:checked').each(function(){
-    Modeles.push($(this).attr('id'));
-  });
-  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
-});
-$('.wrapperMarques .checkboxContainer').on('click', function(){
-  Marques = [];
-  $('.wrapperMarques input:checkbox:checked').each(function(){
-    Marques.push($(this).attr('id'));
-  });
-  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KkilMin,KilMax,DateMin,DateMax);
-});
+        /******************************* Gestionnaire de filtrage du store auto ***************************************/
+        var PrixMin  ,PrixMax, Energie, Boite , HPmin , HPmax , KilMin , KilMax , DateMin , DateMax, Marques=[], Modeles = [];
+        $('.multiSelect > select').click(function(){
+            $(this).next().toggleClass('actif');
+        });
+        $('.multiSelect .valid').click(function(){
+            $(this).closest('.multiSelect').find('.checkboxContainer').removeClass('actif');
+        });
 
-$('#PrixMin, #PrixMax, #selectEnergie, #selectBoite, #chevauxMin, #chevauxMax, #kilomMin, #kilomMax, #dateMin, #dateMax').on('input',function() {
-    const id = $(this).attr('id');
-    (id==="PrixMin") && (PrixMin = $(this).val(),console.log('input PrixMin >> ',PrixMin));
-    (id==="PrixMax") && (PrixMax = $(this).val(),console.log('input PrixMax >> ',PrixMax));
-    (id==="selectEnergie") && (Energie =  $(this).find(' option:selected').text());
-    (id==="selectBoite") && (Boite =  $(this).find(' option:selected').text());
-    (id==="chevauxMin") && (HPmin = $(this).val(),console.log('input chevauxMax : ',HPmin));
-    (id==="chevauxMax") && (HPmax = $(this).val(),console.log('input chevauxMax : ',HPmax));
-    (id==="kilomMin") && (KilMin = $(this).val(),console.log('input kilomMin : ',KilomMin));
-    (id==="kilomMax") && (KilMax = $(this).val(),console.log('input kilMax : ',KilMax));
-    (id==="dateMin") && (DateMin = $(this).val(),console.log('input DateMin : ',DateMin));
-    (id==="dateMax") && (DateMax = $(this).val(),console.log('input DateMax : ',DateMax));
-  
-  filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
-});
-})(jQuery)
+        function onlyNum($num){
+            return Number($num.replace(/\D/g, ''));
+        }
+        function filtre($PrixMin,$PrixMax,$Energie,$Boite,$Marques,$Modeles,$HPMin,$HPMax,$KilMin,$KilMax,$DateMin,$DateMax){
+            //loop sur l'ensemble des annonces
+            $('.annonceAuto').each(function(i,t){
+              $(this).removeClass('filtred');//reset des éléments filtrés
+              //Gestion du filtrage et de l'attribution des variables globales
+              ($PrixMin && onlyNum($(this).find('.prix').text()) <= Number($PrixMin) ) && ($(this).addClass('filtred'), PrixMin=$PrixMin);
+              ($PrixMax && onlyNum($(this).find('.prix').text()) >= Number($PrixMax) )  &&  ($(this).addClass('filtred'), PrixMax=$PrixMax);
+              ($Energie && Number($(this).find('.valNRJ img').attr('src').split('_')[1].split('.')[0]) != Number($Energie)) &&  ($(this).addClass('filtred'), Energie=$Energie);
+              ($Boite && $(this).find('.valBV').text() != $Boite) &&  ($(this).addClass('filtred'), Boite=$Boite);
+              ($Marques && Marques.indexOf($(this).find('.marque').text()) == "-1" ) && ($(this).addClass('filtred'), Marques = $Marques); 
+              ($Modeles && Modeles.indexOf($(this).find('.modele').text().split(' ')[0]) == "-1" ) && ($(this).addClass('filtred'), Modeles =$Modeles);
+              ($HPMin && Number($(this).find('.valChev').text().split(' ')[0]) <= Number($HPMin) ) &&  ($(this).addClass('filtred'), HPMin=$HPMin);
+              ($HPMax && Number($(this).find('.valChev').text().split(' ')[0]) >= Number($HPMax) ) &&  ($(this).addClass('filtred'), HPMax=$HPMax);
+              ($KilMin &&  Number($(this).find('.valKilom').text().split(' ')[0]) <=  Number($KilMin) ) &&  ($(this).addClass('filtred'), KilMin=$KilMin);
+              ($KilMax &&  Number($(this).find('.valKilom').text().split(' ')[0]) >=  Number($KilMax) ) &&  ($(this).addClass('filtred'), KilMax=$KilMax);
+              ($DateMin &&  Number($(this).find('.valDateMeC').text().split('/')[2]) <=  Number($DateMin) ) &&  ($(this).addClass('filtred'), DateMin=$DateMin);
+              ($DateMax &&  Number($(this).find('.valDateMeC').text().split('/')[2]) >=  Number($DateMax) ) &&  ($(this).addClass('filtred'), DateMax=$DateMax);
+            });
+        }
+        function fillModeles($Marques){
+            $('.wrapperModeles .checkboxContainer').html('');
+            for (i = 0; i < $Marques.length; ++i) {
+              let selec = '.marqueModele > ul > .marque:contains(' + $Marques[i] +')';//Select comportant les marques passées en arguments
+              Marques.push( $Marques[i]);
+            }
+            $(selec).each(function() {
+                let temp = '#' + $(this).closest('ul').find('.modele').text().split(' ')[0];
+                ($(temp).length < 1) && $('.wrapperModeles .checkboxContainer').append('<label for="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'"> <input type="checkbox" id="' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'" checked />' + $(this).closest('ul').find('.modele').text().split(' ')[0] +'</label>');
+            });
+            $('.wrapperModeles input:checkbox:checked').each(function(){
+             Modeles.push($(this).attr('id'));
+            });
+            filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
+        }
+        //Init permettant de prendre en compte l'ensemble des modéles et marques dès la première recherche (sans paramètre depuis les filtres)
+        function initStart(){
+            $('.wrapperMarques .checkboxContainer input').each(function(i,t){
+                Marques.push($(this).attr('id'));
+            });
+            $('.wrapperModeles .checkboxContainer input').each(function(i,t){
+                Modeles.push($(this).attr('id'));
+            });
+        }
+        //Ajout de toutes les marques et modéles à l'init : le setTimeout permet d'attendre que les dats soient implémentées
+        setTimeout(()=>{
+            initStart();
+        },1500);
+
+        $('.wrapperModeles .checkboxContainer').on('click', function(){
+          Modeles = [];
+          $('.wrapperModeles input:checkbox:checked').each(function(){
+            Modeles.push($(this).attr('id'));
+          });
+          filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,kilMin,kilMax,dateMin,dateMax);
+        });
+        $('.wrapperMarques .checkboxContainer').on('click', function(){
+          Marques = [];
+          $('.wrapperMarques input:checkbox:checked').each(function(){
+            Marques.push($(this).attr('id'));
+          });
+          filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
+        });
+
+        $('#PrixMin, #PrixMax, #selectEnergie, #selectBoite, #chevauxMin, #chevauxMax, #kilomMin, #kilomMax, #dateMin, #dateMax').on('input',function() {
+            const id = $(this).attr('id');
+            (id==="PrixMin") && (PrixMin = $(this).val(),console.log('input PrixMin >> ',PrixMin));
+            (id==="PrixMax") && (PrixMax = $(this).val(),console.log('input PrixMax >> ',PrixMax));
+            (id==="selectEnergie") && (Energie =  $(this).find(' option:selected').text());
+            (id==="selectBoite") && (Boite =  $(this).find(' option:selected').text());
+            (id==="chevauxMin") && (HPmin = $(this).val(),console.log('input chevauxMax : ',HPmin));
+            (id==="chevauxMax") && (HPmax = $(this).val(),console.log('input chevauxMax : ',HPmax));
+            (id==="kilomMin") && (KilMin = $(this).val(),console.log('input kilomMin : ',KilomMin));
+            (id==="kilomMax") && (KilMax = $(this).val(),console.log('input kilMax : ',KilMax));
+            (id==="dateMin") && (DateMin = $(this).val(),console.log('input DateMin : ',DateMin));
+            (id==="dateMax") && (DateMax = $(this).val(),console.log('input DateMax : ',DateMax));
+
+          filtre(PrixMin,PrixMax,Energie,Boite,Marques,Modeles,HPmin,HPmax,KilMin,KilMax,DateMin,DateMax);
+        });
+    })(jQuery)
 </script>
