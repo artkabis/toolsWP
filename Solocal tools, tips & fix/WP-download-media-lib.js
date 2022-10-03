@@ -1,3 +1,8 @@
+
+/*** Params
+* -- @limit_nb_img (Number) -> Nombre d'image maximum à télécharger
+* -- @start_img (Number) -> Débuter le téléchargement à partir de la x image (null si désactivé)
+***/
 var cmp=0;
 const limit_nb_img =10,start_img = 20;
 async function downloadImage(imageSrc,name) {
