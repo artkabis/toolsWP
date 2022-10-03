@@ -1,12 +1,10 @@
-
 /*** Params
 * -- @limit_nb_img (Number) -> Nombre d'image maximum à télécharger
 * -- @start_img (Number) -> Débuter le téléchargement à partir de la x image (null si désactivé)
 ***/
 var cmp=0;
-const limit_nb_img =10,start_img = 20;
+const limit_nb_img = 10,start_img = 5;
 async function downloadImage(imageSrc,name) {
-    cmp++
     if(cmp<limit_nb_img){
       const image = await fetch(imageSrc)
       const imageBlog = await image.blob()
@@ -18,17 +16,16 @@ async function downloadImage(imageSrc,name) {
       link.click()
       document.body.removeChild(link)
     }
+    cmp++;
 }
-const imgs = (document.querySelectorAll('.save-ready')) ? document.querySelectorAll('.save-ready img') :document.querySelectorAll('.author-other img');
-let linksArray = Array.from(imgs);
-console.log('tab link full > ',linksArray);
-(start_img) && (linksArray = Array.from(imgs).splice(start_img-1,Array.from(imgs).length),console.log('tab link start more > ',linksArray));
+const imgs = (document.querySelectorAll('.save-ready').length) ? document.querySelectorAll('.save-ready img') : document.querySelectorAll('td[data-colname="Fichier"] img');
+const linksArray = (start_img) ? Array.from(imgs).slice(start_img,Array.from(imgs).length) : Array.from(imgs);
 linksArray.forEach(linkEl => {
     const img = linkEl.getAttribute("src");
     const ext = img.substring(img.lastIndexOf('.'),img.length);
     const last2 = img.lastIndexOf('/');
     var name="",finalImg="";
-    if(img.match(/\d{3}x\d{3}/m)){
+    if(img.match(/\d{3}x\d{3}/m) || img.match(/\d{2}x\d{2}/m) ){
         console.log('redimentionnement detecté : ',img);
       const last = img.lastIndexOf('-');
       finalImg = window.location.origin+img.substring(0,last)+ext;
