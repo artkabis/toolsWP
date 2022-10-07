@@ -1,4 +1,7 @@
 
+
+/** Vous devez créer un contenu bouton (widget), utiliser ensuite le réglage en mode popup tout en ayant créé celui-ci via "créer un nouveau popup **/
+
 const dateD = new Date('october 07 2022'); // date du debut d'affichage
 const dateF = new Date('october 29 2022'); // date du fin d'affichage
 const dateJ = new Date(); //date du jour
