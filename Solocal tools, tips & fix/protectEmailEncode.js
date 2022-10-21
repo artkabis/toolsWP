@@ -7,7 +7,8 @@
     }
     //Ceci permet de récupérer les adresses mails inversé (avant intégration)
     $.each(["monadress1@gmail.com","monadress2@gmail.com","monadress3@gmail.com"],function(i,t){
-        console.log(reverseEmail(t));
+        console.log(reverseEmail(t));//retourne : moc.liamg@1sserdano,moc.liamg@2sserdanom,moc.liamg@3sserdano
+
     });
     //Les e-mails seront désormais visibles dans leur format initial, sans que ce soit le cas dans le DOM
     $('.encodemail').each(function(i,t){
