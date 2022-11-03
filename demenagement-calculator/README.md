@@ -24,4 +24,5 @@ const space = -300;//Espace de positionnement du module volume total et liste d'
 
 
 5°) Intégrer le css dans Composium ou Betheme (css.txt).
-(https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/screen-calculator.JPG)
+
+![Screnn calculator]([Dragster.jpg](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/screen-calculator.JPG))
