@@ -13,7 +13,7 @@
 
 <script>
 const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images
-const xlsx_url = "/wp-content/uploads/sites/5958/2022/01/listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
+const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
 const space = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
 </script>
 ```
