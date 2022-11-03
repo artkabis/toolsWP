@@ -12,7 +12,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 
 <script>
-const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images
+/*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx et le dernier permet de paramètrer l'espacement au scroll du conteneur de volume total ***/
+
+const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images (sans nom et extension de celles-ci)
 const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
 const space = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
 </script>
@@ -20,6 +22,5 @@ const space = -300;//Espace de positionnement du module volume total et liste d'
 
 4°) Déposer le fichier xslx (listing-items) dans la bibliothèque de médias ainsi que le pack d'icônes dézippé.
 
-5°) Vérifier que l'url de ces derniers est bien présent dans la variable située en début de script, la première variable reprend le chemin relatif sans le nom et l'extension du fichier et la seconde comporte la base url vers vos icônes (sans le nom et l'extension de l'image).
 
-6°) Intégrer le css dans Composium ou Betheme (css.txt).
+5°) Intégrer le css dans Composium ou Betheme (css.txt).
