@@ -6,7 +6,7 @@
 
 2°) Placer le shortcode dans la page qui intégrera le calculateur.
 
-3°) Vérifier que ces deux libs sont bien importés et que les variables comporte le bon chemin vers votre xslx et vos images : 
+3°) Vérifier que ces deux libs sont bien importés et que les variables comportent le bon chemin vers votre xslx et vos images : 
 ```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
