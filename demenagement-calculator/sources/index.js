@@ -56,7 +56,8 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
     return out;
   }
   function cleanArea($str,dataType){
-    return (dataType)?$.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n') : $.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n');
+           console.log(JSON.stringify($str));
+    return (dataType) ? $.trim($str.replace(/\s\s+/g, '')).replaceAll('m³','m³\n').replaceAll(',','') : $.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n');
   }
   setTimeout(()=>{
     tab = tab1;
@@ -178,8 +179,8 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
         $('.result-volume-a-calculer textarea').val('');
         //Ajout du contenu de volume-a-calculer avec saut de ligne
         $('.volume-a-calculer div').each(function(index) {
-            $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(),true).replaceAll('m³','m³\n'));
-            $('.result-volume-a-calculer textarea').val( cleanArea(temp +$(this).text()).replaceAll('m³','m³\n'));
+            $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(),true));
+            $('.result-volume-a-calculer textarea').val( (temp +$(this).text()).replaceAll(/(?:\r\n|\r|\n)/g, '').replaceAll('m³','m³\n').replaceAll(' , ',''));
             temp = $('.result-volume-a-calculer textarea').val();
         });
         recalc();
