@@ -15,6 +15,7 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
   var infos_catg_1,infos_catg_2,infos_catg_3,infos_catg_4=[];
   var url=base_url;//"https://centre-dimagerie.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/1674/2019/06/";
 
+  
   var urlXlsx = xlsx_url;
   var tab1,titleCatg=[],catg=[];
   var oReq = new XMLHttpRequest();
@@ -39,8 +40,8 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
     tab1=XLSX.utils.sheet_to_json(worksheet, {raw: true});
   }
   oReq.send();
-
-  var tab = tab1;
+  
+  var tab;
   var digitNb = $n=> {
     var v;
     (typeof $n === 'number') ? v=$n+'' : v=$n;
@@ -54,13 +55,17 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
     for (j in obj) {out.push(j);}
     return out;
   }
+  function cleanArea($str,dataType){
+    return (dataType)?$.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n') : $.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n');
+  }
   setTimeout(()=>{
-    for( var i =0; i<tab1.length;i++ ){ 
-        var names  = tab1[i].name;//["name"];//.name;
-        catg.push(tab1[i].categorie);
+    tab = tab1;
+    for( var i =0; i<tab.length;i++ ){ 
+        var names  = tab[i].name;//["name"];//.name;
+        catg.push(tab[i].categorie);
         titleCatg = cleanArray(catg);
     }
-  },400);
+  },600);
   function constructTab($titleCatg){
        if(typeof  $titleCatg!== undefined){
          for(var i=0;i<$titleCatg.length;i++){ 
@@ -80,33 +85,21 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
 
   function constructItem(){
     var tNames=[];
-    /***** Récupération élément lié à la catégorie cuisine 
-     *******/
-   /*for( var i =0; i<tab1.length;i++ ){
-      var names  = tab1[i].name;//["name"];//.name;
-      tNames.push(names);
-      var nbCatgs = titleCatg.length
-
-      var images = tab1[i]["content/img"]//.content.img;//["content/img"];
-      var titles = tab1[i]["content/title"]//.content.title;//["content/title"];//.content.title;
-      var values = tab1[i]["content/val"];//["content/val"];//.content.val;
-   }
-   */
-  //categories_name = titleCatg;
-  $.grep( tab1, function( n, i ) {
-    console.log('all grep tab1 i >> ',i,n);
-    for(var j=0;j<titleCatg.length;j++){
-        if( n.categorie == titleCatg[j]){
-           var name = n.name;
-           var img = n["content/img"];
-           var title = n["content/title"];
-           var value = n["content/val"];
-           $('#tab-'+(j+1)).append(`<div id="${digitNb(i)}" class="item ${name}"><span class="item-text">${title}</span><span id="price_item_${digitNb(i)}">${value}</span><span class="img_item"></span><input type="button" value="-" class="qtyminus" /><input type="text" class="qtyvalue" value="0" size="2"><input type="button" value="+" class="qtyplus"/><input class="totalitem" id="total_item" type="hidden" value="0"></div>`);   
-           var lastUrl = url+img;
-           $("."+name).find(".img_item").css('background-image',"url("+lastUrl+")");
+    //categories_name = titleCatg;
+    $.grep( tab, function( n, i ) {
+      //console.log('all grep tab1 i >> ',i,n);
+      for(var j=0;j<titleCatg.length;j++){
+          if( n.categorie == titleCatg[j]){
+             var name = n.name;
+             var img = n["content/img"];
+             var title = n["content/title"];
+             var value = n["content/val"];
+             $('#tab-'+(j+1)).append(`<div id="item-${digitNb(i)}" class="item ${name}"><span class="item-text">${title}</span><span id="price_item_${digitNb(i)}">${value}</span><span class="img_item"></span><input type="button" value="-" class="qtyminus" /><input type="text" class="qtyvalue" value="0" size="2"><input type="button" value="+" class="qtyplus"/><input class="totalitem" id="total_item" type="hidden" value="0"></div>`);   
+             var lastUrl = url+img;
+             $("."+name).find(".img_item").css('background-image',"url("+lastUrl+")");
+        }
       }
-    }
-  });
+    });
   }
   /***** Récupération des informations liées aux différentes catégories et création du DOM ****/
   var volumeItem = 0;
@@ -124,8 +117,7 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
     }else if (typeof calcul === 'undefined' || typeof calcul === 'null') {
       //console.log('si undefined >> calcul = '+calcul);
       console.log('calcul de base mis en place');
-      $("[id^=total_item]").calc("qty * price", {qty: $("input[name^=qty_item_]"),price: $("[id^=price_item_]")
-                                                }, function(s) {
+      $("[id^=total_item]").calc("qty * price", {qty: $("input[name^=qty_item_]"),price: $("[id^=price_item_]")}, function(s) {
         return s.toFixed(2);
       }, function($this) {
         var sum = $this.sum();
@@ -155,9 +147,12 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
         var nb5 = $(this).closest('.item').attr('id');
         $(this).attr("id", "total_item_" + nb5);
     });
-    $('.qtyplus').click(function(e) {
+    
+    $('.qtyplus').on('click',function(e) {
+       var temp = '';
         e.preventDefault();
         fieldName = $(this).attr('field');
+      console.log('filed name : ',fieldName);
         var currentVal = parseInt($('input[name=' + fieldName + ']').val(),10);
         if (!isNaN(currentVal)) {
             $('input[name=' + fieldName + ']').val(currentVal + 1);
@@ -166,14 +161,11 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
             var itemId = $(this).parent().attr('id');
             recalc();
             var volumeItem = $(this).siblings('.totalitem').val();
-            console.log('actVal >>' + actVal + 'itemName>> ' + itemName + 'itemId >>' + itemId);
+            console.log('fieldName : ',fieldName, 'actVal >>' + actVal + 'itemName>> ' + itemName + 'itemId >>' + itemId);
             if (actVal > 0) {
                 $(this).parents('.item').addClass("selected");
                 $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}">
-                                                <span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span>
-                                                <span class="item-volume">  Volume  : ${volumeItem} m³ ,</span> </div>`);
-                console.log(`si item existant : actVal >> ${actVal} itemName>> ${itemName} itemId >> ${itemId},    Volume item >> ${volumeItem}`);
+                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"> <span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span><span class="item-volume"> :  Volume  : ${volumeItem} m³ ,</span> </div>`);
             }
             if (actVal === 0) {
                 $(".volume-a-calculer div[class$='" + itemId + "']").remove();
@@ -183,13 +175,11 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
             $('input[name=' + fieldName + ']').val(0);
         }
         // reset du textearea
-        var temp = '';
         $('.result-volume-a-calculer textarea').val('');
         //Ajout du contenu de volume-a-calculer avec saut de ligne
         $('.volume-a-calculer div').each(function(index) {
-            console.log('test' + index);
-            $('.liste-fourniture-send textarea').val(temp + $(this).text());
-            $('.result-volume-a-calculer textarea').val(temp + $(this).text().replace(',', '\n'));
+            $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(),true).replaceAll('m³','m³\n'));
+            $('.result-volume-a-calculer textarea').val( cleanArea(temp +$(this).text()).replaceAll('m³','m³\n'));
             temp = $('.result-volume-a-calculer textarea').val();
         });
         recalc();
@@ -207,20 +197,14 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
             var itemId = $(this).parent().attr('id');
             recalc();
             var volumeItem = $(this).siblings('.totalitem').val();
-            console.log('actVal >>' + actVal + 'itemName>> ' + itemName + 'itemId >>' + itemId);
             if (actVal > 0) {
                 $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-                console.log($(".volume-a-calculer div[class$='" + itemId + "']").text());
-                $('.volume-a-calculer').append(`
-                                              <div class="new-item-${fieldName}">
-                                                <span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span>
-                                                <span class="item-volume">  Volume  : ${volumeItem} m³ ,</span> </div>`);
-             }
-            if (actVal == 0) {
+                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span><span class="item-volume">  Volume  : ${volumeItem} m³ ,</span> </div>`);
+             }else if (actVal == 0) {
                 $(this).parents('.item').removeClass("selected");
                 $(".volume-a-calculer div[class$='" + itemId + "']").remove();
             }
-        } else {
+        }else {
             $(".volume-a-calculer div[class$='" + itemId + "']").remove();
             $('input[name=' + fieldName + ']').val(0);
         }
@@ -229,16 +213,15 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
         $('.result-volume-a-calculer textarea').val('');
         //Ajout du contenu de volume-a-calculer avec saut de ligne
         $('.volume-a-calculer div').each(function(index) {
-            console.log('test' + index);
-            $('.liste-fourniture-send textarea').val(temp + $(this).text());
-            $('.result-volume-a-calculer textarea').val(temp + $(this).text().replace(',', '\n'));
+            $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text()));
+            $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text()));
             temp = $('.result-volume-a-calculer textarea').val();
         });
 
         recalc();
     });
     /***Reset calc forms***/
-    $( '.reset-calculateur' ).click(function() {
+    $( '.reset-calculateur' ).on('click',function() {
       $( '.qtyvalue' ).val('0');
       $( '#grandTotal' ).html('0');
       $( '.volume-a-calculer' ).html('');
@@ -248,7 +231,7 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
   }
   /**** Gestion deplacement volume à demenager
   **/
-  $(window).scroll(function() {
+  $(window).on('scroll',function() {
     var menuH = $( ".row-top .col-menu" ).height();
     var space = (spaceTop) ? spaceTop : -300;
     var In = $( '.row-top' ).offset().top + space;
@@ -270,5 +253,43 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
     constructItem();
     recalc();
     construcBtn();
+
+/******************** sauvegarde des éléments du calculateur dans le localStorage ****/
+
+    $(window).on('beforeunload',function (e) {
+      console.log('*************reload');
+      var labelVolume = []; var valueVolume = [];
+      $('#Tabs .item').each(function () {
+        if ($(this).find('.qtyvalue').val() > 0) {
+          var laLabel = $(this).attr('id'); 
+          labelVolume.push(laLabel);
+          var laValue = $(this).find('.qtyvalue').val(); 
+          valueVolume.push(laValue);
+        }
+      });
+      localStorage.setItem('labelVolume', labelVolume);
+      localStorage.setItem('valueVolume', valueVolume);
+      localStorage.setItem('totalVolume', $('#grandTotal').text());
+      localStorage.setItem('exerptVolume', cleanArea($('#input_37_321').val()).replaceAll('m³','m³,'));
+      localStorage.setItem('suppVolume', $('#input_37_383').val());
+    });
+    $( document ).ready(function (e){
+        if (localStorage.getItem("labelVolume").length > 0) {
+            var labelVolume = localStorage.getItem("labelVolume").split(",");
+            var valueVolume = localStorage.getItem("valueVolume").split(",");
+            var expertVolume = localStorage.getItem("exerptVolume").split(",");
+            $('#grandTotal').html(localStorage.getItem("totalVolume"));
+            $('.result-volume-a-calculer textarea').val(localStorage.getItem("exerptVolume").replaceAll(',','').replace(/\s/g, '').replaceAll('m³','m³\n'));//.replaceAll('m³','m³\n')
+          for (var i =0; i< labelVolume.length; i++) {
+            var thisid = "#" + labelVolume[i]; 
+            var thisvalue = valueVolume[i];
+            var exp = expertVolume[i]
+            $(thisid).addClass('selected');
+            thisid = thisid + " .qtyvalue";
+            $(thisid).val(thisvalue);
+            $('.volume-a-calculer').append(`<div class="new-item-${labelVolume[i]}"><span class="item-name">${exp}</span> </div>`);
+          }
+        }
+    });
   },800);
 });
