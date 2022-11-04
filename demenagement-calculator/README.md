@@ -1,3 +1,13 @@
+# Calculator infos
+
+Ce calculateur gère : 
+
+1°) L'ensemble du calculateur se construit via le chargement d'un seul fichier xlsx, celui-ci est ensuite converti au format JSON pour construire le DOM.
+
+2°) Les données sont sauvegardées via le localStorage, il est donc possible de continuer l'édition du calculateur, même après avoir quitté la page.
+
+3°) Pour modifier l'ensemble des éléments du calculateur, il vous suffit simplement de supprimer le fichier xlsx de base et de le replacer par le nouveau.
+
 # Usage Calculator XLSX to json
 
 ## Déploiement
