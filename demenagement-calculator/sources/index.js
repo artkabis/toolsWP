@@ -1,24 +1,23 @@
-jQuery(document).ready(function($) {
 
-  var calcul = undefined;
-  var categories_name=[];
+/****
+** online WP implementation : https://www.provence-demenagement.com/testing-calculator/
+** For view calculateur segment page : add this script in your console (F12) & keypress "Enter"->
+document.querySelector('#gform_page_49_1').style.display="none";
+document.querySelector('#gform_page_49_3').style.display="block"
+***/
+
+jQuery(document).ready(function($) {
+  //the calcul contain : calcStr (String calcul(qty * price), we associate these two elements with their selectors (with the same naming of the key)
+  var calcul = undefined;//= {calcStr:"qty * price", qty: $("input[name^=qty_item_]"),price: $("[id^=price_item_]")};
 
   /**** Start calculator ***/
-  // Calcul volume definitions
-var defaults={reNumbers:/(-?\$?)(\d+(,\d{3})*(\.\d{1,})?|\.\d{1,})/g,cleanseNumber:function(v){return v.replace(/[^0-9.\-]/g,"")},useFieldPlugin:(!!$.fn.getValue),onParseError:null,onParseClear:null};$.Calculation={version:"0.4.09",setDefaults:function(options){$.extend(defaults,options)}};$.fn.parseNumber=function(options){var aValues=[];options=$.extend(options,defaults);this.each(function(){var $el=$(this),sMethod=($el.is(":input")?(defaults.useFieldPlugin?"getValue":"val"):"text"),v=$.trim($el[sMethod]()).match(defaults.reNumbers,"");if(v==null){v=0;if(jQuery.isFunction(options.onParseError))options.onParseError.apply($el,[sMethod]);$.data($el[0],"calcParseError",true)}else{v=options.cleanseNumber.apply(this,[v[0]]);if($.data($el[0],"calcParseError")&&jQuery.isFunction(options.onParseClear)){options.onParseClear.apply($el,[sMethod]);$.data($el[0],"calcParseError",false)}}aValues.push(parseFloat(v,10))});return aValues};$.fn.calc=function(expr,vars,cbFormat,cbDone){var $this=this,exprValue="",precision=0,$el,parsedVars={},tmp,sMethod,_,bIsError=false;for(var k in vars){expr=expr.replace((new RegExp("("+k+")","g")),"_.$1");if(!!vars[k]&&!!vars[k].jquery){parsedVars[k]=vars[k].parseNumber()}else{parsedVars[k]=vars[k]}}this.each(function(i,el){var p,len;$el=$(this);sMethod=($el.is(":input")?(defaults.useFieldPlugin?"setValue":"val"):"text");_={};for(var k in parsedVars){if(typeof parsedVars[k]=="number"){_[k]=parsedVars[k]}else if(typeof parsedVars[k]=="string"){_[k]=parseFloat(parsedVars[k],10)}else if(!!parsedVars[k]&&(parsedVars[k]instanceof Array)){tmp=(parsedVars[k].length==$this.length)?i:0;_[k]=parsedVars[k][tmp]}if(isNaN(_[k]))_[k]=0;p=_[k].toString().match(/\.\d+$/gi);len=(p)?p[0].length-1:0;if(len>precision)precision=len}try{exprValue=eval(expr);if(precision)exprValue=Number(exprValue.toFixed(Math.max(precision,4)));if(jQuery.isFunction(cbFormat)){var tmp=cbFormat.apply(this,[exprValue]);if(!!tmp)exprValue=tmp}}catch(e){exprValue=e;bIsError=true}$el[sMethod](exprValue.toString())});if(jQuery.isFunction(cbDone))cbDone.apply(this,[this]);return this};$.each(["sum","avg","min","max"],function(i,method){$.fn[method]=function(bind,selector){if(arguments.length==0)return math[method](this.parseNumber());var bSelOpt=selector&&(selector.constructor==Object)&&!(selector instanceof jQuery);var opt=bind&&bind.constructor==Object?bind:{bind:bind||"keyup",selector:(!bSelOpt)?selector:null,oncalc:null};if(bSelOpt)opt=jQuery.extend(opt,selector);if(!!opt.selector)opt.selector=$(opt.selector);var self=this,sMethod,doCalc=function(){var value=math[method](self.parseNumber(opt));if(!!opt.selector){sMethod=(opt.selector.is(":input")?(defaults.useFieldPlugin?"setValue":"val"):"text");opt.selector[sMethod](value.toString())}if(jQuery.isFunction(opt.oncalc))opt.oncalc.apply(self,[value,opt])};doCalc();return self.bind(opt.bind,doCalc)}});var math={sum:function(a){var total=0,precision=0;$.each(a,function(i,v){var p=v.toString().match(/\.\d+$/gi),len=(p)?p[0].length-1:0;if(len>precision)precision=len;total+=v});if(precision)total=Number(total.toFixed(precision));return total},avg:function(a){return math.sum(a)/a.length},min:function(a){return Math.min.apply(Math,a)},max:function(a){return Math.max.apply(Math,a)}}
+  //External function "calc"  (codepen js parameters) : https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js
 
-var tabCuisine,tabChambre,tabSalon,tabAutres;
-  var nameImgCuisine,titleCuisine,nameCuisine,valueCuisine;
-  var nameImgChambre,titleChambre,nameChambre,valueChambre;
-  var nameImgSalon,titleSalon,nameSalon,valueSalon;
-  var nameImgAutres,titleAutres,nameAutres,valueAutres;
-  var infos_catg_1,infos_catg_2,infos_catg_3,infos_catg_4=[];
-  var url=base_url;//"https://centre-dimagerie.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/1674/2019/06/";
-
-  
-  var urlXlsx = xlsx_url;
-  var tab1,titleCatg=[],catg=[];
-  var oReq = new XMLHttpRequest();
+  //var url=base_url,categories_name=[];//"https://centre-dimagerie.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/1674/2019/06/";
+  let [url,categories_name,urlXlsx,tab1,titleCatg,catg] = [base_url,[],xlsx_url,[],[],[]];//Destructuring assignement
+ 
+ //request xlsx to json (uncomment in current domain)
+ var oReq = new XMLHttpRequest();
   oReq.open("GET", urlXlsx, true);
   oReq.responseType = "arraybuffer";
 
@@ -42,36 +41,27 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
   oReq.send();
   
   var tab;
-  var digitNb = $n=> {
-    var v;
-    (typeof $n === 'number') ? v=$n+'' : v=$n;
-    if(v.length===3){v=''+v;}else if(v.length===2){v='0'+v;}else if(v.length===1){v='00'+v};
-    return  v;
+  const digitNb = $n=> {
+    const v = (typeof $n === 'number') ? String($n) : $n;
+    return (v).padStart(4, '0');//digt : if 1 > 0001, if 10 > 0010, if 100 > 0100, ...
   };
-
   function cleanArray(array) {
-    var i, j, len = array.length, out = [], obj = {};
-    for (i = 0; i < len; i++) {obj[array[i]] = 0;}
-    for (j in obj) {out.push(j);}
-    return out;
+    return [...new Set(array)];//fusion multiple values array
   }
   function cleanArea($str,dataType){
-           console.log(JSON.stringify($str));
-    return (dataType) ? $.trim($str.replace(/\s\s+/g, '')).replaceAll('m³','m³\n').replaceAll(',','') : $.trim($str.replace(/\s\s+/g, '')).replace(/,/g, '\n');
+    return (dataType)?$str.replace(/\s\s+/g, '').replace(/,/g, '\n').replaceAll(/^\s+|\s+$/gm,'') : $str.replace(/\s\s+/g, '').replace(/,/g, '\n').replaceAll(/^\s+|\s+$/gm,'');
   }
   setTimeout(()=>{
     tab = tab1;
     for( var i =0; i<tab.length;i++ ){ 
-        var names  = tab[i].name;//["name"];//.name;
-        catg.push(tab[i].categorie);
-        titleCatg = cleanArray(catg);
+        catg.push(tab[i].categorie);     
     }
-  },600);
+    titleCatg = cleanArray(catg);//Titles catgories (no-duplicate)
+  },300);
   function constructTab($titleCatg){
        if(typeof  $titleCatg!== undefined){
          for(var i=0;i<$titleCatg.length;i++){ 
             var num=1+i;
-            console .log('contruction de ',$titleCatg[i]);
             $('.resp-tabs-list').append('<li><a href="#tab-'+num+'">'+$titleCatg[i]+'</a></li>');
             $('.resp-tabs-container').append(`<div id="tab-${num}" class="tab"></div>`);
             if(i ===$titleCatg.length-1){
@@ -83,111 +73,89 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
             console.error("Les catégories du fichier xlsx n'ont pu être récupérées");
        }
     }
-
   function constructItem(){
     var tNames=[];
-    //categories_name = titleCatg;
     $.grep( tab, function( n, i ) {
-      //console.log('all grep tab1 i >> ',i,n);
       for(var j=0;j<titleCatg.length;j++){
-          if( n.categorie == titleCatg[j]){
-             var name = n.name;
-             var img = n["content/img"];
-             var title = n["content/title"];
-             var value = n["content/val"];
+          ( n.categorie == titleCatg[j]) && (()=>{        
+             const name = n.name,img = n["content/img"],title = n["content/title"],value = n["content/val"];
              $('#tab-'+(j+1)).append(`<div id="item-${digitNb(i)}" class="item ${name}"><span class="item-text">${title}</span><span id="price_item_${digitNb(i)}">${value}</span><span class="img_item"></span><input type="button" value="-" class="qtyminus" /><input type="text" class="qtyvalue" value="0" size="2"><input type="button" value="+" class="qtyplus"/><input class="totalitem" id="total_item" type="hidden" value="0"></div>`);   
-             var lastUrl = url+img;
-             $("."+name).find(".img_item").css('background-image',"url("+lastUrl+")");
-        }
+             $("."+name).find(".img_item").css('background-image',"url("+url+img+")");
+         })()
       }
     });
   }
-  /***** Récupération des informations liées aux différentes catégories et création du DOM ****/
+  /***** Extract datas for the categories and creat DOM ****/
   var volumeItem = 0;
   $("input[name^=qty_item_]").bind("keyup", recalc);
   function recalc() {
     if (typeof calcul !== 'undefined') {
-      $("[id^=total_item]").calc(calcul.calcStr, {qty: calcul.qty,price: calcul.price
-                                                 }, function(s) {
-        return s.toFixed(2);
+      $("[id^=total_item]").calc(calcul.calcStr, {qty: calcul.qty,price: calcul.price}, function(s) {
+        return s;
       }, function($this) {
-        var sum = $this.sum();
-        $("#grandTotal").text(sum.toFixed(2));
-        $("#input_25_335").val(sum.toFixed(2));
+        const sum = $this.sum().toFixed(2);
+        $("#grandTotal").text(sum);
+        $("#input_25_335").val(sum);
       });
     }else if (typeof calcul === 'undefined' || typeof calcul === 'null') {
-      //console.log('si undefined >> calcul = '+calcul);
-      console.log('calcul de base mis en place');
       $("[id^=total_item]").calc("qty * price", {qty: $("input[name^=qty_item_]"),price: $("[id^=price_item_]")}, function(s) {
-        return s.toFixed(2);
+        return s;
       }, function($this) {
-        var sum = $this.sum();
-        $("#grandTotal").text(sum.toFixed(2));
-        $("#input_25_335").val(sum.toFixed(2));
+        const sum = $this.sum().toFixed(2);
+        $("#grandTotal").text(sum);
+        $("#input_25_335").val(sum);
       });
     }
   }
   function construcBtn(){
-    $(".qtyminus").each(function() {
-        var nb1 = $(this).closest('.item').attr('id');
-        $(this).attr("field", "qty_item_" + nb1);
-    });
-    $(".qtyplus").each(function() {
-        var nb2 = $(this).closest('.item').attr('id');
-        $(this).attr("field", "qty_item_" + nb2);
-    });
     $(".qtyvalue").each(function() {
-        var nb3 = $(this).closest('.item').attr('id');
-        $(this).attr("name", "qty_item_" + nb3);
-    });
-    $(".qtyvalue").each(function() {
-        var nb4 = $(this).closest('.item').attr('id');
-        $(this).attr("name", "qty_item_" + nb4);
+        const id = $(this).closest('.item').attr('id');
+        $(this).attr("name", "qty_item_" + id);
     });
     $(".totalitem").each(function() {
-        var nb5 = $(this).closest('.item').attr('id');
-        $(this).attr("id", "total_item_" + nb5);
-    });
-    
-    $('.qtyplus').on('click',function(e) {
+        const id = $(this).closest('.item').attr('id');
+        $(this).attr("id", "total_item_" + id);
+    });  
+    $(".qtyplus").each(function() {
+        var id = $(this).closest('.item').attr('id');
+        $(this).attr("field", "qty_item_" + id);
+    }).on('click',function(e) {
        var temp = '';
         e.preventDefault();
-        fieldName = $(this).attr('field');
-      console.log('filed name : ',fieldName);
-        var currentVal = parseInt($('input[name=' + fieldName + ']').val(),10);
-        if (!isNaN(currentVal)) {
+        const fieldName = $(this).attr('field');
+        let currentVal = parseInt($('input[name=' + fieldName + ']').val(),10);
+        (!isNaN(currentVal)) ? (()=>{
             $('input[name=' + fieldName + ']').val(currentVal + 1);
-            var actVal = $(this).siblings('.qtyvalue').val();
-            var itemName = $(this).siblings('.item-text').text();
-            var itemId = $(this).parent().attr('id');
-            recalc();
-            var volumeItem = $(this).siblings('.totalitem').val();
-            console.log('fieldName : ',fieldName, 'actVal >>' + actVal + 'itemName>> ' + itemName + 'itemId >>' + itemId);
-            if (actVal > 0) {
-                $(this).parents('.item').addClass("selected");
+            const actVal = $(this).siblings('.qtyvalue').val(), itemName = $(this).siblings('.item-text').text(), itemId = $(this).parent().attr('id'), volumeItem = $(this).siblings('.totalitem').val();
+            
+          recalc();
+          
+          (actVal > 0) ? (()=>{
+             $(this).parents('.item').addClass("selected");
                 $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"> <span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span><span class="item-volume"> :  Volume  : ${volumeItem} m³ ,</span> </div>`);
-            }
-            if (actVal === 0) {
-                $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-            }
-        } else {
+                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"> <span class="item-name">${itemName}</span>&nbsp;:&nbsp;<span class="item-qty">${actVal}</span><span class="item-volume">&nbsp;->&nbsp;Volume&nbsp;:&nbsp;${volumeItem} m³ ,</span> </div>`);
+          })() :  $(".volume-a-calculer div[class$='" + itemId + "']").remove();
+       })() : (()=>{
             $(".volume-a-calculer div[class$='" + itemId + "']").remove();
             $('input[name=' + fieldName + ']').val(0);
-        }
+        })();
+        
         // reset du textearea
         $('.result-volume-a-calculer textarea').val('');
         //Ajout du contenu de volume-a-calculer avec saut de ligne
         $('.volume-a-calculer div').each(function(index) {
             $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(),true));
-            $('.result-volume-a-calculer textarea').val( (temp +$(this).text()).replaceAll(/(?:\r\n|\r|\n)/g, '').replaceAll('m³','m³\n').replaceAll(' , ',''));
+           $('.result-volume-a-calculer textarea').val((temp +$(this).text()).replaceAll(/(?:\r\n|\r|\n)/g, '').replaceAll('m³','m³\n').replaceAll(' , ','').replaceAll('  ','').replaceAll(/^\s+|\s+$/gm,''));
             temp = $('.result-volume-a-calculer textarea').val();
         });
         recalc();
     });
 
-
-    $(".qtyminus").click(function(e) {
+    //click less button and calculate new value
+    $(".qtyminus").each(function() {
+        var nb1 = $(this).closest('.item').attr('id');
+        $(this).attr("field", "qty_item_" + nb1);
+    }).on('click',function(e) {
         e.preventDefault();
         fieldName = $(this).attr('field');
         var currentVal = parseInt($('input[name=' + fieldName + ']').val(), 10);
@@ -198,13 +166,10 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
             var itemId = $(this).parent().attr('id');
             recalc();
             var volumeItem = $(this).siblings('.totalitem').val();
-            if (actVal > 0) {
-                $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>  : <span class="item-qty">${actVal}</span><span class="item-volume">  Volume  : ${volumeItem} m³ ,</span> </div>`);
-             }else if (actVal == 0) {
-                $(this).parents('.item').removeClass("selected");
-                $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-            }
+            (actVal > 0) ? (()=>{
+               $(".volume-a-calculer div[class$='" + itemId + "']").remove();
+                $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>&nbsp;:&nbsp;<span class="item-qty">${actVal}</span><span class="item-volume">&nbsp;->&nbsp;Volume&nbsp;:>&nbsp;${volumeItem} m³ ,</span> </div>`);
+            })() : ($(this).parents('.item').removeClass("selected"),$(".volume-a-calculer div[class$='" + itemId + "']").remove());
         }else {
             $(".volume-a-calculer div[class$='" + itemId + "']").remove();
             $('input[name=' + fieldName + ']').val(0);
@@ -212,13 +177,12 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
         // reset du textearea
         var temp = '';
         $('.result-volume-a-calculer textarea').val('');
-        //Ajout du contenu de volume-a-calculer avec saut de ligne
+        //Add content to volume-a-calculer with break line
         $('.volume-a-calculer div').each(function(index) {
             $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text()));
             $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text()));
             temp = $('.result-volume-a-calculer textarea').val();
         });
-
         recalc();
     });
     /***Reset calc forms***/
@@ -232,41 +196,29 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
   }
   /**** Gestion deplacement volume à demenager
   **/
+  
   $(window).on('scroll',function() {
-    var menuH = $( ".row-top .col-menu" ).height();
-    var space = (spaceTop) ? spaceTop : -300;
-    var In = $( '.row-top' ).offset().top + space;
-    var Out = $( '.row-bottom' ).offset().top - menuH + space;
-    var screenTop = $(document).scrollTop() + space;
-    if (( $(this).scrollTop() >= In ) && ($(this).scrollTop() < Out )) {
-      $( '.row-top' ).addClass( "m-sticky" );
-      $('.col-menu').css('top', screenTop);
-    } else if ( $(this).scrollTop() >= Out ) {
-      $( '.row-top' ).removeClass( "m-sticky" );
-      $( '.row-top' ).addClass( "m-sticky-bot" );
-    } else {
-      $( '.row-top' ).removeClass( "m-sticky" );
-      $( '.row-top' ).removeClass( "m-sticky-bot" );
-    }
+    const menuH = $( ".row-top .col-menu" ).height();
+    const space = (spaceTop) ? spaceTop : -300;//External constante
+    const In = $( '.row-top' ).offset().top + space;
+    const Out = $( '.row-bottom' ).offset().top - menuH + space;
+    const screenTop = $(document).scrollTop() + space;
+    ( $(this).scrollTop() >= In  && $(this).scrollTop() < Out ) ? ($( '.row-top' ).addClass( "m-sticky" ),$('.col-menu').css('top', screenTop)) : ($( '.row-top' ).removeClass( "m-sticky" ),$( '.row-top' ).addClass( "m-sticky-bot" )) ? ( $(this).scrollTop() >= Out ) : ($( '.row-top' ).removeClass( "m-sticky" ),$( '.row-top' ).removeClass( "m-sticky-bot" ))
   });
+  
+  
+  //Start construct steps calculator
   setTimeout(function(){
-    constructTab(titleCatg);
-    constructItem();
-    recalc();
-    construcBtn();
+    constructTab(titleCatg);//Create tab with titleCategories (global constante)
+    constructItem();//Start construct items (datas xlsx to json)
+    recalc();//Init calcul
+    construcBtn();//Construct button and attach event (mor & less products)
 
-/******************** sauvegarde des éléments du calculateur dans le localStorage ****/
-
+/******************** save elements in localStorage ****/
     $(window).on('beforeunload',function (e) {
-      console.log('*************reload');
-      var labelVolume = []; var valueVolume = [];
+      var [labelVolume, valueVolume, laLabel, laValue] = [ [], [], '', '' ];
       $('#Tabs .item').each(function () {
-        if ($(this).find('.qtyvalue').val() > 0) {
-          var laLabel = $(this).attr('id'); 
-          labelVolume.push(laLabel);
-          var laValue = $(this).find('.qtyvalue').val(); 
-          valueVolume.push(laValue);
-        }
+        ($(this).find('.qtyvalue').val() > 0) && (laLabel = $(this).attr('id'), labelVolume.push(laLabel), laValue = $(this).find('.qtyvalue').val(), valueVolume.push(laValue))
       });
       localStorage.setItem('labelVolume', labelVolume);
       localStorage.setItem('valueVolume', valueVolume);
@@ -274,23 +226,24 @@ var tabCuisine,tabChambre,tabSalon,tabAutres;
       localStorage.setItem('exerptVolume', cleanArea($('#input_37_321').val()).replaceAll('m³','m³,'));
       localStorage.setItem('suppVolume', $('#input_37_383').val());
     });
+    
+    //after ready document and if localStorage item > 0
     $( document ).ready(function (e){
-        if (localStorage.getItem("labelVolume").length > 0) {
-            var labelVolume = localStorage.getItem("labelVolume").split(",");
-            var valueVolume = localStorage.getItem("valueVolume").split(",");
-            var expertVolume = localStorage.getItem("exerptVolume").split(",");
+        (localStorage.getItem("labelVolume").length > 0) && (()=>{
+            let labelVolume = localStorage.getItem("labelVolume").split(","), valueVolume = localStorage.getItem("valueVolume").split(","), exerptVolume = localStorage.getItem("exerptVolume").split(",");
             $('#grandTotal').html(localStorage.getItem("totalVolume"));
-            $('.result-volume-a-calculer textarea').val(localStorage.getItem("exerptVolume").replaceAll(',','').replace(/\s/g, '').replaceAll('m³','m³\n'));//.replaceAll('m³','m³\n')
+            $('.result-volume-a-calculer textarea').val( String(exerptVolume).replaceAll(',','').replace(/\s/g, '').replaceAll('m³','m³\n').replaceAll('->',' -> ').replaceAll(':',' : ') );//.replaceAll('m³','m³\n')
+          //loop labelVolume items
           for (var i =0; i< labelVolume.length; i++) {
-            var thisid = "#" + labelVolume[i]; 
-            var thisvalue = valueVolume[i];
-            var exp = expertVolume[i]
+            let thisid = "#" + labelVolume[i]; 
+            const thisvalue = valueVolume[i];
+            const thisexp = exerptVolume[i]
             $(thisid).addClass('selected');
             thisid = thisid + " .qtyvalue";
             $(thisid).val(thisvalue);
-            $('.volume-a-calculer').append(`<div class="new-item-${labelVolume[i]}"><span class="item-name">${exp}</span> </div>`);
+            $('.volume-a-calculer').append(`<div class="new-item-${labelVolume[i]}"><span class="item-name">${thisexp}</span> </div>`);
           }
-        }
+        })();
     });
-  },800);
+  },600);
 });
