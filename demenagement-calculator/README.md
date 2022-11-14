@@ -24,11 +24,11 @@ Ce calculateur gère :
 <script  src="https://rawcdn.githack.com/artkabis/toolsWP/25ba76190699d5bce365bef6f19bbf444387fc26/demenagement-calculator/sources/calculatorApp.min.js">
 </script>
 <script>
-/*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx et le dernier permet de paramètrer l'espacement au scroll du conteneur de volume total ***/
+/*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx, la troisième la formule de calcul avec les sélecteurs rattachés aux inputs comportant les datas, le dernier permet de paramétrer l'espacement au scroll du conteneur de volume total ***/
 
 const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images (sans nom et extension de celles-ci).
 const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
- const calcul = {calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
+const calcul = {calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
 const spaceTop = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
 </script>
 ```
