@@ -32,6 +32,8 @@ const calcul = {calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price:
 const spaceTop = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
 </script>
 ```
+Voici la strcture de votre page : 
+![Agencement de votre page](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/agencement-page-calculator.JPG)
 
 4°) Déposer le fichier xslx (listing-items) dans la bibliothèque de médias ainsi que le pack d'icônes dézippé.
 
@@ -41,4 +43,4 @@ const spaceTop = -300;//Espace de positionnement du module volume total et liste
 ### Version online depuis mon [Codepen](https://codepen.io/artkabis/pen/wvXWrmB)
 
 
-![Screen calcullator](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/screen-calculator.JPG)
+![Screen calculator](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/screen-calculator.JPG)
