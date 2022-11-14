@@ -14,19 +14,22 @@ Ce calculateur gère :
 
 1°) Importer le formulaire via Gravityform (fichier json).
 
-2°) Placer le shortcode dans la page qui intégrera le calculateur.
+2°) Intégrer le formulaire précédemment importé dans la page (en dessous du bloc html comportant le script ci-dessous).
 
-3°) Vérifier que ces deux libs sont bien importés et que les variables comportent le bon chemin vers votre xslx et vos images : 
-```javascript
+3°) Vérifier que ces trois librairies sont bien importées et que les variables comportent le bon chemin vers votre xslx et vos images (bloc html brut) : 
+```html
+<!-- libs xlsx to json & calculatorApp -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-
+<script  src="https://rawcdn.githack.com/artkabis/toolsWP/25ba76190699d5bce365bef6f19bbf444387fc26/demenagement-calculator/sources/calculatorApp.min.js">
+</script>
 <script>
 /*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx et le dernier permet de paramètrer l'espacement au scroll du conteneur de volume total ***/
 
-const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images (sans nom et extension de celles-ci)
+const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images (sans nom et extension de celles-ci).
 const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
-const space = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
+ const calcul = {calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
+const spaceTop = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
 </script>
 ```
 
