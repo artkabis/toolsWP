@@ -35,10 +35,9 @@ const spaceTop = -300;//Espace de positionnement du module volume total et liste
 Voici la strcture de votre page : 
 ![Agencement de votre page](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/agencement-page-calculator.JPG)
 
-4°) Déposer le fichier xslx (listing-items) dans la bibliothèque de médias ainsi que le pack d'icônes dézippé.
+4°) Déposer le fichier xslx (listing-items) dans la bibliothèque de médias (vérifié que la constante "base_url" reprend bien l'url de base sans le nom du fichier).
 
 
-5°) Intégrer le css dans Composium ou Betheme (css.txt).
 
 ### Version online depuis mon [Codepen](https://codepen.io/artkabis/pen/wvXWrmB)
 
