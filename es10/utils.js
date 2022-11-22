@@ -3,9 +3,9 @@
 export function getMessage() {
   return "Hello world";
 }
-export function funcMod1 (...arguments) {
-  console.log('funcMod1 -> arg : ', arguments, ' --- arg length : ', arguments.length); 
+export function funcMod1 (...args) {
+ return String('funcMod1 -> arg : '+ args+ ' --- arg length : '+ args.length); 
 }
-export function funcMod2 (...arguments) {
-  console.log('funcMod2 -> arg : ', arguments, ' --- arg length : ', arguments.length); 
+export function funcMod2 (...args) {
+  return String('funcMod2 -> arg : '+ args+ ' --- arg length : '+ args.length); 
 }
