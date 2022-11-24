@@ -6,4 +6,4 @@ export function toNumber(s){ return (s) && +s}
 export function noDuplcaArray(a){ return [...new Set(a)]}
 export function onlyValidValueArray(a){a.filter(Boolean)}
 export function generateToken(){const shuffle = ()=>Math.random().toString(36).substr(2);let tokenA = [];[0,0,0].forEach((t)=>tokenA.push(shuffle()+shuffle()));return String(tokenA.join(''));}
-export function shuffleArray(arr){(arr && Array.isArray(arr)) && (()=>{const tabRange = [...new Set(arr)].sort();const randomiz =  tabRange.sort(()=>{return Math.random()-0.5});})()}
+export function shuffleArray(arr){(arr && Array.isArray(arr)) && return (()=>{const tabRange = [...new Set(arr)].sort();const randomiz =  tabRange.sort(()=>{return Math.random()-0.5});})()}
