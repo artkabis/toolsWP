@@ -1,6 +1,6 @@
 "use strict";
-export const cl = () => console.log.bind(console);
-export const ce = () => console.error.bind(console,'ERROR:');
+export const cl = () => console.log.bind(document.console,'LOG: ');
+export const ce = () => console.error.bind(document.console,'ERROR: ');
 export const randomMM = (min,max)=> Math.floor(Math.random() * (max - min + 1)) + min;
 export const isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
 export const toNumber = (s) =>  (s) && +s;
