@@ -1,6 +1,7 @@
 export function randomMM (min,max){return Math.floor(Math.random() * (max - min + 1)) + min}
 export function isNumber(n){ return !isNaN(parseFloat(n)) && isFinite(n)}
 export function toNumber(s){ return (s) && +s}
+export function isEvent(n){ return n % 2 === 0}
 export function noDuplcaArray(a){ return [...new Set(a)]}
 export function onlyValidValueArray(a){a.filter(Boolean)}
 export function generateToken(){const shuffle = ()=>Math.random().toString(36).substr(2);let tokenA = [];[0,0,0].forEach((t)=>tokenA.push(shuffle()+shuffle()));return String(tokenA.join(''));}
