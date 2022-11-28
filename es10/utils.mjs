@@ -2,6 +2,7 @@ export function randomMM (min,max){return Math.floor(Math.random() * (max - min 
 export function isNumber(n){ return !isNaN(parseFloat(n)) && isFinite(n)}
 export function toNumber(s){ return (s) && +s}
 export function isEven(n){ return n % 2 === 0}
+export function isOdd(n){ return n % 2 === 1}
 export function noDuplcaArray(a){ return [...new Set(a)]}
 export function onlyValidValueArray(a){a.filter(Boolean)}
 export function generateToken(){const shuffle = ()=>Math.random().toString(36).substr(2);let tokenA = [];[0,0,0].forEach((t)=>tokenA.push(shuffle()+shuffle()));return String(tokenA.join(''));}
@@ -13,3 +14,5 @@ export function shortenText (text, length = 10, ellipsisCount = 3){(!(typeof tex
 export function sortJsonKey (o,v){ return o.sort((a, b) => a[v].localeCompare(b[v]))}
 export function clamp(value, range) {return Math.min(Math.max(value, range[0]), range[1])}//return the closest value with [min,max], ex : (5,[10,20]) => 10, (22,[10,20]) => 22
 export function getNavigator(){const userAgent = navigator.userAgent;const isGoogle = navigator.vendor==="Google Inc.";const chrome = (userAgent.match(/Chrome/i) && isGoogle) && "Chrome";const firefox = (userAgent.match(/firefox|fxios/i) && !isGoogle) && "Firefox"; const safari = (userAgent.match(/safari/i) && !isGoogle) && "Safari";const opera = (userAgent.match(/opr\//i) && !isGoogle) && "Opera";const edge = (userAgent.match(/edg/i) && !isGoogle) && "Edge";const android = (userAgent.match(/android/i) && !isGoogle) && "Android";const iphone = (userAgent.match(/iphone/i) && !isGoogle) && "Iphone";const browser = chrome || firefox || safari || opera  || edge || android || iphone || "Inconnu";return browser;}
+export function reject (predicate, array) => array.reduce((newArray, item) => {(predicate(item) === false) && newArray.push(item);return newArray;}, []);
+export function findKeyArray (key, array){array.reduce((values, current) => {values.push(current[key]); return values;}, []);
