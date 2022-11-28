@@ -1,7 +1,7 @@
 "use strict";
 export const cl = () => console.log.bind(document.console,'LOG: ');
 export const ce = () => console.error.bind(document.console,'ERROR: ');
-export const toCamelcase = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter, index) =>index === 0 ? letter.toLowerCase() : letter.toUpperCase()).replace(/\s+/g, '');
+export const toCamelCase = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter, index) =>index === 0 ? letter.toLowerCase() : letter.toUpperCase()).replace(/\s+/g, '');
 export const randomMM = (min,max)=> Math.floor(Math.random() * (max - min + 1)) + min;
 export const isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
 export const toNumber = (s) =>  (s) && +s;
