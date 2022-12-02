@@ -21,5 +21,5 @@ export const clamp = (value, range) => Math.min(Math.max(value, range[0]), range
 export const getNavigator=()=>{const userAgent = navigator.userAgent;const isGoogle = navigator.vendor==="Google Inc.";const chrome = (userAgent.match(/Chrome/i) && isGoogle) && "Chrome";const firefox = (userAgent.match(/firefox|fxios/i) && !isGoogle) && "Firefox"; const safari = (userAgent.match(/safari/i) && !isGoogle) && "Safari";const opera = (userAgent.match(/opr\//i) && !isGoogle) && "Opera";const edge = (userAgent.match(/edg/i) && !isGoogle) && "Edge";const android = (userAgent.match(/android/i) && !isGoogle) && "Android";const iphone = (userAgent.match(/iphone/i) && !isGoogle) && "Iphone";const browser = chrome || firefox || safari || opera  || edge || android || iphone || "Inconnu";return browser;}
 export const reject = (predicate, array) =>array.reduce((newArray, item) => {(predicate(item) === false) && newArray.push(item);return newArray; }, []);
 export const findKeyArray = (key, array) =>array.reduce((values, current) => {values.push(current[key]);return values;}, []);
-export const startLog=(w)=>{w.cl = (args)=>{cl.history = cl.history || [];cl.history.push(args),(w.console)&& console.log(Object.keys(args).map((key)=> args[key]) )}}
+export const startLog=(w)=>{w.cl = (args)=>{cl.history = cl.history || [];cl.history.push(args),(w.console)&& console.log(args)}}
 
