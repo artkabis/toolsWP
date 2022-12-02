@@ -22,6 +22,6 @@ export const getNavigator=()=>{const userAgent = navigator.userAgent;const isGoo
 export const reject = (predicate, array) =>array.reduce((newArray, item) => {(predicate(item) === false) && newArray.push(item);return newArray; }, []);
 export const findKeyArray = (key, array) =>array.reduce((values, current) => {values.push(current[key]);return values;}, []);
 export const startLog=(w)=>{w.cl = (args)=>{cl.history = cl.history || [];cl.history.push(args),(w.console)&& console.log(Object.keys(...args).map(function(key) {
-    return countries[key];
+    return ...args[key];
 }) )}}
 
