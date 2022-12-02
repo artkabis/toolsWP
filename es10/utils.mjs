@@ -2,6 +2,7 @@
 export const toCamelCase = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter, index) =>index === 0 ? letter.toLowerCase() : letter.toUpperCase()).replace(/\s+/g, '');
 export const randomMM = (min,max)=> Math.floor(Math.random() * (max - min + 1)) + min;
 export const isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
+export const isNotUndefined = (n) => n === undefined ? false : true;
 export const toNumber = (s) =>  (s) && +s;
 export const isEven = (n) => n % 2 === 0;
 export const isOdd = (n) => n % 2 === 1;
