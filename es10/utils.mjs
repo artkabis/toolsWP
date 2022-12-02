@@ -23,3 +23,4 @@ export const reject = (predicate, array) =>array.reduce((newArray, item) => {(pr
 export const findKeyArray = (key, array) =>array.reduce((values, current) => {values.push(current[key]);return values;}, []);
 export const logger=(w)=>{w.cl = w.console.log}
 export const isVisible=(elem) =>{if(!(elem instanceof Element))  throw Error('DomUtil: elem is not an element.');const style = window.getComputedStyle(elem);const rect = elem.getBoundingClientRect();return (rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth) && style.display === 'block' && style.visibility !== 'hidden'&& style.opacity > 0 && elem.offsetWidth + elem.offsetHeight + elem.getBoundingClientRect().height +elem.getBoundingClientRect().width === 0);}
+export const hrefMatch=(page,func)=>( location.href.match(String(page)) ) && func();
