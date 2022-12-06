@@ -1567,4 +1567,4 @@ export const Calculator = {
       },400);
   }
 }
-document.addEventListener('DOMContentLoaded', Calculator.init({baseUrl:base_url,xlsxUrl: xlsx_url}));
+
