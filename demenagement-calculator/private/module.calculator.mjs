@@ -44,7 +44,8 @@ export const Calculator = {
           var bstr = arr.join("");
 
           // Call XLSX 
-          var workbook = xlsx.XLSX.read(bstr, {type: "binary"});
+          let _read = jszip.read;
+          var workbook = xlsx.XLSX._read(bstr, {type: "binary"});
           // DO SOMETHING WITH workbook HERE 
           var first_sheet_name = workbook.SheetNames[0];
           // Get worksheet 
