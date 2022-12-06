@@ -1,6 +1,8 @@
 import * as jQuery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js';
-import * as jQueryui from 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'
-import * as calc from 'https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js'
+import * as jQueryui from 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js';
+import * as calc from 'https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js';
+import * as jszip from 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js';
+import * as xlsx from 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js';
 
 
 
@@ -13,20 +15,6 @@ document.querySelector('#gform_page_49_1').style.display="none";
 document.querySelector('#gform_page_49_3').style.display="block"
 ***/
 
-// loading libs necessary working for the calculator : jquery, jqueryui, calc (sum)
-/*async () => {
-  try{
-    let parsej = await require("https://unpkg.com/jquery@3.6.0/dist/jquery.js");
-    let parsejui = await require("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js");
-    let calc = await require("https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js");
-    console.log('libs chargées');
-    
-  }catch(e){
-    console.log('error :',e);
-  }
-})()
-
-*/
 
 export const Calculator = {
   init: ({baseUrl=base_url,xlsxUrl = xlsx_url, datas = undefined})=>{
@@ -39,30 +27,31 @@ export const Calculator = {
       let [url,urlXlsx,dataJson] = [baseUrl,xlsxUrl,datas];
 
     /* uncomment for online version and delete const datas ***.
-    /*
+    /*/
      //request xlsx to json (uncomment in current domain)
-     var oReq = new XMLHttpRequest();
-      oReq.open("GET", urlXlsx, true);
-      oReq.responseType = "arraybuffer";
-      oReq.onload = function(e) {
-        var arraybuffer = oReq.response;
+    if(dataJson){
+       var oReq = new XMLHttpRequest();
+        oReq.open("GET", urlXlsx, true);
+        oReq.responseType = "arraybuffer";
+        oReq.onload = function(e) {
+          var arraybuffer = oReq.response;
 
-        // convert data to binary string 
-        var data = new Uint8Array(arraybuffer);
-        var arr = new Array();
-        for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-        var bstr = arr.join("");
+          // convert data to binary string 
+          var data = new Uint8Array(arraybuffer);
+          var arr = new Array();
+          for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          var bstr = arr.join("");
 
-        // Call XLSX 
-        var workbook = XLSX.read(bstr, {type: "binary"});
-        // DO SOMETHING WITH workbook HERE 
-        var first_sheet_name = workbook.SheetNames[0];
-        // Get worksheet 
-        var worksheet = workbook.Sheets[first_sheet_name];
-        tab1=XLSX.utils.sheet_to_json(worksheet, {raw: true});
-      }
-      oReq.send();
-      */
+          // Call XLSX 
+          var workbook = XLSX.read(bstr, {type: "binary"});
+          // DO SOMETHING WITH workbook HERE 
+          var first_sheet_name = workbook.SheetNames[0];
+          // Get worksheet 
+          var worksheet = workbook.Sheets[first_sheet_name];
+          tab1=XLSX.utils.sheet_to_json(worksheet, {raw: true});
+        }
+        oReq.send();
+    }
       let tab;//global data init
       const digitNb = $n=> {
         return ((typeof $n === 'number') ? String($n) : $n).padStart(4, '0');//digt : if 1 > 0001, if 10 > 0010, if 100 > 0100, ...
