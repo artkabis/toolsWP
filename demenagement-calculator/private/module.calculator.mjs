@@ -44,11 +44,11 @@ export const Calculator = {
           var bstr = arr.join("");
 
           // Call XLSX 
-          let _read = jszip.read();
+          //let _read = jszip.read();
           console.log('jzip : ',jzip);
-          console.log('  read init',jszip.read);
+          console.log('  read init',jszip.read());
           console.log('_read custom : ', _read);
-          var workbook = xlsx.XLSX._read(bstr, {type: "binary"});
+          var workbook = xlsx.XLSX.jszip.read(bstr, {type: "binary"});
           // DO SOMETHING WITH workbook HERE 
           var first_sheet_name = workbook.SheetNames[0];
           // Get worksheet 
