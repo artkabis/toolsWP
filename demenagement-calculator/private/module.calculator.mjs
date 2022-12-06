@@ -17,7 +17,7 @@ document.querySelector('#gform_page_49_3').style.display="block"
 
 
 export const Calculator = {
-  init: ({baseUrl=base_url,xlsxUrl = xlsx_url, datas = undefined})=>{
+  init: ({baseUrl=base_url,xlsxUrl = xlsx_url, datas = undefined, calcul = undefined})=>{
       console.log('loading DOM');
       /**** Start calculator ***/
       //External function "calc"  (codepen js parameters) : https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js
