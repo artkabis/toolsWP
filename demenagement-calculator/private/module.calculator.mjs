@@ -45,9 +45,9 @@ export const Calculator = {
 
           // Call XLSX 
           //let _read = jszip.read();
-          console.log('jzip : ',jzip);
+          console.log('jzip : ',jszip);
           console.log('  read init',jszip.read());
-          console.log('_read custom : ', _read);
+          console.log('_read custom : ', jszip.read);
           var workbook = xlsx.XLSX.jszip.read(bstr, {type: "binary"});
           // DO SOMETHING WITH workbook HERE 
           var first_sheet_name = workbook.SheetNames[0];
