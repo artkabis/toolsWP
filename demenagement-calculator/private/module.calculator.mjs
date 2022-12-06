@@ -29,6 +29,7 @@ export const Calculator = {
     /* uncomment for online version and delete const datas ***.
     /*/
      //request xlsx to json (uncomment in current domain)
+    console.log('calcul : ',calcul,'   dataJson : ',dataJson);
     if(dataJson){
        var oReq = new XMLHttpRequest();
         oReq.open("GET", urlXlsx, true);
