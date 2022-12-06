@@ -44,12 +44,12 @@ export const Calculator = {
           var bstr = arr.join("");
 
           // Call XLSX 
-          var workbook = XLSX.read(bstr, {type: "binary"});
+          var workbook = xlsx.XLSX.read(bstr, {type: "binary"});
           // DO SOMETHING WITH workbook HERE 
           var first_sheet_name = workbook.SheetNames[0];
           // Get worksheet 
           var worksheet = workbook.Sheets[first_sheet_name];
-          tab1=XLSX.utils.sheet_to_json(worksheet, {raw: true});
+          tab1=xlsx.XLSX.utils.sheet_to_json(worksheet, {raw: true});
         }
         oReq.send();
     }
