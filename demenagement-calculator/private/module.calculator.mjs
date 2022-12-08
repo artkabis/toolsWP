@@ -1,4 +1,3 @@
-
 import * as jQuery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js';
 import * as jQueryui from 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js';
 import * as calc from 'https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js';
@@ -204,7 +203,8 @@ document.querySelector('#gform_page_49_3').style.display="block"
       const In = $('.row-top').offset().top + space;
       const Out = $('.row-bottom').offset().top - menuH + space;
       const screenTop = $(document).scrollTop() + space;
-      ($(this).scrollTop() >= In && $(this).scrollTop() < Out) ? ($('.row-top').addClass("m-sticky"), $('.col-menu').css('top', screenTop)) : ($('.row-top').removeClass("m-sticky"), $('.row-top').addClass("m-sticky-bot")) ? ($(this).scrollTop() >= Out) : ($('.row-top').removeClass("m-sticky"), $('.row-top').removeClass("m-sticky-bot"))
+      const isSticky = (screenTop >= In && screenTop < Out);
+      (isSticky) ? ($('.row-top').addClass("m-sticky"), $('.col-menu').css('top', screenTop)) : ($('.row-top').removeClass("m-sticky"), $('.row-top').addClass("m-sticky-bot")) ? ($(this).scrollTop() >= Out) : ($('.row-top').removeClass("m-sticky"), $('.row-top').removeClass("m-sticky-bot"))
     });
 
 
