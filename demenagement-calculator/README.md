@@ -20,7 +20,7 @@ Ce calculateur gère :
 ```html
 <script type="module">
 /**** import ESModule ***/
-import * as Calculator from 'https://rawcdn.githack.com/artkabis/toolsWP/4bc5684ce8784df2da0f2cb1392d0266d99728d2/demenagement-calculator/private/module.calculator.mjs';
+import * as Calculator from 'https://rawcdn.githack.com/artkabis/toolsWP/50ca12c804edc3950248c355b5233e8134cb58e3/demenagement-calculator/module.calculator.min.mjs';
 
 
 /*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx et le dernier permet de paramètrer l'espacement au scroll du conteneur de volume total ***/
