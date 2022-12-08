@@ -29,6 +29,7 @@ export const Calculator = {
     
     console.log('data json import :',dataJson);
     if (!dataJson) {
+      console.log('start convert XLSX2JSON');
 
       var oReq = new XMLHttpRequest();
       oReq.open("GET", urlXlsx, true);
