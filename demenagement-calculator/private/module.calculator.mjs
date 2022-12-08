@@ -46,7 +46,7 @@ export const Calculator = {
           // Call XLSX 
           //let _read = jszip.read();
           console.log('jzip : ',jszip);
-          console.log('  read init',read);
+          //console.log('  read init',read);
           //console.log('_read custom : ', jszip.read);
           var workbook = xlsx.XLSX.read(bstr, {type: "binary"});
           // DO SOMETHING WITH workbook HERE 
