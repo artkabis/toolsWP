@@ -60,7 +60,7 @@ export const Calculator = {
       return [...new Set(array)];//fusion multiple values array
     }
     const cleanArea = ($str, dataType) => {
-      return (dataType) ? $.trim($str.replace(/\s\s+/g, '').replace(/,/g, '\n').replaceAll(/^\s+|\s+$/gm, '')) : $.trim($str.replace(/,/g, '\n'));
+      return (dataType) ? $.trim($str.replace(/\s\s+/g, '').replace(/,/g, '\n').replaceAll(/^\s+|\s+$/gm, '')).replace('m³','m³ \n') : $.trim($str.replace(/,/g, '\n'));
     }
     setTimeout(() => {
       tab = (dataJson) ? dataJson : tab1;//Si la requête est décommenter, à remplacer par tab1
