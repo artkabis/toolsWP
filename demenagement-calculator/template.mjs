@@ -1,6 +1,3 @@
-export const template=()=>{
-return
-  (`
   <link href="https://rawcdn.githack.com/artkabis/toolsWP/bb3de90516da7eaac8d94db466b04b3672b62137/demenagement-calculator/custom.css" rel="stylesheet"/>
   <div class="rowCalc flex-row row-top">
   <div class="col-4 flex-col">
@@ -28,5 +25,3 @@ return
 </div>
 <div class="row-bottom"></div>
 <li id="field_49_43" class="gfield volume-a-calculer field_sublabel_below field_description_below gfield_visibility_visible"><label class="gfield_label" for="input_49_43">Liste fournitures formatage</label><div class="ginput_container ginput_container_textarea"></div></li>
-`);
-}
