@@ -16,20 +16,22 @@ Ce calculateur gère :
 
 2°) Intégrer le formulaire précédemment importé dans la page (en dessous du bloc html comportant le script ci-dessous).
 
-3°) Vérifier que ces trois librairies sont bien importées et que les variables comportent le bon chemin vers votre xslx et vos images (bloc html brut) : 
+3°) Vérifier que les variables comportent le bon chemin vers votre xslx et vos images (bloc html brut) : 
 ```html
-<!-- libs xlsx to json & calculatorApp -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script  src="https://rawcdn.githack.com/artkabis/toolsWP/25ba76190699d5bce365bef6f19bbf444387fc26/demenagement-calculator/sources/calculatorApp.min.js">
-</script>
-<script>
-/*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx, la troisième la formule de calcul avec les sélecteurs rattachés aux inputs comportant les datas, le dernier permet de paramétrer l'espacement au scroll du conteneur de volume total ***/
+<script type="module">
+/**** import ESModule ***/
+import * as Calculator from 'https://rawcdn.githack.com/artkabis/toolsWP/4bc5684ce8784df2da0f2cb1392d0266d99728d2/demenagement-calculator/private/module.calculator.mjs';
+
+
+/*** La première constante reprend le chemin relatif sans le nom et l'extension de vos icones et du fichier xlsx (que vous récupérez une fois ceux-ci mis en bibliothèque), la seconde comporte la base url et le nom du fichier xlsx et le dernier permet de paramètrer l'espacement au scroll du conteneur de volume total ***/
 
 const base_url = "/wp-content/uploads/sites/5958/2022/01/";//Chemin vers les images (sans nom et extension de celles-ci).
 const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant les éléments traités.
-const calcul = {calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
+const calcul = undefined;//{calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
 const spaceTop = -300;//Espace de positionnement du module volume total et liste d'item (fixé via le scroll)
+
+document.addEventListener('DOMContentLoaded', Calculator.Calculator.init({baseUrl:base_url,xlsxUrl: xlsx_url}));//Initialisation du calculateur après chargement du DOM
+</script>
 </script>
 ```
 Voici la strcture de votre page : 
