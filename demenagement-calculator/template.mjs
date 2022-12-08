@@ -1,6 +1,7 @@
 export const template=()=>{
 return
   (`
+  <link href="https://rawcdn.githack.com/artkabis/toolsWP/bb3de90516da7eaac8d94db466b04b3672b62137/demenagement-calculator/custom.css" rel="stylesheet"/>
   <div class="rowCalc flex-row row-top">
   <div class="col-4 flex-col">
     <div class="col-menu s-col-menu-sticky">
