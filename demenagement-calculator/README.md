@@ -32,7 +32,6 @@ const spaceTop = -300;//Espace de positionnement du module volume total et liste
 
 document.addEventListener('DOMContentLoaded', Calculator.Calculator.init({baseUrl:base_url,xlsxUrl: xlsx_url}));//Initialisation du calculateur après chargement du DOM
 </script>
-</script>
 ```
 Voici la strcture de votre page : 
 ![Agencement de votre page](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/agencement-page-calculator.JPG)
