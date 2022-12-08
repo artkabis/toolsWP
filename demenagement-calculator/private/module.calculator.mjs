@@ -27,7 +27,7 @@ export const Calculator = {
     /*/
     //request xlsx to json (uncomment in current domain)
     
-    console.log('data json import :'dataJson);
+    console.log('data json import :',dataJson);
     if (!dataJson) {
 
       var oReq = new XMLHttpRequest();
