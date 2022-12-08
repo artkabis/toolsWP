@@ -26,6 +26,8 @@ export const Calculator = {
     /* uncomment for online version and delete const datas ***.
     /*/
     //request xlsx to json (uncomment in current domain)
+    
+    console.log('data json import :'dataJson);
     if (!dataJson) {
 
       var oReq = new XMLHttpRequest();
@@ -61,6 +63,7 @@ export const Calculator = {
     }
     setTimeout(() => {
       tab = (dataJson) ? dataJson : tab1;//Si la requête est décommenter, à remplacer par tab1
+      console.log('############### tab : ',tab);
       console.log(tab)
       for (var i = 0; i < tab.length; i++) { catg.push(tab[i].categorie); }
       titleCatg = cleanArray(catg);//Titles categories (no-duplicate)
