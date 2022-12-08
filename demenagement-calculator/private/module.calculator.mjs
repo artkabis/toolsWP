@@ -14,7 +14,7 @@ document.querySelector('#gform_page_49_3').style.display="block"
 ***/
 
  export const Calculator = {
-  init: ({ baseUrl = base_url, xlsxUrl = xlsx_url, datas = undefined, calcul = undefined }) => {
+  init: ({spaceTop:0, baseUrl = base_url, xlsxUrl = xlsx_url, datas = undefined, calcul = undefined }) => {
     console.log('loading DOM');
     /**** Start calculator ***/
     //External function "calc"  (codepen js parameters) : https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js
@@ -28,7 +28,7 @@ document.querySelector('#gform_page_49_3').style.display="block"
       oReq.open("GET", urlXlsx, true);
       oReq.responseType = "arraybuffer";
       oReq.onload = function(e) {
-        var arraybuffer = oReq.response;
+      var arraybuffer = oReq.response;
 
         // convert data to binary string 
         var data = new Uint8Array(arraybuffer);
@@ -41,7 +41,6 @@ document.querySelector('#gform_page_49_3').style.display="block"
         // Get worksheet 
         var worksheet = workbook.Sheets[first_sheet_name];
         tab1 = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-        console.log('tab1 : ', tab1);
       }
       oReq.send();
     }
@@ -168,11 +167,10 @@ document.querySelector('#gform_page_49_3').style.display="block"
             itemName = $(this).siblings('.item-text').text(),
             itemId = $(this).parent().attr('id'),
             volumeItem = $(this).siblings('.totalitem').val();
-          (actVal && actVal > 0) ? (() => {
-            //console.log('if actVal > 0 itemId: ',itemId, 'select item : ',$(".volume-a-calculer div[class$='" + itemId + "']"));
-            $(".volume-a-calculer div[class$='" + itemId + "']").remove();
-            $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>&nbsp;:&nbsp;<span class="item-qty">${actVal}</span><span class="item-volume">&nbsp;->&nbsp;Volume&nbsp;:>&nbsp;${volumeItem} m³ ,</span> </div>`);
-          })() : ($(this).parents('.item').removeClass("selected"), $(".volume-a-calculer div[class$='" + itemId + "']").remove());
+            (actVal && actVal > 0) ? (() => {
+             $(".volume-a-calculer div[class$='" + itemId + "']").remove();
+             $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>&nbsp;:&nbsp;<span class="item-qty">${actVal}</span><span class="item-volume">&nbsp;->&nbsp;Volume&nbsp;:>&nbsp;${volumeItem} m³ ,</span> </div>`);
+           })() : ($(this).parents('.item').removeClass("selected"), $(".volume-a-calculer div[class$='" + itemId + "']").remove());
         })() : (() => {
           (itemId) && $(".volume-a-calculer div[class$='" + itemId + "']").remove();
           $('input[name=' + fieldName + ']').val(0);
