@@ -1,9 +1,10 @@
+
 import * as jQuery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js';
 import * as jQueryui from 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js';
 import * as calc from 'https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js';
 import * as jszip from 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js';
 import * as XLSX from 'https://unpkg.com/xlsx/xlsx.mjs';
-
+import * as datas from 'https://rawcdn.githack.com/artkabis/toolsWP/d9fdb64e8ce5e9a5032ad11805bb28d74a196a8f/demenagement-calculator/datas.mjs';
 
 /****
 ** online WP implementation : https://www.provence-demenagement.com/testing-calculator/
@@ -12,8 +13,7 @@ document.querySelector('#gform_page_49_1').style.display="none";
 document.querySelector('#gform_page_49_3').style.display="block"
 ***/
 
-
-export const Calculator = {
+ export const Calculator = {
   init: ({ baseUrl = base_url, xlsxUrl = xlsx_url, datas = undefined, calcul = undefined }) => {
     console.log('loading DOM');
     /**** Start calculator ***/
@@ -23,14 +23,7 @@ export const Calculator = {
     let [categories_name, tab1, titleCatg, catg] = [[], [], [], []];//Destructuring assignement
     let [url, urlXlsx, dataJson] = [baseUrl, xlsxUrl, datas];
 
-    /* uncomment for online version and delete const datas ***.
-    /*/
-    //request xlsx to json (uncomment in current domain)
-    
-    console.log('data json import :',dataJson);
     if (!dataJson) {
-      console.log('start convert XLSX2JSON');
-
       var oReq = new XMLHttpRequest();
       oReq.open("GET", urlXlsx, true);
       oReq.responseType = "arraybuffer";
@@ -60,12 +53,10 @@ export const Calculator = {
       return [...new Set(array)];//fusion multiple values array
     }
     const cleanArea = ($str, dataType) => {
-      return (dataType) ? $.trim($str.replace(/\s\s+/g, '').replace(/,/g, '\n').replaceAll(/^\s+|\s+$/gm, '')).replace('m³','m³ \n') : $.trim($str.replace(/,/g, '\n'));
+      return (dataType) ? String($str).replaceAll(',', '').replace(/\s/g, '').replaceAll('m³', 'm³\n').replaceAll('->', ' -> ').replaceAll(':', ' : '): $.trim($str.replace(/,/g, '\n'));
     }
     setTimeout(() => {
       tab = (dataJson) ? dataJson : tab1;//Si la requête est décommenter, à remplacer par tab1
-      console.log('############### tab : ',tab);
-      console.log(tab)
       for (var i = 0; i < tab.length; i++) { catg.push(tab[i].categorie); }
       titleCatg = cleanArray(catg);//Titles categories (no-duplicate)
     }, 300);
@@ -156,7 +147,7 @@ export const Calculator = {
         //Ajout du contenu de volume-a-calculer avec saut de ligne
         $('.volume-a-calculer div').each(function(index) {
           $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(), true));
-          $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text(), false));
+          $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text(), true));
           temp = $('.result-volume-a-calculer textarea').val();
         });
         recalc();
@@ -183,7 +174,7 @@ export const Calculator = {
             $('.volume-a-calculer').append(`<div class="new-item-${fieldName}"><span class="item-name">${itemName}</span>&nbsp;:&nbsp;<span class="item-qty">${actVal}</span><span class="item-volume">&nbsp;->&nbsp;Volume&nbsp;:>&nbsp;${volumeItem} m³ ,</span> </div>`);
           })() : ($(this).parents('.item').removeClass("selected"), $(".volume-a-calculer div[class$='" + itemId + "']").remove());
         })() : (() => {
-          $(".volume-a-calculer div[class$='" + itemId + "']").remove();
+          (itemId) && $(".volume-a-calculer div[class$='" + itemId + "']").remove();
           $('input[name=' + fieldName + ']').val(0);
         })();
         // reset du textearea
@@ -192,7 +183,7 @@ export const Calculator = {
         //Add content to volume-a-calculer with break line
         $('.volume-a-calculer div').each(function(index) {
           $('.liste-fourniture-send textarea').val(cleanArea(temp + $(this).text(), true));
-          $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text(), false));
+          $('.result-volume-a-calculer textarea').val(cleanArea(temp + $(this).text(), true));
           temp = $('.result-volume-a-calculer textarea').val();
         });
         recalc();
