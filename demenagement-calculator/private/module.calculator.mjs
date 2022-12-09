@@ -21,22 +21,22 @@ document.querySelector('#gform_page_49_3').style.display="block"
     let [url, urlXlsx, dataJson] = [baseUrl, xlsxUrl, datas];
 
     if (!dataJson) {
-      var oReq = new XMLHttpRequest();
+      let oReq = new XMLHttpRequest();
       oReq.open("GET", urlXlsx, true);
       oReq.responseType = "arraybuffer";
       oReq.onload = function(e) {
-      var arraybuffer = oReq.response;
+      const arraybuffer = oReq.response;
 
         // convert data to binary string 
-        var data = new Uint8Array(arraybuffer);
-        var arr = new Array();
-        for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-        var bstr = arr.join("");
-        var workbook = XLSX.read(bstr, { type: "binary" });
+        const data = new Uint8Array(arraybuffer);
+        let arr = new Array();
+        for (let i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+        const bstr = arr.join("");
+        const workbook = XLSX.read(bstr, { type: "binary" });
         // DO SOMETHING WITH workbook HERE 
-        var first_sheet_name = workbook.SheetNames[0];
+        const first_sheet_name = workbook.SheetNames[0];
         // Get worksheet 
-        var worksheet = workbook.Sheets[first_sheet_name];
+        const worksheet = workbook.Sheets[first_sheet_name];
         tab1 = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       }
       oReq.send();
