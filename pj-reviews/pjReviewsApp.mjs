@@ -8,7 +8,7 @@ import * as jQuery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jqu
   - Constantes de paramétrage liées au nombre d'avis devant être visibles dans l'app
   -
   ***************/
-export const pjReviewsApp = async ({idClient=IDPRODUCT,nbReviews=null,containerReviews=''}) =>{
+export const pjReviewsApp = async ({idClient='',nbReviews=null,containerReviews=''}) =>{
   //Vous pouvez donner un nombre limite d'avis en modifiant cette variable (10 par exemple), si null, tous les avis seront affichés.
   if ($(containerReviews).length && idClient && containerReviews) {
     let rates = [],isRatings = !1, reply = [{comment: '',date: '',id: 0}],i =0,j=0;
