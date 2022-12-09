@@ -1,9 +1,7 @@
 import * as jQuery from 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js';
 import * as jQueryui from 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js';
 import * as calc from 'https://rawcdn.githack.com/artkabis/toolsWP/b2154687760ca3b152066029ceb912aa48057b08/demenagement-calculator/sources/calculator.min.js';
-import * as jszip from 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js';
 import * as XLSX from 'https://unpkg.com/xlsx/xlsx.mjs';
-import * as datas from 'https://rawcdn.githack.com/artkabis/toolsWP/d9fdb64e8ce5e9a5032ad11805bb28d74a196a8f/demenagement-calculator/datas.mjs';
 
 /****
 ** online WP implementation : https://www.provence-demenagement.com/testing-calculator/
@@ -54,7 +52,7 @@ document.querySelector('#gform_page_49_3').style.display="block"
       return (dataType) ? String($str).replaceAll(',', '').replace(/\s/g, '').replaceAll('m³', 'm³\n').replaceAll('->', ' -> ').replaceAll(':', ' : '): $.trim($str.replace(/,/g, '\n'));
     }
     setTimeout(() => {
-      tab = (dataJson) ? dataJson : tab1;//Si la requête est décommenter, à remplacer par tab1
+      tab = dataJson??= tab1;//Si la requête est décommenter, à remplacer par tab1
       for (var i = 0; i < tab.length; i++) { catg.push(tab[i].categorie); }
       titleCatg = cleanArray(catg);//Titles categories (no-duplicate)
     }, 300);
@@ -238,7 +236,7 @@ document.querySelector('#gform_page_49_3').style.display="block"
           for (var i = 0; i < labelVolume.length; i++) {
             let thisid = "#" + labelVolume[i];
             const thisvalue = valueVolume[i],
-              thisexp = exerptVolume[i]
+              thisexp = exerptVolume[i];
             $(thisid).addClass('selected');
             thisid = thisid + " .qtyvalue";
             $(thisid).val(thisvalue);
