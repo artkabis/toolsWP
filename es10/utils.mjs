@@ -9,6 +9,7 @@ export const isEven = (n) => n % 2 === 0;
 export const isOdd = (n) => n % 2 === 1;
 export const getPercentage = (total, value) => (total && value) ? Math.round((value / total) * 100) : 0;
 export const convertDate2fr = (el) => el.split('-').reverse(el).join('/');
+export const hex2rgb = (hex) => {let r,g,b,result;(hex.length === 4) ? (r = hex.slice(1,2),g = hex.slice(2,3),b = hex.slice(3,4),r = parseInt(r+r, 16),g = parseInt(g+g, 16),b = parseInt(b+b, 16),result={ r, g, b}): (r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16), result={ r, g, b });return result;}
 export const noDuplcaArray = (a) =>  [...new Set(a)];
 export const onlyValidValueArray = (a) =>a.filter(Boolean);
 export const generateToken = () =>{const shuffle = ()=>Math.random().toString(36).substr(2);let tokenA = [];[0,0,0].forEach((t)=>tokenA.push(shuffle()+shuffle()));return String(tokenA.join(''));}
