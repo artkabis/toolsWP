@@ -1,0 +1,21 @@
+<script id="widget-avis-etat" src="https://vraimentpro.com/storage/plugins_widget/widget_avis_artisan_460360.js" type="text/javascript"></script>
+<script async>
+    dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+    function funcReadyDomDM() {
+        const env = dmAPI.getCurrentEnvironment();
+        if(env !== 'editor') {
+            setTimeout(()=>{
+                $('.widget-avis tr').css('display','flex');
+                $(" #pushleft .content-left").css({'right': '-310px','left': 'inherit'});
+                $('.content-left.widget-avis tr td:first-child').css('order','1');
+                $('.content-left.widget-avis tr td:last-child').css('order','0');
+                $('body').on('mouseover',"#data_widget_show .content-left",function(me){
+                    $(this).css('right','0');
+                });
+                 $("body").on('mouseout','#data_widget_show .content-left',function(me){
+                    $(this).css('right','-310px');
+                });
+            },500)
+        }
+    }
+</script>
