@@ -11,7 +11,7 @@ const onDomElementIsReady = (elementToWatch)=> {
       };
 
 //Fix H4 news
-$(window).on('load',function(){
+$(function() {//ready dom function
     if(window.location.pathname.includes('/actualites/')){
         onDomElementIsReady('.vc_grid h4').then(el =>{
            $('.vc_grid h4').each(function(i,t){
