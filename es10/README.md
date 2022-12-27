@@ -32,6 +32,8 @@
 24. $$$ -> (querSelector:String) :: Node // loop inner dom and shadow dom et return node element
 29. hex2rgb -> 
 30. createButton
-31. getLinkStyleSheet
-32. validateEmailFormat
+31. getLinkStyleSheet (
+32. validateEmailFormat -> (email:String) :: Boolean
 33. lazyLoadImg
+34. getUUID -> () :: String //return uuid (best perf comparate to uuidv4)
+35. perfTest -> (repeats:Number, description:String, func:Function) :: String // Testing comparative function in ms (ex: getUUID(): total time is 118 ms)
