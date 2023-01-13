@@ -59,7 +59,7 @@ linksArray.forEach((linkEl,i) => {
     jsonImg.push({img:finalImg,name:name,cmp:i});
 });
 console.log('_______________ jsonImg : ',jsonImg);
-async function downloadAll(elements,name,i) {
+async function downloadAll(elements) {
     var count = 0;
     for (var e in elements) {
 
