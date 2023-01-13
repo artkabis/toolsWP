@@ -1,8 +1,8 @@
 /*** Params
-* -- @limit_nb_img (Number) -> Nombre d'image maximum à télécharger
-* -- @start_img (Number) -> Débuter le téléchargement à partir de la x image (null si désactivé)
+* -- @max_img (Number) -> Nombre d'images maximums à télécharger
+* -- @start_img (Number) -> Débuter le téléchargement à partir de la x image
 ***/
-
+const max_img = 25, start_img = 5;//Ici téléchargement à partir de la cinquième image et jusqu'à la vingt-cinquième
 function pause(msec) {
     return new Promise(
         (resolve, reject) => {
@@ -10,7 +10,6 @@ function pause(msec) {
         }
     );
 }
-const max_img = 25, start_img = 5;
 let loop = start_img;
 function convertirHrefEnBlobEtTelecharger(href,name,cmp) {
     // Faire une requête AJAX pour récupérer le contenu du fichier
