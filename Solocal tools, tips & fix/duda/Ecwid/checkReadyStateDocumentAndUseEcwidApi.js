@@ -17,12 +17,14 @@
             });
         });
       }
-      var timer = setInterval( function() {
-            console.log('state : ',document.readyState);
-        	if ( /loaded|complete/.test( document.readyState ) ) {
-        	    clearInterval( timer );
-        	    console.log('dom ready state document');
-                checkEcwid();
-        	}
-        }, 100 );
+      if(window.location.pathname.includes('/boutique/')){
+       var timer = setInterval( function() {
+             console.log('state : ',document.readyState);
+             if ( /loaded|complete/.test( document.readyState ) ) {
+                 clearInterval( timer );
+                 console.log('dom ready state document');
+                    checkEcwid();
+             }
+         }, 100 );
+      }
   }
