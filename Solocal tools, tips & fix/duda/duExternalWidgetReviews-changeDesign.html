@@ -19,3 +19,50 @@
         }
     }
 </script>
+
+
+<!-- Version avancé avec pris en compte du chnagement de page et de l'attente du ready state lié à document -->
+<script id="widget-avis-etat" src="https://vraimentpro.com/storage/plugins_widget/widget_avis_artisan_460360.js" type="text/javascript"></script>
+<script async>
+    dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+    const redesignWidget = () =>{
+        console.log('redéploiement du widget vers la droite');
+        $('.widget-avis tr').css('display','flex');
+        $(" #pushleft .content-left").css({'right': '-310px','left': 'inherit','transition': 'all 0s ease-in-out'});
+        $('.content-left.widget-avis tr td:first-child').css('order','1');
+        $('.content-left.widget-avis tr td:last-child').css('order','0');
+        $('body').on('mouseover',"#data_widget_show .content-left",function(me){
+            $(this).css('right','0');
+        });
+         $("body").on('mouseout','#data_widget_show .content-left',function(me){
+            $(this).css('right','-310px');
+        });
+        let cmp = 0;
+        console.time('listenTimer')
+        var timer = setInterval( function() {
+            cmp ++;
+             console.log('state : ',document.readyState);
+             if ( /loaded|complete/.test( document.readyState ) ) {
+                 clearInterval( timer );
+                 console.log('dom ready state document');
+                    redesignWidget();
+             }else if(cmp === 60){
+                 console.timeEnd('listenTimer');
+                 clearInterval( timer );
+             }
+        }, 100 );
+    }
+    dmAPI.runBeforeAjaxNavigation('beforeChangePage',redesignWidget);
+
+    function funcReadyDomDM() {
+        const env = dmAPI.getCurrentEnvironment();
+        console.log('env : ',env,'  is not editor : ',env !== 'editor');
+        const widget = $('data_widget_show');
+        
+        console.log('widget : ',widget);
+        if(env !== 'editor') {
+            redesignWidget();
+        }
+    }
+
+</script>
