@@ -22,6 +22,7 @@
 
 
 <!-- Version avancé avec pris en compte du chnagement de page et de l'attente du ready state lié à document -->
+
 <script id="widget-avis-etat" src="https://vraimentpro.com/storage/plugins_widget/widget_avis_artisan_460360.js" type="text/javascript"></script>
 
 <script async>
@@ -50,7 +51,7 @@
          if ( /loaded|complete/.test( document.readyState ) ) {
              clearInterval( timer );
              console.log('dom ready state document - cmp :',cmp);
-                redesignWidget();
+                if($('.widget-avis').length)redesignWidget();
                 cmp=0;
          }else if(cmp === 60){
              console.timeEnd('listenTimer');
@@ -58,6 +59,7 @@
              cmp=0;
          }
     }, 100 );
+     
    
     dmAPI.runBeforeAjaxNavigation('beforeChangePage',redesignWidget);
 
@@ -69,7 +71,7 @@
         console.log('widget : ',widget);
         if(env !== 'editor') {
             readyDom = true;
-            if(readyDom)redesignWidget();
+            if(readyDom && $('.widget-avis').length)redesignWidget();
         }
     }
 
