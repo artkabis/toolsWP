@@ -1,0 +1,62 @@
+<!-- CSS scroll zoom Maps -->
+<style>
+.containerMaps{
+    position:relative;
+}
+.containerMaps:not(.clicked):before{
+    content: "";
+    position:absolute;
+    /*top:50%;
+    left:50%;
+    transform: translate(-50%,-50%)*/
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgb(0 0 0 /80%);
+    color: white;
+    z-index:9
+}
+.containerMaps:not(.clicked):after{
+    content: "Veuillez cliquer sur la map pour l'activer";
+    position:absolute;
+    text-align:center;
+    left:50%;
+    top: 50%;
+    transform:translate(-50%,-50%);
+    z-index:9;
+    color:white;
+}
+iframe[src*="https://www.google.com/maps/"]{
+    width: 100%;
+    display: block;
+    pointer-events: none;
+    position: relative; 
+}
+iframe[src*="https://www.google.com/maps/"].clicked{
+    pointer-events: auto;
+}
+</style>
+<!-- END -> CSS scroll zoom Maps -->
+
+
+<!-- JS scroll zoom Maps (body-end.html) -->
+<script async>
+  dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+  function funcReadyDomDM(){
+    const env = dmAPI.getCurrentEnvironment();
+    if(env !== 'editor') {
+      (function($){
+        const parentIframeMaps = $('iframe[src*="https://www.google.com/maps/"]').parent();
+        parentIframeMaps.addClass('containerMaps');
+        parentIframeMaps
+          .on('click',function(me){
+            $(this).addClass('clicked')})
+          .on('mouseleave',function(me){
+            $(this).removeClass('clicked')
+        });
+      })(jQuery);
+    }
+  }
+</script>
+<!-- END -> JS scroll zoom Maps (body-end.html) -->
