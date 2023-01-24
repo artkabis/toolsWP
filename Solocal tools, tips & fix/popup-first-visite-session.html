@@ -1,0 +1,84 @@
+<style>
+#welcomePopup {
+    position: fixed;
+    right: 26px;
+    bottom: 11vh;
+    width: auto;
+    min-width: 35vw;
+    min-height: 300px;
+    height: auto;
+    background: rgb(255 255 255 / 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 0 30px rgba(0 0 0 /80%);
+    z-index:9;
+}
+
+div#welcomePopup .closePopupBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #333;
+    padding: 7.5px;
+    font-weight: 900;
+    font-size: 1.3em;
+    text-decoration: none;
+}
+
+.titlePopup {
+    padding: 15px 0;
+    margin: 0 0 30px 0;
+    background: gray;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.popupContent {
+    width: 100%;
+    padding: 15px;
+}
+
+.messagePopup p {
+    color: #333;
+}
+</style>
+
+<script>
+/***** Détecter la première visite et le nombre d'occurrence sans prendre en compte update de la page (F5) afin de personnaliser le message de bienvenue ****/
+(function ($) {
+    var nb = null;//Compteur de visite à null
+    setTimeout(testVisite,300);//Appel de la fonction après 300ms
+    function testVisite(){
+        const reloaded = (performance.getEntriesByType("navigation")[0].type === 'reload')?true:false;//Détection du refresh de la page (si reload alors true)
+        console.log('reloaded : ',performance.getEntriesByType("navigation")[0].type);
+    	if( !localStorage.getItem('visiteHome')){//Si la valeur en localStorage et le compteur ne sont pas initialisés.
+    	    localStorage.setItem('visiteHome', 1);//on redéfinit la valeur de la variable du localStorage avec la variable locale.
+            $('body').append(`<div id="welcomePopup">
+                <a class="closePopupBtn">X</a>
+                <div class="popupContent">
+                    <div class="messagePopup">
+                        <img class="aligncenter wp-image-273" src="https://www.residence-retraite-lesrestanques.fr//wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc-300x47.png" alt="Grand-logo" width="400" height="63" srcset="https://www.residence-retraite-lesrestanques.fr/wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc-300x47.png 300w, https://www.residence-retraite-lesrestanques.fr/wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc-260x41.png 260w, https://www.residence-retraite-lesrestanques.fr/wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc-50x8.png 50w, https://www.residence-retraite-lesrestanques.fr/wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc-150x24.png 150w, /wp-content/uploads/sites/9962/2019/03/logo-les-restanques-de-flayosc.png 758w" sizes="(max-width: 400px) 100vw, 400px">
+                        <p style="text-align: center">Montée de la Grande Vigne – 83780 Flayosc</p>
+                        <p style="text-align: center"><a href="tel:0498101515">04.98.10.15.15</a></p>
+                        <p style="text-align: center">du studio au 2 pièces à partir de <strong>1140 €/ mois</strong></p>
+                        <div class="column one-second"><a class="my-btn fat" href="/demande-brochure/">Demandez votre brochure</a></div>
+                        <p></p>
+                        <div class="column one-second"><a class="my-btn cta" href="/contact/">Je visite la résidence</a></div>
+                    </div>
+                </div>
+            </div>`);
+            
+            $('#welcomePopup').fadeIn(300);//On affiche le message de bienvenue
+    	}else if(Number(localStorage.getItem('visiteHome'))>0 && !reloaded){//si la valeur numérique de visiteHome est supérieure à 0 et qu'update vaut false
+    	    nb=Number(localStorage.getItem('visiteHome')) + 1;//nb vaut la valeur dans le localStorage + 1
+    	    localStorage.setItem('visiteHome', nb);//on met à jour visiteHome
+    		  $('#welcomePopup').fadeOut(0);//Le message de bienvenue n'est plus visible
+    	}
+    }
+
+})(jQuery)
+</script>
