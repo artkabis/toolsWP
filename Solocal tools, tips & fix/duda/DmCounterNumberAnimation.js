@@ -3,13 +3,13 @@
   function funcReadyDomDM(){
       const env = dmAPI.getCurrentEnvironment();
       if(env !== 'editor') {
-          const blocCounter = document.querySelector(".blocCounter");//BlocCounter qui devront être détectés pour lancer l'animation
+          const blocCounter = document.querySelector(".blocCounter");//blocCounter qui devront être détectés pour lancer l'animation
         if(blocCounter){   
             let blocCounterValue = blocCounter.getBoundingClientRect();
             const counters = document.querySelectorAll(".numberCounter");
             // LES PARAMETRES DE BASE DE L'ANIMATION
             let play = false;
-            let duration = 2000; // temps de l'animation en millisecondes
+            let duration = 3000; // Temps de l'animation en millisecondes
             
             // LE DÉCLENCHEUR DE L'ANIMATION = ici 1/2 de la Hauteur de l'écran (paramétrable)
             const heightDivide = 2;
@@ -50,17 +50,20 @@
   }
 
 
-/******* HTML brut
+/******* HTML brut -->
 
 
 
-<div class="colCounter">
+<div class="blocCounter">
   <span class="prefixe"></span>
   <div class="numberCounter" data-target="6360">0</div>
   <span class="suffixe"></span>
 </div>
 
 
-
+CSS -->
+.numberCounter {color:#333; font-size:48px;padding-bottom:20px;font-weight: 700;display: flex;justify-content: center;flex-direction: column;align-items: center;}
+.numberCounter:after {content: '';display: block;background-color: orange;height: 4px;width:50px;} 
+.suffixe {color:#fff;}
 
 *******************/
