@@ -1,6 +1,7 @@
 
 <script async>
-  dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+  // Only end Duda ready -> dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+$(window).load(funcReadyDomDM);//Spped dom ready
   function funcReadyDomDM(){
       const env = dmAPI.getCurrentEnvironment();
       if(env !== 'editor') {
