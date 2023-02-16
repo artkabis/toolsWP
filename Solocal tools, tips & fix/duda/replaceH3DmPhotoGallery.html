@@ -1,0 +1,14 @@
+<script async>
+  dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+  function funcReadyDomDM(){
+      const env = dmAPI.getCurrentEnvironment();
+      if(env !== 'editor') {
+        const galerie = $('.dmPhotoGallery h3.caption-title');
+        if(galerie.length){
+            galerie.each(function(i,t){
+                $(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>'); 
+            });
+        }
+     }
+  }
+</script>
