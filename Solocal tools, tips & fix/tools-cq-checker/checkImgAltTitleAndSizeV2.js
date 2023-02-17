@@ -1,4 +1,4 @@
-jaavascript:(() => {
+javascript:(() => {
   function formatBytes(bytes) {
     if (bytes < 1024) return bytes + " Bytes";
     else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
