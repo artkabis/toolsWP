@@ -38,7 +38,7 @@ javascript:(()=>{
                         parentheight: parentHeight
                     };
                     console.table(result, "");
-                    if (fsize > 248000) {
+                    if (fsize > 310000) {
                         console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
                     }
                     if (type === 'srcImage' && alt === null) {
