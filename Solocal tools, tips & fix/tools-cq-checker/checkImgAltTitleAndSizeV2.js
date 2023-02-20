@@ -1,4 +1,4 @@
-(()=>{
+javascript:(()=>{
     function formatBytes(bytes) {
         if (bytes < 1024)
             return bytes + " Bytes";
