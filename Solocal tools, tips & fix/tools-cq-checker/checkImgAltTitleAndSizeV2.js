@@ -1,9 +1,12 @@
 javascript:(() => {
     const formatBytes = (bytes) => {
-      if (bytes < 1024) return bytes + " Bytes";
-      else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
-      else if (bytes < 1073741824) return (bytes / 1048576).toFixed(2) + " MB";
-      else return (bytes / 1073741824).toFixed(2) + " GB";
+      return bytes < 1024
+        ? bytes + " Bytes"
+        : bytes < 1048576
+        ? (bytes / 1024).toFixed(2) + " KB"
+        : bytes < 1073741824
+        ? (bytes / 1048576).toFixed(2) + " MB"
+        : (bytes / 1073741824).toFixed(2) + " GB";
     };
     
     const checkUrlImg = async ($this, url, alt, title, type, width, height, parentWidth, parentHeight) => {
