@@ -38,7 +38,8 @@ javascript:(()=>{
                         parentheight: parentHeight
                     };
                     console.table(result, "");
-                    if (fsize > 310000) {
+                    /*317435 Bytes = 310 KB*/
+                    if (fsize > 317435) {
                         console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
                     }
                     if (type === 'srcImage' && alt === null) {
@@ -70,5 +71,7 @@ javascript:(()=>{
                 }
             }
         });
-    })(jQuery)
-})();
+    }
+    )(jQuery)
+}
+)();
