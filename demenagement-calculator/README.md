@@ -18,6 +18,10 @@ Ce calculateur gère :
 
 3°) Vérifier que les variables comportent le bon chemin vers votre xslx et vos images (bloc html brut) : 
 ```html
+ <!-- App container calculator -->
+<div id="App"></div>
+
+ <!-- ESM -->
  <script type="module">
   /**** import ESModule ***/
 import * as Calc from 'https://rawcdn.githack.com/artkabis/toolsWP/70558dbd9031e99db99dd468eda07114da49991b/demenagement-calculator/module.calculator.min.mjs'
@@ -29,11 +33,13 @@ const xlsx_url = base_url+"listing-items.xlsx";//Chemin vers l'Excel comportant 
 const calcul = undefined;//{calcStr:"qty * price", qty: '$("input[name^=qty_item_]")',price: '$("[id^=price_item_]")'};
 const spaceTop = 20;//Espace de positionnement du module volume total et liste d'items (fixé via le scroll)
 const datasJson = Datas.datas;//Exemple de datas au format json, si undefined alors mise en place de la request XLSX-> Json
+
+/** Gestion de l'injection du module  dans le DOM (#App container)***/
 document.querySelector('#App').innerHTML = String(Template.template).split('`')[1];//Template html du calculateur
 document.addEventListener('DOMContentLoaded', await Calc.Calculator.init({spaceTop:spaceTop, baseUrl:base_url,xlsxUrl:xlsx_url, datas:datasJson}));//Initialisation du calculateur après chargement du DOM
  </script>
 ```
-Voici la strcture de votre page : 
+Voici la structure de votre page : 
 ![Agencement de votre page](https://github.com/artkabis/toolsWP/blob/main/demenagement-calculator/sources/agencement-page-calculator.JPG)
 
 4°) Déposer le fichier xslx (listing-items) dans la bibliothèque de médias (vérifié que la constante "base_url" reprend bien l'url de base sans le nom du fichier).
