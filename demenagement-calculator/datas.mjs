@@ -1257,7 +1257,7 @@ export const datas =[
     {
         "categorie": "autres",
         "name": "paniere-linge",
-        "content/img": "paniere-a-linge.png",
+        "content/img": "panier-a-linge.png",
         "content/title": "Panière à linge",
         "content/val": 0.3
     },
