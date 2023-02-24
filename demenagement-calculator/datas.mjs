@@ -1012,7 +1012,7 @@ export const datas =[
     {
         "categorie": "autres",
         "name": "velo",
-        "content/img": "velo",
+        "content/img": "velo.png",
         "content/title": "Vélo",
         "content/val": 0.25
     },
