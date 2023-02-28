@@ -1,4 +1,5 @@
 javascript:(()=>{
+    console.clear();
     const formatBytes = (bytes) => {
       return bytes < 1024
         ? bytes + " Bytes"
@@ -34,7 +35,7 @@ javascript:(()=>{
             } else {
                 console.warn("Not available");
             }
-        }
+        };
 
     (function($) {
         $('img').each(function(t, i) {($(this) && $(this).attr('src')) && checkUrlImg($(this), $(this)[0].src, $(this)[0].getAttribute('alt'), $(this)[0].getAttribute('title'), 'srcImage', $(this)[0].width, $(this)[0].height, $(this).width(), $(this).height());});
@@ -42,9 +43,13 @@ javascript:(()=>{
             if ($(this).css('background-image') && String($(this).css('background-image')) !== 'none' && String($(this).css('background-image')).includes('url(')) {
                 console.log('------------------------------', $(this).css('background-image'));
                 let bgimg = String($(this).css('background-image')).split('url("')[1].split('")')[0];
+                
                 let _this = $(this);
                 let customImg = new Image();
                 bgimg = (bgimg.includes('http')) ? bgimg : window.location.origin + bgimg;
+                const detectAnotherOrigin = (!bgimg.includes(window.location.origin));
+                (detectAnotherOrigin) && console.warn('Image url not current domain origin :',bgimg);
+                bgimg = (detectAnotherOrigin) ? window.location.origin + '/wp-content/'+bgimg.split('/wp-content/')[1] : bgimg;
                 customImg.src = bgimg;
                 if (bgimg) {
                     customImg.onload = function() {
