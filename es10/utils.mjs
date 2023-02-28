@@ -7,6 +7,8 @@ export const isNotUndefined = (n) => n === undefined ? false : true;
 export const toNumber = (s) =>  (s) && +s;
 export const isEven = (n) => n % 2 === 0;
 export const isOdd = (n) => n % 2 === 1;
+export const isIE2 = () => (navigator.userAgent.includes('MSIE')) ? true : false;
+export const mailAddressIsValid = (mail) => {try {const emailRegEx = /(^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-+]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$)/;return emailRegEx.test(address);} catch(e) {console.error(e)}}
 export const getPercentage = (total, value) => (total && value) ? Math.round((value / total) * 100) : 0;
 export const convertDate2fr = (el) => el.split('-').reverse(el).join('/');
 export const hex2rgb = (hex) => {let r,g,b,result;(hex.length === 4) ? (r = hex.slice(1,2),g = hex.slice(2,3),b = hex.slice(3,4),r = parseInt(r+r, 16),g = parseInt(g+g, 16),b = parseInt(b+b, 16),result={ r, g, b}): (r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16), result={ r, g, b });return result;}
