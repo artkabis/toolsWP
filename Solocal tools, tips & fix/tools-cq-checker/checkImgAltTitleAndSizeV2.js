@@ -53,8 +53,7 @@ javascript:(()=>{
                 customImg.src = bgimg;
                 if (bgimg) {
                     customImg.onload = function() {
-                        (!bgimg.includes('data:image/')) && checkUrlImg($(this), bgimg, 'no alt -> gbimg', 'no title -> gbimg', 'bgImage', customImg.width, customImg.height, _this.width(), _this.height());
-                         (bgimg.includes('data:image/')) && (console.log('base64 img detected : ',bgimg.includes('data:image/'),'  width : ',customImg.width, '  height : ',customImg.height,' url : ',bgimg));
+                        (!bgimg.includes('data:image/')) ? checkUrlImg($(this), bgimg, 'no alt -> gbimg', 'no title -> gbimg', 'bgImage', customImg.width, customImg.height, _this.width(), _this.height()) : console.log('base64 img detected : ',bgimg.includes('data:image/'),'  width : ',customImg.width, '  height : ',customImg.height,' url : ',bgimg);
                     }
                 }
             }
