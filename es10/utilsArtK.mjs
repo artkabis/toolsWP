@@ -1,5 +1,5 @@
 "use strict";
-export const utilsArtK = (()=>{
+export const utilsArtK = ()=>{
  const toCamelCase = (str) => str.toLowerCase().replace(/^\w|\s\w/g, (letter, index) =>index === 0 ? letter.toLowerCase() : letter.toUpperCase()).replace(/\s+/g, '');
  const randomMM = (min,max)=> Math.floor(Math.random() * (max - min + 1)) + min;
  const isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
@@ -47,4 +47,4 @@ export const utilsArtK = (()=>{
 document.addEventListener("DOMContentLoaded", () => {var lazyImages = [].slice.call(_selector);if ("IntersectionObserver" in window) {let lazyImageObserver = new IntersectionObserver((entries, observer) =>{entries.forEach((entry) =>{if (entry.intersectionRatio > 0 || entry.isIntersecting) {const lazyImage = entry.target;const IMG_DATA_SRC = lazyImage?.dataset?.src;const IMG_DATA_SRCSET = lazyImage?.dataset?.srcset;(IMG_DATA_SRC) && (lazyImage.src = lazyImage?.dataset?.src, lazyImage.removeAttribute('data-src'));  (IMG_DATA_SRCSET) && (lazyImage.srcset = IMG_DATA_SRCSET, lazyImage.removeAttribute('data-srcset'));lazyImage.classList.remove(_classNode);lazyImageObserver.unobserve(lazyImage);}},_options);});lazyImages.forEach((lazyImage)=>lazyImageObserver.observe(lazyImage));} else {console.error('IntersectionObserver not working on your device');}});}
  const getUUID = () =>{const generateNumber = (limit) =>  limit * Math.random() | 0;const generateX = () => generateNumber(16).toString(16);const generateXes = (count) => {let result = '';for(let i = 0; i < count; ++i) {result += generateX()}return result};const generateVariant = () =>  (generateNumber(16) & 0x3) | 0x8.toString(16);return generateXes(8) + '-' + generateXes(4) + '-' + '4' + generateXes(3) + '-' + generateVariant() + generateXes(3) + '-' + generateXes(12)};
  const perfTest = (repeats, description, func) => {const t1 = Date.now();for (let i = 0; i < repeats; ++i) func();console.log(`${description}: totoal time is ${Date.now() - t1} ms`);};
-})();
+};
