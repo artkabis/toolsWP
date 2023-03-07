@@ -1,10 +1,10 @@
 <script>
 /** 
-1°) dans le menu de gauche -> pages, onglet de droite "popup" vous avez la possibilité de créer un nouveau popup.
+1°) dans le menu de gauche -> pages, onglet de droite "pop-up" vous avez la possibilité de créer un nouveau pop-up.
 
 2°) Vous devez créer un contenu bouton (widget), à placer dans une zone du site autre que head et footer. 
 
-3°) Utilisez ensuite le réglage en mode popup tout en ayant créé celui-ci via "créer un nouveau popup. Connectez-le au non du popup précédemment créé (étape 1). 
+3°) Utilisez ensuite le réglage en mode pop-up tout en ayant créé celui-ci via "créer un nouveau pop-up. Connectez-le au non du pop-up précédemment créé (étape 1). 
 
 4°) Dernière étape, clic droit sur le bouton -> "modifier HTML/CSS", ajoutez dans le <a> (HTML), votre nouvelle classe "homePoup" (près de la classe "dmButtonLink")
 
@@ -19,10 +19,10 @@ $( window ).on( "load", function() {
     const dateF = new Date('october 29 2022'); // date du fin d'affichage
     const dateJ = new Date(); //date du jour
     if (dateJ >= dateD && dateJ <= dateF && $('.homePoup').length > 0) {
-        // trigger sur btnPopup pour l'ouvrir
+        // trigger sur le bouton ayant la classe "homePoup" pour ouvrir le pop-up. Il faudra personnaliser le bouton (HTML) afin d'ajouter cette classe personnalisée.
         setTimeout(function() {
-            $('.homePoup').click().css('display','none');
-        }, 500);
+            $('.homePoup').trigger('click').remove();
+        }, 500);//délai de latence après le load (en millisecondes)
     }
 });
 </script>
