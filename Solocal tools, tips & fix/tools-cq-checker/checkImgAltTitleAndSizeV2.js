@@ -29,7 +29,7 @@ javascript:(()=>{
                     if (fsize > 317435) {
                         console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
                     }
-                    if (type === 'srcImage' && alt === null) {
+                    if (type === 'srcImage' && alt === null || alt==='') {
                         console.log("%c Warning SRC ALT not working : " + url, "color: red");
                     }
                 } else {
