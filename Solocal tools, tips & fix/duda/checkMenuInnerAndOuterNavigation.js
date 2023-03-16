@@ -10,9 +10,10 @@
         const nv2InNav = (subNavOk) && subNavOk.filter((s)=>s.inNavigation==true);
         nv2InNav.niveau2In = true;
         const finalNavOut = (nv2OutNav>0) ? {nv1OutNav,nv2OutNav} : nv1OutNav;
-        const finalNavIn = (nv2InNav>0) ? {nv1InNav,nv2InNav} : nv1InNav
+        const finalNavIn = (nv2InNav>0) ? {nv1InNav,nv2InNav} : nv1InNav;
         console.log('---------------------------------- Visible en navigation (depuis le menu) --------------------------------------------');
         console.table( finalNavIn );
         console.log('---------------------------------- Non visible dans la navigation (depuis le menu) --------------------------------------------');
         console.table( finalNavOut );
+        finalNavOut.map((t)=>{console.log('links outer nav : ',window.location.origin+t.path) });
 })()
