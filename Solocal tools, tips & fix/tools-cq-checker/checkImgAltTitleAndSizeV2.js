@@ -1,3 +1,4 @@
+
 javascript:(()=>{
     console.clear();
     const formatBytes = (bytes) => {
@@ -10,7 +11,7 @@ javascript:(()=>{
         : (bytes / 1073741824).toFixed(2) + " GB";
     };
    const checkUrlImg = async ($this, url, alt, title, type, width, height, parentWidth, parentHeight) =>{
-            const response = await fetch(url, { method: "HEAD" });
+            const response = await fetch(url, { method: "GET" });
             const fsize = response.headers.get("content-length");
                 if (fsize != null) {
                     var result = {
@@ -24,7 +25,7 @@ javascript:(()=>{
                         parentwidth: parentWidth,
                         parentheight: parentHeight
                     };
-                    console.table(result, "");
+                    console.log(result, "");
                     /*317435 Bytes = 310 KB*/
                     if (fsize > 317435) {
                         console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
