@@ -58,3 +58,8 @@ Style css pour la création du after laCarte permettant d'afficher le message et
 }
 </style>
 ***/
+
+/*** Ajouter des alt aux pin de Mappy ***/
+(function ($) {
+    $(".vc_mappy-map").length && $(".vc_mappy-map .leaflet-pane.leaflet-marker-pane img").each(function(){$(this).attr('alt', 'pin')});
+})(jQuery)
