@@ -25,7 +25,7 @@ javascript:(()=>{
                         parentwidth: parentWidth,
                         parentheight: parentHeight
                     };
-                    console.log(result, "");
+                    console.table(result, "");
                     /*317435 Bytes = 310 KB*/
                     if (fsize > 317435) {
                         console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
