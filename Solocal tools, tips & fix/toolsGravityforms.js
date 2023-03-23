@@ -1,24 +1,18 @@
-/***** Gestion du formulaire, en fonction du paramétre passé dans l'url (bouton en page formation) l'option du select sera modifié et donc envera une confirmation personnalisé en fonction de la formation ciblée ***/
-
-
-/* Exemple d'un lien menant vers la page avec query passé dans l'url *
-<a class="focus-link" href="/formation/plaquettes-formations?formation=EFIT03"></a>
-
+/***** Gestion du formulaire, en fonction du paramètre passé dans l'url (bouton en page formation) l'option du select sera modifiée et donc enverra une confirmation personnalisée en fonction de la formation ciblée 
 
 Exemple de déploiement : https://ingetelbet202209131530.site-privilege.pagesjaunes.fr/formation/plaquettes-formations?formation=EFIT03
 ****/
 
+/***** Gestion du formulaire, en fonction du paramètre passé dans l'url (bouton en page formation) l'option du select sera modifiée et donc enverra une confirmation personnalisée en fonction de la formation ciblée ***/
 const pageFormFormation = "/formation/plaquettes-formations";
 const path = window.location.pathname;
-//Si nous sommes dans la page liée au plaquettes de formation
-if(path === pageFormFormation){
-    const paramFormation = window.location.search.split('=')[1].toLowerCase();//Récupération de la value du paramétre
-    //Check de l'existance du select via son id 
+
+if(path.includes(pageFormFormation)){
+    const paramFormation = window.location.search.split('=')[1].toLowerCase();
     ($('#input_47_1').length>0) && (()=>{
-        //Loop sur les option du select
         $('#input_47_1 option').each(function(t,i){
-            const valOption = $(this).val().toLowerCase();//Récupération de la valeur de l'option (en lowercase)
-            (valOption.includes(paramFormation)) && $(this).attr('selected','selected');//si la valeur de l'option comporte la valeur du paramétre passé en url on ajoute un attribut seleceted
+            const valOption = $(this).val().toLowerCase();
+            (valOption.includes(paramFormation)) && $(this).attr('selected','selected');
             
         });
     })();
