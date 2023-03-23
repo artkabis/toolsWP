@@ -1,7 +1,20 @@
 /***** Gestion du formulaire, en fonction du paramètre passé dans l'url (bouton en page formation) l'option du select sera modifiée et donc enverra une confirmation personnalisée en fonction de la formation ciblée 
 
 Exemple de déploiement : https://ingetelbet202209131530.site-privilege.pagesjaunes.fr/formation/plaquettes-formations?formation=EFIT03
+Dans Gform : activer "Remplir dynamiquement les champs" dans le champ "Avancés" et indiquer la clé du paramètre, ici nous utilisons "Nom du paramètre" : formation. Ceci indique que nous prendrons le résultat qui suit "formation = ", cette value (après le "= ") sera l'id de la formation et nous ferons donc un check (via includes) de l'id de formation en lowercase dans le pathname (en lowecase lui aussi). Si celui-ci match alors le select aura l'option target en fonction de l'id passé en paramètre de l'url.
+
+Les boutons menant vers la page seront donc constitués ainsi :
+https://www.ingetel-bet.com/formation/plaquettes-formations?formation=EFIT00
+https://www.ingetel-bet.com/formation/plaquettes-formations?formation=EFIT01
+
+
+Seule la valeur de l'url après le "= " sera check et modifiera l'option incluant cette dernière dans l'option du select
+(ex : EFIT00 ou EFIT01 : afin de modifier l'option du select et donc de la condition logique, le premier ferra un check,
+si celui-ci est inclus dans l'option du select ainsi que dans l'url alors on ajoutera l'attribut "selected" si la condition est vraie).
+
 ****/
+
+
 
 /***** Gestion du formulaire, en fonction du paramètre passé dans l'url (bouton en page formation) l'option du select sera modifiée et donc enverra une confirmation personnalisée en fonction de la formation ciblée ***/
 const pageFormFormation = "/formation/plaquettes-formations";
