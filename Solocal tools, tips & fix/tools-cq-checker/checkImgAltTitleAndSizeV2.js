@@ -40,7 +40,8 @@ javascript:(()=>{
         };
 
     (function($) {
-        $('img').each(function(t, i) {($(this) && $(this).attr('src')) && checkUrlImg($(this), $(this)[0].src, $(this)[0].getAttribute('alt'), $(this)[0].getAttribute('title'), 'srcImage', $(this)[0].width, $(this)[0].height, $(this).width(), $(this).height());});
+        $('img').each(function(t, i) {
+            ($(this) && $(this).attr('src') && !$(this).attr('src').includes('mappy')) && checkUrlImg($(this), $(this)[0].src, $(this)[0].getAttribute('alt'), $(this)[0].getAttribute('title'), 'srcImage', $(this)[0].width, $(this)[0].height, $(this).width(), $(this).height());});
         $('html *').each(function(i, t) {
             if ($(this).css('background-image') && String($(this).css('background-image')) !== 'none' && String($(this).css('background-image')).includes('url(')) {
                 let bgimg = String($(this).css('background-image')).split('url("')[1].split('")')[0];
@@ -54,7 +55,9 @@ javascript:(()=>{
                 customImg.src = bgimg;
                 if (bgimg) {
                     customImg.onload = function() {
-                        (!bgimg.includes('data:image/')) ? checkUrlImg($(this), bgimg, 'no alt -> gbimg', 'no title -> gbimg', 'bgImage', customImg.width, customImg.height, _this.width(), _this.height()) : console.log('base64 img detected : ',bgimg.includes('data:image/'),'  width : ',customImg.width, '  height : ',customImg.height,' url : ',bgimg);
+                        if(!bgimg.includes('mappy')){
+                            (!bgimg.includes('data:image/')) ? checkUrlImg($(this), bgimg, 'no alt -> gbimg', 'no title -> gbimg', 'bgImage', customImg.width, customImg.height, _this.width(), _this.height()) : console.log('base64 img detected : ',bgimg.includes('data:image/'),'  width : ',customImg.width, '  height : ',customImg.height,' url : ',bgimg);
+                        }
                     }
                 }
             }
