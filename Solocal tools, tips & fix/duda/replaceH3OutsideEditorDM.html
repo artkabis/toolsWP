@@ -7,5 +7,7 @@ if(env !== 'editor') {
     $("h3.slide-title").each(function(){$(this).replaceWith('<span class="slide-title">' + $(this).text() + '</span>');});
     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LE WIDGETS FORMULAIRE
     $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="h3.dmform-title.dmwidget-title">' + $(this).text() + '</span>');});
+    // REMPLACEMENT DES BALISES H3 MODULE CONTENU DE LA FORME
+    $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
 }
 </script>
