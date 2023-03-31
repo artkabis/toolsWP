@@ -10,8 +10,8 @@ $(window).on('load',function(){
         $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="h3.dmform-title.dmwidget-title">' + $(this).text() + '</span>');});
         // REMPLACEMENT DES BALISES H3 MODULE CONTENU DE LA FORME
         $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
-        //REMPLACEMENT DES BALISES H3 DU MODULE AVIS PJ
-        $("h3.cardTitle").each(function(){$(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>');});
+        //REMPLACEMENT DES BALISES H3 DU MODULE Prolive V3 (ajout d'un délai car le chargement est différé).
+        setTimeout(()=>$("h3.cardTitle").each(function(){$(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>');}),800);
      }
 });
 </script>
