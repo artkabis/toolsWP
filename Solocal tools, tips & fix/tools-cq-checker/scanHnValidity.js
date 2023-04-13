@@ -1,8 +1,9 @@
 javascript:(()=>{
     document.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach((t,i)=>{
-        console.table({[t.tagName]:t.textContent,' nb word':t.textContent.length})
-        if(t.tagName === 'H1' || t.tagName === "H2" && t.textContent.length<50){console.log('%c'+t.tagName+' : '+t.textContent+'  - inférieur à 50 : '+(t.textContent.length)+' < 50','color:red',)}
-        if(t.tagName === 'H1' || t.tagName === "H2" && t.textContent.length>90){console.log('%c'+t.tagName+' : '+t.textContent+'  - supperieur à 90 : '+(t.textContent.lenght)+' > 90','color:red',)}
-        
+        const nbLetters = t.textContent.length;
+        const tagName = t.tagName
+        const tagContent = t.textContent
+        console.table({[tagName]:tagContent,' nb word':nbLetters})
+        if((tagName === 'H1' || tagName === "H2") && nbLetters < 50 || nbLetters > 90){console.log('%c'+tagName+' : '+tagContent+'  Erreur -> nombre de caractère : '+nbLetters+', ne rentre pad dans le ration 50 -> 90','color:red',)}        
     })
 })()
