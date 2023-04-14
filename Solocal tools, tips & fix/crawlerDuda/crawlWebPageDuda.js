@@ -45,7 +45,7 @@
       const worksheet = XLSX.utils.aoa_to_sheet(contenu);
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Contenu');
     
-      XLSX.writeFile(workbook, 'contenu.xlsx');
+      XLSX.writeFile(workbook, 'contenu-page${window.location.pathname}.xlsx');
         }, 8000);
       </script>
     </body>
