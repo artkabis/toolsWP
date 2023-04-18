@@ -26,7 +26,7 @@ if ($(containerReviews).length && idClient && containerReviews) {
     $('#PJ-review-container').before(`<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/${idClient}" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>`);//Add reviews button for adding a new review to pj pro
  
     const api_call = 'https://api.pagesjaunes.fr/v1/pros/' + idClient + '/reviews';//Create url for api call
-    const resultJsonReview = await api_get(api_call);
+    const resultJsonReview = api_get(api_call);
     const reviews = resultJsonReview.reviews;//data reviews
     //console.log('reviews : ',reviews);
 
