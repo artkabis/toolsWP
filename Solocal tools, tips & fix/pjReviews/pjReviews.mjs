@@ -9,7 +9,8 @@ import {randomMM as random, isNotUndefined, checkInvalid, convertDate2fr} from '
   ***************/
 export const pjReviewsApp = async ({idClient='',nbReviews=null,containerReviews=''}) =>{
   //Vous pouvez donner un nombre limite d'avis en modifiant cette variable (10 par exemple), si null, tous les avis seront affichés.
-  if ($(containerReviews).length && idClient && containerReviews) {
+(function($){  
+if ($(containerReviews).length && idClient && containerReviews) {
     let rates = [],isRatings = !1, reply = [{comment: '',date: '',id: 0}],i =0,j=0;
     //SVG bg random placement
     const blob = `<svg class="blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -98,4 +99,5 @@ export const pjReviewsApp = async ({idClient='',nbReviews=null,containerReviews=
       $(this).find('.container-comment').fadeIn(0);
     });
   }//End (détection de pj-review-container)
+})(jQuery);
 }
