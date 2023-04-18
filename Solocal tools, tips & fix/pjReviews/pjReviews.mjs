@@ -16,7 +16,7 @@ if ($(containerReviews).length && idClient && containerReviews) {
     const blob = `<svg class="blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <path fill="#F2F4F8" d="M17.8,-30.5C20,-22.8,16.7,-13.6,24.2,-4.6C31.6,4.4,49.7,13.2,54.4,23.4C59,33.6,50.1,45.2,38.8,56.3C27.5,67.4,13.8,78,-2.4,81.3C-18.5,84.6,-37.1,80.6,-46.1,68.8C-55.2,56.9,-54.7,37.3,-60.2,19.7C-65.6,2.2,-76.9,-13.2,-74.7,-25.6C-72.5,-38,-56.9,-47.4,-42.2,-51C-27.5,-54.7,-13.7,-52.6,-3,-48.5C7.8,-44.4,15.5,-38.2,17.8,-30.5Z" transform="translate(100 100)" />
     </svg>`;
-
+ setTimeout( async (()=>{
     // API call request to return data reviens
     const  api_get = async (url = '') =>{
       const response = await fetch(url, {dataType: 'json',headers: {'x-apikey': 'aoCYbV2bu8Gllj33DWqa6ECc1I6vrRQA'}}).catch((error) => {console.error('Error:', error)});
@@ -24,7 +24,7 @@ if ($(containerReviews).length && idClient && containerReviews) {
       return result;
     }
     $('#PJ-review-container').before(`<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/${idClient}" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>`);//Add reviews button for adding a new review to pj pro
-  setTimeout( async (()=>{
+ 
     const api_call = 'https://api.pagesjaunes.fr/v1/pros/' + idClient + '/reviews';//Create url for api call
     const resultJsonReview = async api_get(api_call);
     const reviews = resultJsonReview.reviews;//data reviews
