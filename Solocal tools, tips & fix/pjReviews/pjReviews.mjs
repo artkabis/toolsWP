@@ -24,9 +24,9 @@ if ($(containerReviews).length && idClient && containerReviews) {
       return result;
     }
     $('#PJ-review-container').before(`<a class="new-review pj-link" href="https://www.pagesjaunes.fr/contribution/avis/${idClient}" target="_blank"><span class="fa fa-pencil"></span><span class="value">Ecrire un avis</span></a>`);//Add reviews button for adding a new review to pj pro
-
+  setTimeout( async (()=>{
     const api_call = 'https://api.pagesjaunes.fr/v1/pros/' + idClient + '/reviews';//Create url for api call
-    const resultJsonReview = api_get(api_call);
+    const resultJsonReview = async api_get(api_call);
     const reviews = resultJsonReview.reviews;//data reviews
     //console.log('reviews : ',reviews);
 
@@ -98,6 +98,7 @@ if ($(containerReviews).length && idClient && containerReviews) {
       $(this).addClass('active');
       $(this).find('.container-comment').fadeIn(0);
     });
+  },1000)();
   }//End (détection de pj-review-container)
 })(jQuery);
 }
