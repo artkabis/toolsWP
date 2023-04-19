@@ -33,7 +33,7 @@ javascript:(($)=>{
             console.warn("Not available");
         }
     };
-
+      if($('#Content').length){
         $('img').each(function(t, i) {
             ($(this) && $(this).attr('src') && !$(this).attr('src').includes('mappy')) && checkUrlImg($(this), $(this)[0].src, $(this)[0].getAttribute('alt'), $(this)[0].getAttribute('title'), 'srcImage', $(this)[0].width, $(this)[0].height, $(this).width(), $(this).height());
         });
@@ -56,6 +56,7 @@ javascript:(($)=>{
                 }
             }
         });
+      }
     console.log('----------------------------- END Check validity global image --------------------------------------------');
 
 
