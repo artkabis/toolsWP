@@ -21,7 +21,7 @@ javascript:(($)=>{
                 parentwidth: parentWidth,
                 parentheight: parentHeight
             };
-            console.table(result, "");
+            console.log(result, "");
             /*317435 Bytes = 310 KB*/
             if (fsize > 317435) {
                 console.log("%c Warning File size exceeds 310 KB : " + url, "color: red");
@@ -73,10 +73,9 @@ console.log('----------------------------- END Check META ----------------------
 console.log('----------------------------- Check ALT images --------------------------------------------');
 
 $('img').each(function(i,t){
-        const href = $(this).attr('href') === 0 || $(this).attr('href') !== null;
-        const alt = href ? $(this).attr('alt') : 'NO ALT';
+        const alt = $(this).attr('alt') ;
         ($(this).attr('data-src')) && $(this).attr('src',$(this).attr('data-src'));
-        (alt)?console.log(alt,this) : console.error('NO ALT >>> ',this);
+        (!alt && alt.lenght<1) && console.error('NO ALT >>> ',this);
     });
 console.log('----------------------------- END Check ALT images --------------------------------------------');
 
