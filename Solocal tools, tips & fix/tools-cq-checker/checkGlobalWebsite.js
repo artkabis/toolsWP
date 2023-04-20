@@ -25,9 +25,11 @@ javascript: (($) => {
     "----------------------------- Check ALT images --------------------------------------------"
   );
   $("img").each(function (i, t) {
-    const alt = $(this).attr("alt");
-    $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
-    !alt && alt === "" && console.error("NO ALT >>> ", this);
+    if (!$(this).attr("src").includes("mappy")) {
+      const alt = $(this).attr("alt");
+      $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
+      !alt && alt === "" && console.error("NO ALT >>> ", this);
+    }
   });
   console.log(
     "----------------------------- END Check ALT images --------------------------------------------"
@@ -253,5 +255,5 @@ javascript: (($) => {
       "--------------------- END check validity links -----------------------------"
     );
     $("#Content").length && checkerImageWP();
-  }, document.querySelectorAll("a").length * 200);
+  }, document.querySelectorAll("a").length * 150);
 })(jQuery);
