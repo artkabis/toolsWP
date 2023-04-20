@@ -253,5 +253,5 @@ javascript: (($) => {
       "--------------------- END check validity links -----------------------------"
     );
     $("#Content").length && checkerImageWP();
-  }, document.querySelectorAll("a").length * 100);
+  }, document.querySelectorAll("a").length * 200);
 })(jQuery);
