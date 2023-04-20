@@ -62,7 +62,7 @@ javascript:(($)=>{
 
 
     
-    const title = $('title')[0].textContent;
+    const title = $('meta[property="og:title"]').attr('content');
     const desc = $('meta[name="description"]').attr('content');
 console.log('----------------------------- Check META --------------------------------------------');
     console.log(`%c Meta title : ${title}  -> caractère : ${title.length} ----- (de 50 à 65)`,`color:${title.length>=50 && title.length<=65 ? "orange" : "red"}`);
