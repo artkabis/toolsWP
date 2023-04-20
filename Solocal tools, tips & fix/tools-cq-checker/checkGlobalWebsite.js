@@ -41,7 +41,7 @@ javascript: (($) => {
     const nbLetters = t.textContent.length;
     const tagName = t.tagName;
     const tagContent = t.textContent;
-    console.log({ [tagName]: tagContent, " nb word": nbLetters });
+    console.log({ [tagName]: tagContent, " nb word": nbLetters, node : t, index:i });
     if (
       ((tagName === "H1" || tagName === "H2") && nbLetters < 50) ||
       nbLetters > 90
@@ -53,7 +53,7 @@ javascript: (($) => {
           tagContent +
           " ------ Erreur -> nombre de caractère : " +
           nbLetters +
-          ", ne rentre pad dans le ratio 50 -> 90",
+          ", ne rentre pad dans le ratio 50 -> 90 -- Node : ",
         "color:red"
       );
     }
