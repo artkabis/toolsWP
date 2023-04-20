@@ -1,113 +1,114 @@
 javascript: (($) => {
-    console.clear();
-  
-    const title = $('meta[property="og:title"]').attr("content");
-    const desc = $('meta[name="description"]').attr("content");
-    console.log(
-      "----------------------------- Check META --------------------------------------------"
-    );
-    title && title.length > 0
-      ? console.log(
-          `%c Meta title : ${title} -> caractère : ${title.length} ----- (de 50 à 65)`,
-          `color:${title.length >= 50 && title.length <= 65 ? "green" : "red"}`
-        )
-      : console.log(`%c Meta title non présent !!!`, `color:red`);
-    desc && desc.length > 0
-      ? console.log(
-          `%c Meta description : ${desc} -> caractère : ${desc.length} ----- (de140 à 156)`,
-          `color:${desc.length >= 140 && desc.length <= 156 ? "green" : "red"}`
-        )
-      : console.log(`%c Meta desc non présente !!!`, `color:red`);
-    console.log(
-      "----------------------------- END Check META --------------------------------------------"
-    );
-    console.log(
-      "----------------------------- Check ALT images --------------------------------------------"
-    );
-    $("img").each(function (i, t) {
-      const alt = $(this).attr("alt");
-      $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
-      (!alt && alt==="") && console.error("NO ALT >>> ", this);
-    });
-    console.log(
-      "----------------------------- END Check ALT images --------------------------------------------"
-    );
-    console.log(
-      "----------------------------- Check Hn Validity --------------------------------------------"
-    );
-    document.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((t, i) => {
-      const nbLetters = t.textContent.length;
-      const tagName = t.tagName;
-      const tagContent = t.textContent;
-      console.log({ [tagName]: tagContent, " nb word": nbLetters });
-      if (
-        ((tagName === "H1" || tagName === "H2") && nbLetters < 50) ||
-        nbLetters > 90
-      ) {
+  console.clear();
+
+  const title = $('meta[property="og:title"]').attr("content");
+  const desc = $('meta[name="description"]').attr("content");
+  console.log(
+    "----------------------------- Check META --------------------------------------------"
+  );
+  title && title.length > 0
+    ? console.log(
+        `%c Meta title : ${title} -> caractère : ${title.length} ----- (de 50 à 65)`,
+        `color:${title.length >= 50 && title.length <= 65 ? "green" : "red"}`
+      )
+    : console.log(`%c Meta title non présent !!!`, `color:red`);
+  desc && desc.length > 0
+    ? console.log(
+        `%c Meta description : ${desc} -> caractère : ${desc.length} ----- (de140 à 156)`,
+        `color:${desc.length >= 140 && desc.length <= 156 ? "green" : "red"}`
+      )
+    : console.log(`%c Meta desc non présente !!!`, `color:red`);
+  console.log(
+    "----------------------------- END Check META --------------------------------------------"
+  );
+  console.log(
+    "----------------------------- Check ALT images --------------------------------------------"
+  );
+  $("img").each(function (i, t) {
+    const alt = $(this).attr("alt");
+    $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
+    !alt && alt === "" && console.error("NO ALT >>> ", this);
+  });
+  console.log(
+    "----------------------------- END Check ALT images --------------------------------------------"
+  );
+  console.log(
+    "----------------------------- Check Hn Validity --------------------------------------------"
+  );
+  document.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((t, i) => {
+    const nbLetters = t.textContent.length;
+    const tagName = t.tagName;
+    const tagContent = t.textContent;
+    console.log({ [tagName]: tagContent, " nb word": nbLetters });
+    if (
+      ((tagName === "H1" || tagName === "H2") && nbLetters < 50) ||
+      nbLetters > 90
+    ) {
+      console.log(
+        "%c" +
+          tagName +
+          " : " +
+          tagContent +
+          " ------ Erreur -> nombre de caractère : " +
+          nbLetters +
+          ", ne rentre pad dans le ratio 50 -> 90",
+        "color:red"
+      );
+    }
+  });
+  console.log(
+    "----------------------------- END Check Hn Validity --------------------------------------------"
+  );
+
+  const formatBytes = (bytes) => {
+    return bytes < 1024
+      ? bytes + " Bytes"
+      : bytes < 1048576
+      ? (bytes / 1024).toFixed(2) + " KB"
+      : bytes < 1073741824
+      ? (bytes / 1048576).toFixed(2) + " MB"
+      : (bytes / 1073741824).toFixed(2) + " GB";
+  };
+  const checkUrlImg = async (
+    $this,
+    url,
+    alt,
+    title,
+    type,
+    width,
+    height,
+    parentWidth,
+    parentHeight
+  ) => {
+    const response = await fetch(url, { method: "GET" });
+    const fsize = response.headers.get("content-length");
+    if (fsize != null) {
+      var result = {
+        url: new URL(url).href,
+        size: formatBytes(fsize),
+        alt: alt,
+        title: title,
+        type: type,
+        Imgwidth: width,
+        Imgheight: height,
+        parentwidth: parentWidth,
+        parentheight: parentHeight,
+      };
+      console.log(result, "");
+      /*317435 Bytes = 310 KB*/ if (fsize > 317435) {
         console.log(
-          "%c" +
-            tagName +
-            " : " +
-            tagContent +
-            " ------ Erreur -> nombre de caractère : " +
-            nbLetters +
-            ", ne rentre pad dans le ratio 50 -> 90",
-          "color:red"
+          "%c Warning File size exceeds 310 KB : " + url,
+          "color: red"
         );
       }
-    });
-    console.log(
-      "----------------------------- END Check Hn Validity --------------------------------------------"
-    );
-  
-    const formatBytes = (bytes) => {
-      return bytes < 1024
-        ? bytes + " Bytes"
-        : bytes < 1048576
-        ? (bytes / 1024).toFixed(2) + " KB"
-        : bytes < 1073741824
-        ? (bytes / 1048576).toFixed(2) + " MB"
-        : (bytes / 1073741824).toFixed(2) + " GB";
-    };
-    const checkUrlImg = async (
-      $this,
-      url,
-      alt,
-      title,
-      type,
-      width,
-      height,
-      parentWidth,
-      parentHeight
-    ) => {
-      const response = await fetch(url, { method: "GET" });
-      const fsize = response.headers.get("content-length");
-      if (fsize != null) {
-        var result = {
-          url: new URL(url).href,
-          size: formatBytes(fsize),
-          alt: alt,
-          title: title,
-          type: type,
-          Imgwidth: width,
-          Imgheight: height,
-          parentwidth: parentWidth,
-          parentheight: parentHeight,
-        };
-        console.log(result, "");
-        /*317435 Bytes = 310 KB*/ if (fsize > 317435) {
-          console.log(
-            "%c Warning File size exceeds 310 KB : " + url,
-            "color: red"
-          );
-        }
-        if ((type === "srcImage" && alt === null) || alt === "") {
-          console.log("%c Warning SRC ALT not working : " + url, "color: red");
-        }
-      } else {
-        console.warn("Not available");
+      if ((type === "srcImage" && alt === null) || alt === "") {
+        console.log("%c Warning SRC ALT not working : " + url, "color: red");
       }
-    };
+    } else {
+      console.warn("Not available");
+    }
+  };
+  const checkerImageWP = () => {
     if ($("#Content").length) {
       console.log(
         "----------------------------- Check validity global image --------------------------------------------"
@@ -186,5 +187,71 @@ javascript: (($) => {
         }
       });
     }
-  })(jQuery);
-  
+  };
+  console.log(
+    "--------------------- Start check validity links -----------------------------"
+  );
+  let timeout = 30000;
+  function check(url) {
+    const response = { status: null, document: null };
+    return new Promise(function (resolve, reject) {
+      var XMLHttpTimeout = null;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function (data) {
+        if (xhr.readyState == 4) {
+          clearTimeout(XMLHttpTimeout);
+          if (200 <= xhr.status && xhr.status < 400) {
+            response.document = xhr.responseText;
+          }
+          response.source = "xhr";
+          if (xhr.responseURL == url.split("#")[0]) {
+            response.status = xhr.status;
+          } else {
+            response.status = 300;
+          }
+          resolve(response);
+          response.status !== 404
+            ? console.log(
+                `%c url : ${url} status : ${response.status}`,
+                "color:green"
+              )
+            : console.log(
+                `%c url : ${url} status : ${response.status}`,
+                "color:red"
+              );
+        }
+      };
+
+      try {
+        xhr.open("GET", url, true);
+        xhr.send();
+      } catch (e) {
+        console.log(e);
+        response.status = 0;
+        resolve(response);
+      }
+      XMLHttpTimeout = setTimeout(function () {
+        response.status = 408;
+        resolve(response);
+        xhr.abort();
+      }, (timeout += 1000));
+    });
+  }
+  document.querySelectorAll("a").forEach(function (t, i) {
+    let url = t.getAttribute("href");
+    if (url) {
+      url = url.at(0) === "/" ? window.location.origin + url : url;
+      !url.includes("#") &&
+        !url.includes("tel:") &&
+        !url.includes("mailto:") &&
+        url.includes(window.location.origin) &&
+        check(url);
+    }
+  });
+  setTimeout(function () {
+    console.log(
+      "--------------------- END check validity links -----------------------------"
+    );
+    $("#Content").length && checkerImageWP();
+  }, document.querySelectorAll("a").length * 100);
+})(jQuery);
