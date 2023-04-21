@@ -95,6 +95,8 @@ javascript: (($) => {
         Imgheight: height,
         parentwidth: parentWidth,
         parentheight: parentHeight,
+        ratioWidth: width / parentWidth,
+        rationHeight: height / parentHeight
       };
       console.log(result, "");
       /*317435 Bytes = 310 KB*/ if (fsize > 317435) {
@@ -125,10 +127,10 @@ javascript: (($) => {
             $(this)[0].getAttribute("alt"),
             $(this)[0].getAttribute("title"),
             "srcImage",
-            $(this)[0].width,
-            $(this)[0].height,
-            $(this).width(),
-            $(this).height()
+            $(this)[0].naturalWidth,
+            $(this)[0].naturalHeight,
+            $(this)[0].parentNode.offsetWidth,
+              
           );
       });
       $("html *").each(function (i, t) {
