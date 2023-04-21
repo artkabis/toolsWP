@@ -130,7 +130,7 @@ javascript: (($) => {
             $(this)[0].naturalWidth,
             $(this)[0].naturalHeight,
             $(this)[0].parentNode.offsetWidth,
-              
+            $(this)[0].parentNode.offsetHeight,
           );
       });
       $("html *").each(function (i, t) {
@@ -170,10 +170,11 @@ javascript: (($) => {
                       "no alt -> gbimg",
                       "no title -> gbimg",
                       "bgImage",
-                      customImg.width,
-                      customImg.height,
-                      _this.width(),
-                      _this.height()
+                      
+                      customImg.naturalWidth,
+                      customImg.naturalHeight,
+                      _this[0].parentNode.offsetWidth,
+                      _this[0].parentNode.offsetHeight,
                     )
                   : console.log(
                       "base64 img detected : ",
