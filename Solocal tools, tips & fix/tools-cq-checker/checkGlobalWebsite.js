@@ -51,9 +51,9 @@ javascript: (($) => {
           tagName +
           " : " +
           tagContent +
-          " ------ Erreur -> nombre de caractère : " +
+          " ------ Erreur -> nombre de caractères : " +
           nbLetters +
-          ", ne rentre pad dans le ratio 50 -> 90",
+          ", ne rentre pas dans la préco de 50 -> 90 caractères",
         "color:red"
       );
     }
