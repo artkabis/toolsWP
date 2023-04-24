@@ -253,7 +253,7 @@ javascript: (($) => {
         !url.includes("solocal") &&
         !url.includes("sp.report-uri") &&
         !url.includes("chrome-extension") &&
-        !url.includes("https://www.pagesjaunes.fr") &&
+        !url.includes("pagesjaunes") &&
         url.at(0) !=='#';
         (verif && url.includes(window.location.origin)) &&check(url);
         (verif && !url.includes(window.location.origin)) && (console.log(`%c Vérifier manuellement ce lien ${url}`,'color:red'),console.log(t));
