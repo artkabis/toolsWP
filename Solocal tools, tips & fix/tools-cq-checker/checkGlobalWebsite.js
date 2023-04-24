@@ -25,7 +25,7 @@ javascript: (($) => {
     "----------------------------- Check ALT images --------------------------------------------"
   );
   $("img").each(function (i, t) {
-    if (!$(this).attr("src").includes("mappy")) {
+    if (!$(this).attr("src").includes("mappy") && !$(this).attr("src").includes('cdn.manager.solocal.com')) {
       const alt = $(this).attr("alt");
       $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
       !alt && alt === "" && console.error("NO ALT >>> ", this);
@@ -120,7 +120,7 @@ javascript: (($) => {
       $("img").each(function (t, i) {
         $(this) &&
           $(this).attr("src") &&
-          !$(this).attr("src").includes("mappy") &&
+          !$(this).attr("src").includes("mappy") && !$(this).attr("src").includes('cdn.manager.solocal.com') &&
           checkUrlImg(
             $(this),
             $(this)[0].src,
@@ -162,7 +162,7 @@ javascript: (($) => {
           customImg.src = bgimg;
           if (bgimg && !bgimg.includes("undefined")) {
             customImg.onload = function () {
-              if (!bgimg.includes("mappy")) {
+              if (!bgimg.includes("mappy") && !bgimg.includes('cdn.manager.solocal.com')) {
                 !bgimg.includes("data:image/")
                   ? checkUrlImg(
                       $(this),
