@@ -246,11 +246,16 @@ javascript: (($) => {
     let url = t.getAttribute("href");
     if (url) {
       url = url.at(0) === "/" ? window.location.origin + url : url;
-      !url.includes("#") &&
-        !url.includes("tel:") &&
+        const verif = !url.includes("tel:") &&
         !url.includes("mailto:") &&
-        url.includes(window.location.origin) &&
-        check(url);
+        !url.includes("javascript:") &&
+        !url.includes("logflare") && 
+        !url.includes("solocal") &&
+        !url.includes("sp.report-uri") &&
+        !url.includes("chrome-extension") &&
+        url.at(0) !=='#';
+        (verif && url.includes(window.location.origin)) &&check(url);
+        (verif && !url.includes(window.location.origin)) && (console.log(`%c Vérifier manuellement ce lien ${url}`,'color:red'),console.log(t));
     }
   });
   setTimeout(function () {
