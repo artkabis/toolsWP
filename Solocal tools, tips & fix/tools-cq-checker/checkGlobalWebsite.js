@@ -53,7 +53,7 @@ javascript: (($) => {
           tagContent +
           " ------ Erreur -> nombre de caractère : " +
           nbLetters +
-          ", ne rentre pad dans le ratio 50 -> 90 -- Node : ",t,
+          ", ne rentre pad dans le ratio 50 -> 90",
         "color:red"
       );
     }
