@@ -14,7 +14,7 @@ javascript: (($) => {
     : console.log(`%c Meta title non présent !!!`, `color:red`);
   desc && desc.length > 0
     ? console.log(
-        `%c Meta description : ${desc} -> caractère : ${desc.length} ----- (de140 à 156)`,
+        `%c Meta description : ${desc} -> caractère : ${desc.length} ----- (de 140 à 156)`,
         `color:${desc.length >= 140 && desc.length <= 156 ? "green" : "red"}`
       )
     : console.log(`%c Meta desc non présente !!!`, `color:red`);
