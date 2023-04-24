@@ -87,6 +87,7 @@ javascript: (($) => {
     if (fsize != null) {
       var result = {
         url: new URL(url).href,
+        target:$this,
         size: formatBytes(fsize),
         alt: alt,
         title: title,
