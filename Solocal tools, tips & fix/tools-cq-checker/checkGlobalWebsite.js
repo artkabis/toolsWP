@@ -287,5 +287,5 @@ javascript: (($) => {
       "--------------------- END check validity links -----------------------------"
     );
     $("#Content").length && checkerImageWP();
-  }, document.querySelectorAll("a").length * 150);
+  }, document.querySelectorAll("a").length * 190);
 })(jQuery);
