@@ -10,7 +10,7 @@
 - check size images  (kb,mb,gb), ration (image vs container), alt, title and format image : background, img tag, base64, svg
 
 
-## onother tools :
+## Another tools :
 - check sitemap (Duda and WP)
 - check schema markup (microdata google)
 - check inner and outer navigation (Duda nav)
