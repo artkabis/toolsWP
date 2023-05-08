@@ -8,14 +8,14 @@ javascript: (($) => {
     console.log(lighthouse);
     const lighthouseMetrics = {
       'Testing device' : device,
-      'Stack website': lighthouse.stackPacks[0].title,
-      'First Contentful Paint': lighthouse.audits['first-contentful-paint'].displayValue,
-      'Speed Index': lighthouse.audits['speed-index'].displayValue,
-      'Time To Interactive': lighthouse.audits['interactive'].displayValue,
-      'Performance score': lighthouse.categories['performance'].score,
-      'Image alt ko' : lighthouse.audits['image-alt'].details.items
+      'Stack website': lighthouse?.stackPacks?.title,
+      'First Contentful Paint': lighthouse?.audits['first-contentful-paint']?.displayValue,
+      'Speed Index': lighthouse?.audits['speed-index']?.displayValue,
+      'Time To Interactive': lighthouse?.audits['interactive']?.displayValue,
+      'Performance score': lighthouse?.categories['performance']?.score,
+      'Image alt ko' : lighthouse?.audits['image-alt']?.details?.items
     };
-    console.log(lighthouseMetrics);
+    console.log(Object.fromEntries(Object.entries(lighthouseMetrics).filter(([key, value]) => value)));
   });
   const title = $('meta[property="og:title"]').attr("content");
   const desc = $('meta[name="description"]').attr("content");
