@@ -1,5 +1,22 @@
 javascript: (($) => {
   console.clear();
+  const url = window.location.href;
+  const device = 'mobile';/*prompt('Veuillez indiquer le device à tester (mobile ou desktop) : '); */  
+  const apiCall = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&strategy=${device}&category=pwa&category=seo&category=performance&category=accessibility`;
+  fetch(apiCall).then(response=>response.json()).then(json=>{
+    const lighthouse = json.lighthouseResult;
+    console.log(lighthouse);
+    const lighthouseMetrics = {
+      'Testing device' : device,
+      'Stack website': lighthouse.stackPacks[0].title,
+      'First Contentful Paint': lighthouse.audits['first-contentful-paint'].displayValue,
+      'Speed Index': lighthouse.audits['speed-index'].displayValue,
+      'Time To Interactive': lighthouse.audits['interactive'].displayValue,
+      'Performance score': lighthouse.categories['performance'].score,
+      'Image alt ko' : lighthouse.audits['image-alt'].details.items
+    };
+    console.log(lighthouseMetrics);
+  });
   const title = $('meta[property="og:title"]').attr("content");
   const desc = $('meta[name="description"]').attr("content");
   console.log(
@@ -23,18 +40,22 @@ javascript: (($) => {
   console.log(
     "----------------------------- Check ALT images --------------------------------------------"
   );
-  $("img").each(function (i, t) {
+  $("img, svg").each(function (i, t) {
     const src = $(this).attr("src")
       ? $(this).attr("src")
       : $(this).attr("data-src");
     if (
-      src &&
+      (src && this.tagName !== "svg") &&
       !src.includes("mappy") &&
       !src.includes("cdn.manager.solocal.com")
     ) {
       const alt = $(this).attr("alt");
       $(this).attr("data-src") && $(this).attr("src", $(this).attr("data-src"));
-      !alt && alt === "" && console.error("NO ALT >>> ", this);
+      !alt && alt === "" && console.log(`%cNO ALT >>> ${this.src}`,'color:red');
+    }else if(this.tagName== "svg" && this.getAttribute('alt') && this.getAttribute('alt').length<1){
+        console.log(`%cNO ALT SVG >>> ${this.getAttribute('data-icon-name')}`,'color:red');
+        console.log(this);
+        
     }
   });
   console.log(
@@ -47,15 +68,20 @@ javascript: (($) => {
     const nbLetters = t.textContent.length;
     const tagName = t.tagName;
     const tagContent = t.textContent;
+    let words = t.textContent.split(' ');
+    words = words.filter(w=>w.length>2)
+    //console.log('nb words : ',words.length,' mots comptabilisés : ',words.join(','))
     console.log({
       [tagName]: tagContent,
-      " nb word": nbLetters,
+      " nb lettres": nbLetters,
+      "nombre de mots comptabilisés (de 5 à 8) " : Number(words.length),
+      'mots comptabilisés' : words.join(','),
       node: t,
       index: i,
     });
     if (
       ((tagName === "H1" || tagName === "H2") && nbLetters < 50) ||
-      nbLetters > 90
+      nbLetters > 65
     ) {
       console.log(
         "%c" +
@@ -64,7 +90,7 @@ javascript: (($) => {
           tagContent +
           " ------ Erreur -> nombre de caractères : " +
           nbLetters +
-          ", ne rentre pas dans la préco de 50 -> 90 caractères",
+          ", ne rentre pas dans la préco de 50 -> 65 caractères",
         "color:red"
       );
     }
@@ -109,7 +135,8 @@ javascript: (($) => {
         parentwidth: parentWidth,
         parentheight: parentHeight,
         ratioWidth: width / parentWidth,
-        rationHeight: height / parentHeight,
+        ratioHeight: height / parentHeight,
+        ratio : Number((width / parentWidth + height / parentHeight / 2 ).toFixed(2))
       };
       console.log(result, "");
       /*317435 Bytes = 310 KB*/
@@ -123,7 +150,7 @@ javascript: (($) => {
         console.log("%c Warning SRC ALT not working : " + url, "color: red");
       }
     } else {
-      console.warn("Not available");
+      console.log("%cNot available",'color:yellow');
     }
   };
   const checkerImageWP = () => {
@@ -214,7 +241,7 @@ javascript: (($) => {
     "--------------------- Start check validity links -----------------------------"
   );
   let timeout = 30000;
-  function check(url) {
+  function check(_url,_txt,_node) {
     const response = {
       status: null,
       document: null,
@@ -229,28 +256,32 @@ javascript: (($) => {
             response.document = xhr.responseText;
           }
           response.source = "xhr";
-          if (xhr.responseURL == url.split("#")[0]) {
+          if (xhr.responseURL == _url.split("#")[0]) {
             response.status = xhr.status;
           } else {
-            response.status = 300;
+            response.status = xhr.status;
           }
           resolve(response);
           response.status !== 404
             ? console.log(
-                `%c url : ${url} status : ${response.status}`,
-                "color:green"
+                `url : ${_url} %c${_txt} ->  %cstatus : %c${response.status}`,
+                "color:cornflowerblue;","color:white;","color:green"
               )
-            : console.log(
-                `%c url : ${url} status : ${response.status}`,
-                "color:red"
-              );
+            : (console.log(
+                `url : ${_url} %c${_txt} -> %cstatus : %c${response.status}`,
+                "color:cornflowerblue;","color:white;","color:red"
+              ),console.log('node : ',_node));
         }
       };
       try {
-        xhr.open("GET", url, true);
+        xhr.open("GET", _url, true);
+        xhr.onerror = function() {
+          response.status = 0;
+          resolve(response);
+        };
         xhr.send();
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         response.status = 0;
         resolve(response);
       }
@@ -263,22 +294,26 @@ javascript: (($) => {
   }
   document.querySelectorAll("a").forEach(function (t, i) {
     let url = t.getAttribute("href");
+    
     if (url) {
-      url = url.at(0) === "/" ? window.location.origin + url : url;
+      url = (url.at(0) === "/" || url.at(0) === "?") ? window.location.origin + url : url;
+      let prepubRefonteWPCheck = (url.includes('site-privilege.pagesjaunes') || url.includes('solocaldudaadmin.eu-responsivesiteeditor')) ? true : !url.includes("pagesjaunes");
       const verif =
         !url.includes("tel:") &&
         !url.includes("mailto:") &&
         !url.includes("javascript:") &&
         !url.includes("logflare") &&
-        !url.includes("solocal") &&
+        !url.includes("solocal.com") &&
         !url.includes("sp.report-uri") &&
         !url.includes("chrome-extension") &&
-        !url.includes("pagesjaunes") &&
+        prepubRefonteWPCheck &&
         url.at(0) !== "#";
-      verif && url.includes(window.location.origin) && check(url);
+        //console.log({url},'at -4 : ',url.at(-4),'    textContent : ',t.textContent,t);
+        const txtContent = (url && url.at(-4) && !url.at(-4).includes('.') && t.textContent.length >1) ? ',  text : '+t.innerText.replace(/(\r\n|\n|\r)/gm, "") : '';
+      verif && url.includes(window.location.origin) && check(url,txtContent,t);
       verif &&
         !url.includes(window.location.origin) &&
-        (console.log(`%c Vérifier manuellement ce lien ${url}`, "color:red"),
+        (console.log(`%c Vérifier manuellement ce lien ${url,txtContent}`, "color:red"),
         console.log(t));
     }
   });
@@ -286,6 +321,6 @@ javascript: (($) => {
     console.log(
       "--------------------- END check validity links -----------------------------"
     );
-    $("#Content").length && checkerImageWP();
-  }, document.querySelectorAll("a").length * 200);
+    $("#Wrapper").length && checkerImageWP();
+  }, document.querySelectorAll("a").length * 210);
 })(jQuery);
