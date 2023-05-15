@@ -9,6 +9,7 @@
 - check valid links (status 200, 404, 300 and output external manual check external links or parameters path)
 - check content text links
 - check size images  (kb,mb,gb), ratio (image vs container), alt, title and format image : background-image, img tag, base64, svg
+- check duplicate images ( no count logo images and owl images cloned)
 - launch runPagespeed and return FCP, LCP, TTI, performance score, alt images KO and stack website.
 
 
