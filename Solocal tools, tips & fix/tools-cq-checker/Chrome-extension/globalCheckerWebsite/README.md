@@ -16,6 +16,7 @@
 ## Another tools :
 - check sitemap (Duda and WP)
 - check schema markup (microdata google)
+- check outline Hn validity
 - check inner and outer navigation (Duda nav)
 - check the correctness of the spelling of the content of the web page
 - Soprod : copy all expressions and localities
