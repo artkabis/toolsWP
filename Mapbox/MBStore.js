@@ -175,6 +175,7 @@ const plan = mods[property][2]
   }
   return str;//on retourne la chaine créée à chaque itération de la boucle dans le DOM
 }
+let popup;
 function createPopUp(currentFeature) {   
   
   var popUps = document.getElementsByClassName('mapboxgl-popup');
@@ -184,9 +185,9 @@ function createPopUp(currentFeature) {
   var imgThumb = currentFeature.properties.image;
   console.log(imgBig,imgThumb);
 console.log({modeles})
-  var popup = new mapboxgl.Popup({closeOnClick: false})
+  popup = new mapboxgl.Popup({closeOnClick: true})
   .setLngLat(currentFeature.geometry.coordinates)
-  .setHTML(`
+  .setHTML(`<span class="closePopup">X</span>
             <h4><a title="Visiter le site de la ville d'${currentFeature.properties.city}" href="${currentFeature.properties.link}">${currentFeature.properties.title}</a></h4>
             <div class="poster"><a data-fancybox="images" class="fancy" href="${imgBig}"><img src="${imgThumb}" /></a></div>
             <div class="description">${currentFeature.properties.description}</div>
@@ -219,3 +220,7 @@ console.log('____________',{plan})
   });
 }
 $("a.fancy").fancybox();
+$(document).on('click','.closePopup',function(){
+    console.log('click close popup : ',{popup})
+    popup.remove();
+})
