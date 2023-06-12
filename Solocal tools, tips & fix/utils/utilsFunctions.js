@@ -31,3 +31,29 @@ function traverseTCPStates(eventList){
 
   return eventList.reduce(function(state, input) { return states[state][input] || "ERROR"; }, state);
 }
+
+
+// sum of digits
+const findAllDigits = (sumOfDigits, digits) => {
+  let firstOfDigitRange = Number('1'.repeat(digits));
+  let lastOfDigitRange = Number('9'.repeat(digits));
+  let range = [];
+  
+  for (let i = firstOfDigitRange; i <= lastOfDigitRange; i++) {
+    while (i.toString().includes('0')) {
+      i = i.toString().split('');
+      i = i.map((el, ind) => el === '0' ? el.replace('0', i[ind-1]) : el).join('');
+    }
+    if (i.toString().split('').reduce((acc, curr) => acc + Number(curr), 0) === sumOfDigits) {
+      range.push(i);
+    }
+  }
+
+  if (range.length === 0) {
+    return []
+  } else if (range.length === 1) {
+    return [1, range[0].toString(), range[0].toString()]
+  } else {
+    return [range.length, range[0].toString(), range[range.length - 1].toString()]
+  }
+}
