@@ -20,3 +20,18 @@
 - check inner and outer navigation (Duda nav)
 - check the correctness of the spelling of the content of the web page
 - Soprod : copy all expressions and localities
+
+## Installation (fr) :
+- Télécharger le fichier globalCherckerWebSite.zip
+- Ouvrir le zip et copier le dossier visible
+- Coller ce dossier a un endroit fixe afin que Chrome puisse y accéder en permanence.
+- Dans Chrome, ouvrir les extensions : 
+
+- Activer le mode développeur :
+
+- Charger l'extension non empaquetée :
+
+- Sélectionnez le dossier que vous avez collé précédemment :
+
+- check the correctness of the spelling of the content of the web page
+- Soprod : copy all expressions and localities
