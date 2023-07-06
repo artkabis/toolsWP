@@ -26,12 +26,16 @@
 - Ouvrir le zip et copier le dossier visible
 - Coller ce dossier a un endroit fixe afin que Chrome puisse y accéder en permanence.
 - Dans Chrome, ouvrir les extensions : 
+
 ![open chrome](https://github.com/artkabis/toolsWP/blob/main/Solocal%20tools%2C%20tips%20%26%20fix/tools-cq-checker/Chrome-extension/globalCheckerWebsite/medias/open-extensions.JPG)
 - Activer le mode développeur :
+
 ![open chrome](https://github.com/artkabis/toolsWP/blob/main/Solocal%20tools%2C%20tips%20%26%20fix/tools-cq-checker/Chrome-extension/globalCheckerWebsite/medias/mode-dev.JPG)
 - Charger l'extension non empaquetée :
+
 ![open chrome](https://github.com/artkabis/toolsWP/blob/main/Solocal%20tools%2C%20tips%20%26%20fix/tools-cq-checker/Chrome-extension/globalCheckerWebsite/medias/extension-empaquetee.JPG)
 - Sélectionnez le dossier que vous avez collé précédemment :
+
 ![open chrome](https://github.com/artkabis/toolsWP/blob/main/Solocal%20tools%2C%20tips%20%26%20fix/tools-cq-checker/Chrome-extension/globalCheckerWebsite/medias/selection-dossier-extension.JPG)
 - Vous pouvez désormais activer l'extension et la pin pour y avoir accès rapidement.
 
