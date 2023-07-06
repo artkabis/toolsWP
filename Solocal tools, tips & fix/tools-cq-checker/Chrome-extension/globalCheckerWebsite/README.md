@@ -26,7 +26,7 @@
 - Ouvrir le zip et copier le dossier visible
 - Coller ce dossier a un endroit fixe afin que Chrome puisse y accéder en permanence.
 - Dans Chrome, ouvrir les extensions : 
-
+(https://github.com/artkabis/toolsWP/blob/main/Solocal%20tools%2C%20tips%20%26%20fix/tools-cq-checker/Chrome-extension/globalCheckerWebsite/medias/open-extensions.JPG)[open chrome]
 - Activer le mode développeur :
 
 - Charger l'extension non empaquetée :
