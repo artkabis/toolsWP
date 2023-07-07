@@ -10,7 +10,6 @@
 - Check valid links (status 200, 404, 300, and output external manual check external links or parameter paths).
 - Return links and text links.
 - Check content text links.
-- Check bold text and add iteration counter.
 - Check image size (KB, MB, GB), ratio (image vs container), alt, title, and image format: background-image, img tag, base64, svg.
 - Check duplicate images (do not count logo images and cloned owl images).
 - Launch runPagespeed and return FCP, LCP, TTI, performance score, alt images KO, and stack website.
