@@ -8,7 +8,6 @@
 - Check Hn validity (letter length, word length, and number of words).
 - Check outline validity structure.
 - Check valid links (status 200, 404, 300, and output external manual check external links or parameter paths).
-- Return links and text links.
 - Check content text links.
 - Check image size (KB, MB, GB), ratio (image vs container), alt, title, and image format: background-image, img tag, base64, svg.
 - Check duplicate images (do not count logo images and cloned owl images).
