@@ -1,25 +1,27 @@
 # Global checker - chrome extension
 
 
-## Checker list : 
-- check meta title and description
-- check bold and strong iteration (alert if count not<3 && >5)
-- check only alt images (tag img for Duda and WP)
-- check Hn validity ( letters length, words length and number of words, outline validity structure)
-- check valid links (status 200, 404, 300 and output external manual check external links or parameters path)
-- check content text links
-- check size images  (kb,mb,gb), ratio (image vs container), alt, title and format image : background-image, img tag, base64, svg
-- check duplicate images ( no count logo images and owl images cloned)
-- launch runPagespeed and return FCP, LCP, TTI, performance score, alt images KO and stack website.
+## Checklist:
+- Check meta title and description validity.
+- Check bold and strong iteration (alert if count is not <3 and >5).
+- Check only alt images (tag img for Duda and WP).
+- Check Hn validity (letter length, word length, and number of words).
+- Check outline validity structure.
+- Check valid links (status 200, 404, 300, and output external manual check external links or parameter paths).
+- Return links and text links.
+- Check content text links.
+- Check bold text and add iteration counter.
+- Check image size (KB, MB, GB), ratio (image vs container), alt, title, and image format: background-image, img tag, base64, svg.
+- Check duplicate images (do not count logo images and cloned owl images).
+- Launch runPagespeed and return FCP, LCP, TTI, performance score, alt images KO, and stack website.
 
-
-## Another tools :
-- check sitemap (Duda and WP)
-- check schema markup (microdata google)
-- check outline Hn validity
-- check inner and outer navigation (Duda nav)
-- check the correctness of the spelling of the content of the web page
-- Soprod : copy all expressions and localities
+## Other tools:
+- Check sitemap (Duda and WP).
+- Check schema markup (Google microdata).
+- Check outline Hn validity.
+- Check inner and outer navigation (Duda nav).
+- Check the correctness of the spelling of the content of the web page.
+- Soprod: Copy all expressions and localities.
 
 ## Installation (fr) :
 - Télécharger le fichier globalCherckerWebSite.zip
