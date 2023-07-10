@@ -5,6 +5,7 @@
 - Check meta title and description validity.
 - Check bold and strong iteration (alert if count is not <3 and >5).
 - Check only alt images (tag img for Duda and WP).
+- Check validityphone number format
 - Check Hn validity (letter length, word length, and number of words).
 - Check outline validity structure.
 - Check valid links (status 200, 404, 300, and output external manual check external links or parameter paths).
