@@ -18,6 +18,7 @@
 - Check sitemap (Duda and WP).
 - Check schema markup (Google microdata).
 - Check outline Hn validity.
+- Toggle Cors (to fetch request from another domain)
 - Check inner and outer navigation (Duda nav).
 - Check the correctness of the spelling of the content of the web page.
 - Soprod: Copy all expressions and localities.
