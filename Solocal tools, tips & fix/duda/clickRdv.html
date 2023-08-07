@@ -2,3 +2,13 @@
 
 <script type="text/javascript" src="//clicrdv-assets.s3.amazonaws.com/lib/clicrdv-widgets-v1/clicrdv-widgets-min.js"></script>
 <script type="text/javascript">CLICRDV.renderWidget('link','mma-rbc-assurances',{"style":"clicrdv-button-style2","button_bg_color":"#2d4195"});</script>
+
+
+/**** suite à la MAJ de click RDV, il est possible de gérer le module via l'id Soprod de cette section : 
+La reconstruction de l'url : https://clicrdv.com/rdv?popin=1&group_id=209933&colors[content_text]=000000&colors[main_bg]=3a3a3a
+Attention, concernant l'id sur Duda vous pouvez faire ceci en console, le retour sera l'id du produit ClickRDV : 
+dmAPI.getSiteExternalId().split('|')[3];//groupe_id dispo dans Soprod
+
+Puis reconstruire l'url avec cet id : https://www.clicrdv.com/rdv?popin=1&group_id=220304&colors[content_text]=000000&colors[main_bg]=3a3a3a
+
+****/
