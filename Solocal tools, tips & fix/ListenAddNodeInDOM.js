@@ -1,25 +1,22 @@
-
-// Gestion de la mutation du DOM
 const checkDOMMutation = (classListen, utilsFunction) => {
   let nodesToObserve = document.querySelectorAll("." + classListen).length; // Nombre total d'éléments à observer
+  console.log({nodesToObserve},document.querySelectorAll("." + classListen));
+  let cmp=0
   const handleMutation = (mutationsList, observer) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "childList") {
         const addedElements = Array.from(mutation.addedNodes);
         addedElements.forEach((node) => {
           if (String(node.classList).includes(classListen)) {
-            utilsFunction();
-            nodesToObserve--; // Marque l'élément comme "traité"
+              cmp++;
+              console.log({cmp}, 'nb items : ',document.querySelectorAll("." + classListen).length);
+            (cmp === document.querySelectorAll("." + classListen).length)&& utilsFunction(),observer.disconnect();// Une fois tous les éléments checké, on launch la fonction et disconnect "observer"
           }
         });
       }
     }
-    // Si tous les éléments ont été observés et traités, arrêtez l'observation.
-    if (nodesToObserve === 0) {
-      observer.disconnect();
-    }
   };
-  const parentElement = document.body;
+  const parentElement = document;
   const observer = new MutationObserver(handleMutation);
   const observerOptions = {
     childList: true,
