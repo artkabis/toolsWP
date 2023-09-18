@@ -40,7 +40,7 @@ javascript:(($) => {
         );
       }
     });
-  }
+  };
   const updateWindow=() =>{
     const iframeDocument = iframe.contentDocument;
     if (iframeDocument) {
