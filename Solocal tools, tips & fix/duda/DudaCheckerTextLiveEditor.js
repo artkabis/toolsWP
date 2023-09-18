@@ -1,22 +1,17 @@
-
 javascript:(($) => {
-  const detectChange = (elemToObserve, classListen) => {
-    let prevClassState =
+  const detectChange = (elemToObserve, classListen, isUpdateWindow) => {
+    var prevClassState =
       elemToObserve &&
       elemToObserve.classList !== null &&
       elemToObserve.classList.contains(classListen);
-    let observer = new MutationObserver(function (mutations) {
+    var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.attributeName == "class") {
           var currentClassState =
             mutation.target.classList.contains(classListen);
           if (prevClassState !== currentClassState) {
             prevClassState = currentClassState;
-            if (currentClassState) console.log("class added!");
-            else console.log("class removed!");
-            updateWindow();
-            checkParagraphe();
-            observer.disconnect();
+            (currentClassState) ? console.log("class added!") : ((isUpdateWindow) && updateWindow(),checkParagraphe(),observer.disconnect(),console.log("class removed!"));           
           }
         }
       });
@@ -38,16 +33,18 @@ javascript:(($) => {
         .filter((word) => word.trim() !== "").length;
       if (wordCount > 25) {
         const charCount = text.length;
-        detectChange(para, "dmNowInlineEditing");
+        detectChange(para, "dmNowInlineEditing", false);
+
+ 
 
         para.setAttribute(
           "title",
-          ` $Paragraphe : {wordCount} mots - ${charCount} caractères - Texte: "${text}"`
+          ` ${wordCount} mots - ${charCount} caractères - Texte: "${text}"`
         );
       }
     });
   }
-  const updateWindow = () => {
+  const updateWindow=() =>{
     const iframeDocument = iframe.contentDocument;
     if (iframeDocument) {
       const newWindow = window.open(
@@ -56,15 +53,12 @@ javascript:(($) => {
         "width=600,height=400"
       );
       const resultsList = document.createElement("ul");
- 
+
       for (let i = 1; i <= 6; i++) {
         const hnElements = iframeDocument.querySelectorAll(`h${i}`);
-
-        
-
         hnElements.forEach((heading) => {
           const dmPara = heading.closest(".dmNewParagraph");
-          detectChange(dmPara, "dmNowInlineEditing");
+          detectChange(dmPara, "dmNowInlineEditing", true);
           const text = heading.textContent || heading.innerText;
           const wordCount = text
             .split(/\s+/)
