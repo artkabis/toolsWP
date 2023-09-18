@@ -79,7 +79,7 @@ javascript:(($) => {
       newWindow.document.head.innerHTML = "";
       newWindow.document.head.innerHTML = `<style>.green-text {color: green;}.red-text {color: red;}</style>`;
       newWindow.document.body.appendChild(resultsList);
-    }
+    };
   };
   updateWindow();
   checkParagraphe();
