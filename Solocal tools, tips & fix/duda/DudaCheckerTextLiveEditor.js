@@ -81,6 +81,5 @@ javascript:(($) => {
       newWindow.document.body.appendChild(resultsList);
     };
   };
-  updateWindow();
-  checkParagraphe();
+  (()=>{updateWindow();checkParagraphe()})();
 })(jQuery);
