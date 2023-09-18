@@ -34,12 +34,9 @@ javascript:(($) => {
       if (wordCount > 25) {
         const charCount = text.length;
         detectChange(para, "dmNowInlineEditing", false);
-
- 
-
         para.setAttribute(
           "title",
-          ` ${wordCount} mots - ${charCount} caractères - Texte: "${text}"`
+          ` ${wordCount} mots - ${text.length} caractères - Texte: "${text}"`
         );
       }
     });
