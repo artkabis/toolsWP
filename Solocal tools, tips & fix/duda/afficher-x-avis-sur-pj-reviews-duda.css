@@ -1,0 +1,4 @@
+/*** Ici les 3 premiers avis seront visibles **/
+ul#liste-avis li:nth-child(n+4) {
+    display: none;
+}
