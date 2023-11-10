@@ -1,22 +1,23 @@
+[15:09] Gregory NICOLLE
 <script async>
-
-$(window).on('load',function(){
+dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+function funcReadyDomDM(){
     const env = dmAPI.getCurrentEnvironment();
     if(env !== 'editor') {
-        // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS TABS
-        $(".horizontal-label").each(function(){$(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>');});
-        $(".tab-description .desc-title p").each(function(){$(this).replaceWith('<h2>' + $(this).text() + '</h2>');});
-        $(".SOMS_Team-row .tab-description .desc-title *").each(function(){$(this).replaceWith('<span>' + $(this).text() + '</span>');});
-        // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
-        $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
-        // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
-        $("h3.slide-title").each(function(){$(this).replaceWith('<span class="slide-title">' + $(this).text() + '</span>');});
-        //REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS ACTUALITES
-        setTimeout(()=>$('h3.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle ">' + $(this).text() + '</span>');}),300);
-        // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LE WIDGETS FORMULAIRE
-        $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="h3.dmform-title.dmwidget-title">' + $(this).text() + '</span>');});
+        (function($){
+            console.log('env : ',env);
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
+            $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
+            $("h3.slide-title").each(function(){$(this).replaceWith('<span class="slide-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LE WIDGETS FORMULAIRE
+            $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="dmform-title dmwidget-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 MODULE CONTENU DE LA FORME
+            $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
+            $('h3').empty().remove()
+        })(jQuery);
     }
-})
+}
 </script>
 
 
