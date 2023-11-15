@@ -4,41 +4,21 @@
  ***/
 const max_img = 200, start_img = 0;//params de délimitation
 const containerLink = document.createElement("div");
-  containerLink.id = "ContainerLinks";
-  document.querySelector("body").appendChild(containerLink);
-async function donwloaderMedias(href,name,iteration) {
-    // Faire une requête AJAX pour récupérer le contenu du fichier
+containerLink.id = "ContainerLinks";
+document.querySelector("body").appendChild(containerLink);
+
+const donwloaderMedias = (href,name,iteration) =>{
     const isReady = (iteration<=max_img && String(href).includes('site-privilege'));
-    console.log('loop<=max_img : ',iteration<=max_img,'    loop >= start_img : ',iteration >= start_img,'     href.includes("site-privilege") :',String(href).includes('site-privilege'));
-    console.log('*************************** isReady : ',isReady);
     if(isReady){
-        var xhr = new XMLHttpRequest();
-    xhr.open('GET', href, true);
-    xhr.responseType = 'blob';
-    xhr.onload = async function(e) {
-        // Récupérer le blob
-        var blob = xhr.response;
-        
-        // Vérifier si le blob est valide
-        if(blob.size > 0 && xhr.status === 200) {
-            // Créer un lien pour télécharger le fichier
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = name;
-            document.getElementById("ContainerLinks").appendChild(link);
-            console.log('blob -> ',link.href);
-               
-        }
-        else {
-            // Afficher une erreur en console
-            console.error('Erreur lors du téléchargement du fichier : ' + href);
-        }
-    };
-    xhr.send();
+        var link = document.createElement('a');
+        link.href = href;
+        link.download = name;
+        document.getElementById("ContainerLinks").appendChild(link);
+        console.log('link href -> ',link.href,'  n°',iteration+1);
     }
 }
-
-
+ 
+ 
 const imgs = (document.querySelectorAll('.save-ready').length) ? document.querySelectorAll('.save-ready img') : document.querySelectorAll('td[data-colname="Fichier"] img');
 const linksArray = (start_img) ? Array.from(imgs).slice(start_img,Array.from(imgs).length) : Array.from(imgs);
 let jsonImg =[];
@@ -49,7 +29,7 @@ linksArray.forEach((linkEl,i) => {
     const last2 = img.lastIndexOf('/');
     var name="",finalImg="";
     if(img.match(/\d{3}x\d{3}/m) || img.match(/\d{2}x\d{2}/m) ){
-        console.log('Redimentionnement détecté : ',img);
+      console.log('Redimentionnement détecté : ',img);
       const last = img.lastIndexOf('-');
       finalImg = window.location.origin+img.substring(0,last)+ext;
       name = String(img.substring(last2,img.length).split(ext)[0].substring(0,img.substring(last2,img.length).split(ext)[0].lastIndexOf('-'))).replace('/','');
@@ -83,7 +63,7 @@ downloadAll(jsonImg);
 
 /*************************** À lancer dans un second temps***************************************************/
 document.querySelectorAll("#ContainerLinks a").forEach(function (t, i) {
-      setTimeout(function () {
+      setTimeout((() => {
         t.click();
-      }, 1000 * i);
+      })(), 600 * i);
   });
