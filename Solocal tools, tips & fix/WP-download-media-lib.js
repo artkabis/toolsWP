@@ -7,6 +7,17 @@ const containerLink = document.createElement("div");
 containerLink.id = "ContainerLinks";
 document.querySelector("body").appendChild(containerLink);
 
+
+
+
+/*************************** Lanch auto donwloading ***************************************************/
+const downloadImages = () => document.querySelectorAll("#ContainerLinks a").forEach(function (t, i) {setTimeout(t.click(), 600 * i)});
+
+
+//Images in medias lib and send to Array
+const imgs = (document.querySelectorAll('.save-ready').length) ? document.querySelectorAll('.save-ready img') : document.querySelectorAll('td[data-colname="Fichier"] img');
+const linksArray = (start_img) ? Array.from(imgs).slice(start_img,Array.from(imgs).length) : Array.from(imgs);
+
 const donwloaderMedias = (href,name,iteration) =>{
     const isReady = (iteration<=max_img && String(href).includes('site-privilege'));
     if(isReady){
@@ -15,12 +26,12 @@ const donwloaderMedias = (href,name,iteration) =>{
         link.download = name;
         document.getElementById("ContainerLinks").appendChild(link);
         console.log('link href -> ',link.href,'  n°',iteration+1);
+        (linksArray.length === iteration) && dowloadImages();
     }
 }
  
  
-const imgs = (document.querySelectorAll('.save-ready').length) ? document.querySelectorAll('.save-ready img') : document.querySelectorAll('td[data-colname="Fichier"] img');
-const linksArray = (start_img) ? Array.from(imgs).slice(start_img,Array.from(imgs).length) : Array.from(imgs);
+
 let jsonImg =[];
 linksArray.forEach((linkEl,i) => {
     console.log('i : ',i, 'linkEl : ',linkEl);
@@ -51,19 +62,3 @@ downloadAll(jsonImg);
 
 
 
-
-
-
-
-
-
-
-
-
-
-/*************************** À lancer dans un second temps***************************************************/
-document.querySelectorAll("#ContainerLinks a").forEach(function (t, i) {
-      setTimeout((() => {
-        t.click();
-      })(), 600 * i);
-  });
