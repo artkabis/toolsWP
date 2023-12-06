@@ -17,6 +17,6 @@
     //Reconstruction de l'e-mail uniquement après click, puis ouverture du mailto
     $('.encodemail').on('click',function(){
         const mailReverse = reverseEmail($(this).text());
-        location.href = "mailto:"+mailReverse+"?cc=lemailencopie@gmail.com&subject=Prise de contact depuis monsiteprivilege.fr&body=Ce mail concerne votre site SPR";
+        location.href = "mailto:"+mailReverse+"?cc=lemailencopie@gmail.com&subject=Prise de contact depuis votre site monsite.com&body=Ce mail concerne votre site internet";
     });
 })(jQuery)
