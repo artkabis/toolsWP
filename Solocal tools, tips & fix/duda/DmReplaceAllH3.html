@@ -14,6 +14,8 @@
                 $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
                 //REMPLACEMENT DU H4 DU MODULE DE CONDOLEANCES PAR UN SPAN
                 $('h4#postsList_title').replaceWith('<span id="postsList_title">' + $('h4#postsList_title').text() + '</span>');
+                //REMPLACEMENT DES H3 DE LA PAGE AVIS
+                $('.cardTitle').replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>');
                 //SUPPRESSION DES H3 VIDE GENERES PAR CERTAINS WIDGET DUDA
                 $('h3').empty().remove()
             })(jQuery);
