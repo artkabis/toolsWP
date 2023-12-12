@@ -4,6 +4,7 @@
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
             (function($){
+                setTimeout(()=>{
                 // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
                 $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
                 // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
@@ -15,12 +16,11 @@
                 //REMPLACEMENT DU H4 DU MODULE DE CONDOLEANCES PAR UN SPAN
                 $('h4#postsList_title').replaceWith('<span id="postsList_title">' + $('h4#postsList_title').text() + '</span>');
                 //REMPLACEMENT DES H3 DE LA PAGE AVIS
-                $('.cardTitle').replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>');
+                $('.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>')});
                 //SUPPRESSION DES H3 VIDE GENERES PAR CERTAINS WIDGET DUDA
-                $('h3').empty().remove()
+                $('h3').empty().remove();
+                },300);
             })(jQuery);
         }
     }
 </script>
-
-
