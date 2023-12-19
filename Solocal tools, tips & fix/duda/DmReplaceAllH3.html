@@ -18,7 +18,7 @@
                     //REMPLACEMENT DES H3 DE LA PAGE AVIS
                     $('.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>')});
                     //SUPPRESSION DES H3 VIDES GENERES PAR CERTAINS WIDGET DUDA
-                    $('h3').each((i,el) => {(el.innerText.trim() === "") && el.remove();}
+                    $('h3').each((i,el) => {(el.innerText.trim() === "") && el.remove();});
                 },600);
             })(jQuery);
         }
