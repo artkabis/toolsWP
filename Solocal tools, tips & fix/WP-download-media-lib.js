@@ -1,6 +1,6 @@
 /*1] POUR LISTER LES IMAGES*/
 /******************************************************************************/
-const max_img = 150, start_img = 0;//params de délimitation
+const max_img = 17, start_img = 0;//params de délimitation
 const containerLink = document.createElement("div");
   containerLink.id = "ContainerLinks";
   document.querySelector("body").appendChild(containerLink);
@@ -37,8 +37,8 @@ async function donwloaderMedias(href,name,iteration) {
             link.download = name;
             document.getElementById("ContainerLinks").appendChild(link);
             console.log('blob -> ',link.href);
-            console.log(iteration,'/',max_img-1);
-            (iteration === max_img-1) && donwloadImages();
+            console.log(iteration+1,'/',max_img);
+            (iteration+1 === max_img) && donwloadImages();
                
         }
         else {
