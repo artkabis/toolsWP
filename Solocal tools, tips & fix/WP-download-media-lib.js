@@ -2,7 +2,7 @@
  * -- @max_img (Number) -> Nombre d'images maximums à télécharger
  * -- @start_img (Number) -> Débuter le téléchargement à partir de la x image
  ***/
-const max_img = 200, start_img = 0;//params de délimitation
+const max_img = 100, start_img = 0;//params de délimitation
 const containerLink = document.createElement("div");
 containerLink.id = "ContainerLinks";
 document.querySelector("body").appendChild(containerLink);
@@ -26,7 +26,7 @@ const donwloaderMedias = (href,name,iteration) =>{
         link.download = name;
         document.getElementById("ContainerLinks").appendChild(link);
         console.log('link href -> ',link.href,'  n°',iteration+1);
-        (linksArray.length === iteration) && dowloadImages();
+        (max_img === iteration) && downloadImages();
     }
 }
  
@@ -59,6 +59,3 @@ const downloadAll = (elements) => {
     }
 }
 downloadAll(jsonImg);
-
-
-
