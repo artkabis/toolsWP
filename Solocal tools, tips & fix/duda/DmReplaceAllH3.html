@@ -1,3 +1,6 @@
+
+<!-- Pensez à n'utiliser uniquement les "replace" qui sont en lien a un widget posant des problèmes de strcture de headings sur votre site --> 
+
 <script async>
     dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
     function funcReadyDomDM(){
@@ -23,6 +26,8 @@
                     $('.uc-embedding-wrapper h3').each(function(i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>');});
                     // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
                     $('h3.dmwidget-title').each(function(){ $(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>')});
+                    //REMPLACEMENT DES H3 LIES AU WIDGET ACCORDION
+                    $('h3.horizontal-label').each(function(){ $(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>')});
                 },600);
             })(jQuery);
         }
