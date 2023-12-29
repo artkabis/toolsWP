@@ -18,7 +18,7 @@
                     //REMPLACEMENT DES H3 DE LA PAGE AVIS
                     $('.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>')});
                     //SUPPRESSION DES H3 VIDES GENERES PAR CERTAINS WIDGET DUDA
-                    $('h3').each((i,el) => {(el.innerText.trim() === "") && el.remove();});
+                    $('h3').each((i,el) => {(el.textContent.trim() === "") && el.remove();});
                     //REMPLACEMENT DU H3 CONSENTEMENT MAPBOX
                     $('.uc-embedding-wrapper h3').each(function((i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>);});
                     // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
