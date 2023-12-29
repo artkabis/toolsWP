@@ -1,5 +1,5 @@
 <script async>
-       dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
+    dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
     function funcReadyDomDM(){
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
@@ -20,7 +20,7 @@
                     //SUPPRESSION DES H3 VIDES GENERES PAR CERTAINS WIDGET DUDA
                     $('h3').each((i,el) => {(el.textContent.trim() === "") && el.remove();});
                     //REMPLACEMENT DU H3 CONSENTEMENT MAPBOX
-                    $('.uc-embedding-wrapper h3').each(function(i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>')});
+                    $('.uc-embedding-wrapper h3').each(function(i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>');});
                     // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
                     $('h3.dmwidget-title').each(function(){ $(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>')});
                 },600);
