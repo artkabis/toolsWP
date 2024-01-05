@@ -248,3 +248,14 @@ Gestion des retours arrière après erreur sur dernière page
             $('.gf_progressbar_percentage span').text('100%');
         } 
     }
+
+
+/****** Suppression du formulaire si une ip ciblé est detectée ***********/
+$ = jQuery; 
+$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
+  console.log('1er data >> ',data.ip);
+  if(data.ip === "213.44.200.102" && $('.gform_wrapper').length){
+      console.log("ip détécté !!!!");
+      $('.gform_wrapper').remove();
+  }
+});
