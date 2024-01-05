@@ -260,4 +260,4 @@ $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
   }
 });
 // Avec la méthode fetch
-fetch('https://api.ipify.org?format=jsonp&callback=?').then(data => data.text()).then((json)=>console.log(JSON.parse(json.replace('?','').replace('(','').replace(')','').replace(';','')).ip));
+fetch('https://api.ipify.org').then(data => data.text()).then((ip)=>console.log(ip));
