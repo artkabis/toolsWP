@@ -7,7 +7,7 @@
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
             (function($){
-                setTimeout(()=>{
+                                setTimeout(()=>{
                     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
                     $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
                     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
@@ -27,7 +27,7 @@
                     // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
                     $('h3.dmwidget-title').each(function(){ $(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>')});
                     //REMPLACEMENT DES H3 LIES AU WIDGET ACCORDION
-                    $('h3.horizontal-label').each(function(){ $(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>')});
+                    $('h3.horizontal-label, h4.horizontal-label').each(function(){ $(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>')});
                 },600);
             })(jQuery);
         }
