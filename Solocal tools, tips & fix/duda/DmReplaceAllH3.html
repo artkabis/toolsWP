@@ -7,7 +7,7 @@
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
             (function($){
-                                setTimeout(()=>{
+                setTimeout(()=>{
                     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
                     $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
                     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
