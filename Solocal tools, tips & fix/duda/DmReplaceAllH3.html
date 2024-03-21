@@ -2,11 +2,10 @@
 <!-- Pensez à n'utiliser uniquement les "replace" qui sont en lien a un widget posant des problèmes de structure de headings sur votre site --> 
 
 <script async>
-    dmAPI.runOnReady('DudaReadyDOM',funcReadyDomDM);
-    function funcReadyDomDM(){
+    $(window).on('load',function(){
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
-            (function($){
+            (($)=>{
                 setTimeout(()=>{
                     // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
                     $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
@@ -32,5 +31,5 @@
                 },600);
             })(jQuery);
         }
-    }
+    });
 </script>
