@@ -14,15 +14,16 @@ Ex : https://www.pompes-funebres-balme-sillingy.fr/
 
 
 //En mode développeur aller site HMT/CSS > body-end.html et placer ceci : 
-$( window ).on( "load", function() {
-    const dateD = new Date('october 07 2022'); // date du debut d'affichage
-    const dateF = new Date('october 29 2022'); // date du fin d'affichage
-    const dateJ = new Date(); //date du jour
-    if (dateJ >= dateD && dateJ <= dateF && $('.homePoup').length > 0) {
-        // trigger sur le bouton ayant la classe "homePoup" pour ouvrir le pop-up. Il faudra personnaliser le bouton (HTML) afin d'ajouter cette classe personnalisée.
-        setTimeout(function() {
-            $('.homePoup').trigger('click').remove();
-        }, 500);//délai de latence après le load (en millisecondes)
+$(window).on('load',function(){
+    const env = dmAPI.getCurrentEnvironment();
+    if(env !== 'editor') {
+        const dateD = new Date('october 07 2022'); // date du debut d'affichage
+        const dateF = new Date('october 29 2022'); // date du fin d'affichage
+        const dateJ = new Date(); //date du jour
+        if (dateJ >= dateD && dateJ <= dateF && $('.homePoup').length) {
+            // Nous déclanchons le clic afin d'ouvrir le pop-up et nous supprimons ce bouton après cet événement. Il faudra personnaliser le bouton (HTML) afin d'ajouter cette classe personnalisée.
+            $('.homePoup').click().remove();
+        }
     }
 });
 </script>
