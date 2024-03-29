@@ -194,11 +194,16 @@ Ici nous avons plusieurs formulaires qui peuvent avoir ce problème et dans diff
 (function($){
     const GFORM_TARGET = '.gform_wrapper';
     const isMulitpart = $('.gform_wrapper').find('.gf_progressbar_wrapper')?.length;
+    console.log('is multipart : ',{isMulitpart});
     const path = window.location.pathname;
     //Test des url de la page liée aux formulaires
-    if((path.includes('/page1/') || path.includes('/pages2')) && isMulitpart){
+    if((path.includes('/formulaire-auto') || path.includes('/autre') ) && isMulitpart){
+        console.log('check des erreurs');
         // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
+        
+        console.log('fenêtre des erreurs : ',$(GFORM_TARGET+' .validation_error'));
         const isVal = $(GFORM_TARGET+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');  
+        console.log("detection du bon message d'erreur : ",{isVal});
         isVal && $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le ReCAPTCHA)
     }
 })(jQuery)
