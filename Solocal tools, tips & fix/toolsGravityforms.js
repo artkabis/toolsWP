@@ -188,6 +188,25 @@ if($('.gform_wrapper').find('.gform_button[type="submit"]')){
 
 
 
+/***** Autre version du correctif pour les formulaires à plusieurs pages (étapes), si seul le recaptcha n'est pas validé, une erreur empêche de reprendre l'édition du gform.
+Ici nous avons plusieurs formulaires qui peuvent avoir ce problème et dans différentes pages. Nous utilisons donc une stratégie légèrement différente.
+****/
+(function($){
+    const GFORM_TARGET = '.gform_wrapper';
+    const isMulitpart = $('.gform_wrapper').find('.gf_progressbar_wrapper')?.length;
+    const path = window.location.pathname;
+    //Test des url de la page liée aux formulaires
+    if((path.includes('/page1/') || path.includes('/pages2')) && isMulitpart){
+        // Vérication du message d'erreur dans le last .validation_error rattaché au formulaire
+        const isVal = $(GFORM_TARGET+' .validation_error').last().text().includes('Une erreur s’est produite lors de votre envoi. Les erreurs ont été mises en surbrillance plus bas.');  
+        isVal && $('.gform_page').last().css('display','');//Reset du display none lié à la dernière page (celle comportant le ReCAPTCHA)
+    }
+})(jQuery)
+/******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
+
+
+
 
 /*** Gestion des forumaires Gravityform avec routage d'emails - ceux-ci ne sont plus pris en charge par SLM ****/
 /**** Gestionnaire de formulaire avec gestion des agences en routage - condition logique avec plusieurs mails d'envois (pour corriger le non-envoi des notifications vers le SLM du client) ****/
