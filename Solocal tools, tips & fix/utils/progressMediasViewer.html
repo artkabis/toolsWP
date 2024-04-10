@@ -1,6 +1,7 @@
 <script>
-</script>const url = 'https://www.clinique-veterinaire-hopia.com/wp-content/uploads/sites/1304/2020/01/video-presentation-hopia.mp4.mp4';
+const url = 'https://www.clinique-veterinaire-hopia.com/wp-content/uploads/sites/1304/2020/01/video-presentation-hopia.mp4.mp4';
 const progressElement = document.getElementById('progress');
+const progressBarElement = document.getElementById('progress-bar');
 
 fetch(url)
   .then(response => {
@@ -16,7 +17,9 @@ fetch(url)
             return;
           }
           loaded += value.length;
-          progressElement.textContent = `${Math.round((loaded / contentLength) * 100)}%`;
+          const percent = Math.round((loaded / contentLength) * 100);
+          progressElement.textContent = `${percent}%`;
+          progressBarElement.style.width = `${percent}%`;
           loop();
         }).catch(reject);
       };
@@ -30,4 +33,5 @@ fetch(url)
     console.error('Erreur lors du téléchargement :', err);
   });
 </script>
-<div id="preloader"></div>
+<div id="progress"></div>
+<div id="progress-bar" style="height: 10px;background:red;"></div>
