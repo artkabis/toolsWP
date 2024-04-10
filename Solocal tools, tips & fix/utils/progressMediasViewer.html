@@ -1,0 +1,33 @@
+<script>
+</script>const url = 'https://www.clinique-veterinaire-hopia.com/wp-content/uploads/sites/1304/2020/01/video-presentation-hopia.mp4.mp4';
+const progressElement = document.getElementById('progress');
+
+fetch(url)
+  .then(response => {
+    const contentLength = response.headers.get('Content-Length');
+    const stream = response.body.getReader();
+    let loaded = 0;
+
+    return new Promise((resolve, reject) => {
+      const loop = () => {
+        stream.read().then(({ value, done }) => {
+          if (done) {
+            resolve();
+            return;
+          }
+          loaded += value.length;
+          progressElement.textContent = `${Math.round((loaded / contentLength) * 100)}%`;
+          loop();
+        }).catch(reject);
+      };
+      loop();
+    });
+  })
+  .then(() => {
+    console.log('Téléchargement terminé');
+  })
+  .catch(err => {
+    console.error('Erreur lors du téléchargement :', err);
+  });
+</script>
+<div id="preloader"></div>
