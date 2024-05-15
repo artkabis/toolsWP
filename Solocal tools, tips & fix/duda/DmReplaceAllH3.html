@@ -5,31 +5,27 @@
     $(window).on('load',function(){
         const env = dmAPI.getCurrentEnvironment();
         if(env !== 'editor') {
-            (($)=>{
-                setTimeout(()=>{
-                    // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
-                    $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
-                    // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
-                    $("h3.slide-title").each(function(){$(this).replaceWith('<span class="slide-title">' + $(this).text() + '</span>');});
-                    // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LE WIDGETS FORMULAIRE
-                    $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="dmform-title dmwidget-title">' + $(this).text() + '</span>');});
-                    // REMPLACEMENT DES BALISES H3 MODULE CONTENU DE LA FORME
-                    $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
-                    //REMPLACEMENT DU H4 DU MODULE DE CONDOLEANCES PAR UN SPAN
-                    $('h4#postsList_title').replaceWith('<span id="postsList_title">' + $('h4#postsList_title').text() + '</span>');
-                    //REMPLACEMENT DES H3 DE LA PAGE AVIS
-                    $('.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>')});
-                    //SUPPRESSION DES H3 VIDES GENERES PAR CERTAINS WIDGET DUDA
-                    $('h2, h3, h4, h5').each((i,el) => {(el.textContent.trim() === "") && el.remove();});
-                    //REMPLACEMENT DU H3 CONSENTEMENT MAPBOX
-                    $('.uc-embedding-wrapper h3').each(function(i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>');});
-                    // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
-                    $('h3.dmwidget-title').each(function(){ $(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>')});
-                    //REMPLACEMENT DES H3 LIES AU WIDGET ACCORDION
-                    $('h3.horizontal-label, h4.horizontal-label').each(function(){ $(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>')});
-                    $('.accordion-title .title-text h3').each(function(){ $(this).replaceWith('<span>' + $(this).text() + '</span>')});
-                },600);
-            })(jQuery);
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS GALERIES PHOTO
+            $("h3.caption-title").each(function(){$(this).replaceWith('<span class="caption-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LES WIDGETS SLIDE TITLE
+            $("h3.slide-title").each(function(){$(this).replaceWith('<span class="slide-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 PAR SPAN DANS LE WIDGETS FORMULAIRE
+            $("h3.dmform-title.dmwidget-title").each(function(){$(this).replaceWith('<span class="dmform-title dmwidget-title">' + $(this).text() + '</span>');});
+            // REMPLACEMENT DES BALISES H3 MODULE CONTENU DE LA FORME
+            $("h3.shape-text").each(function(){$(this).replaceWith('<span class="shape-text">' + $(this).text() + '</span>');});
+            //REMPLACEMENT DU H4 DU MODULE DE CONDOLEANCES PAR UN SPAN
+            $('h4#postsList_title').replaceWith('<span id="postsList_title">' + $('h4#postsList_title').text() + '</span>');
+            //REMPLACEMENT DES H3 DE LA PAGE AVIS
+            $('.cardTitle').each(function(){$(this).replaceWith('<span class="cardTitle">' + $('.cardTitle').text() + '</span>')});
+            //SUPPRESSION DES H3 VIDES GENERES PAR CERTAINS WIDGET DUDA
+            $('h2, h3, h4, h5').each((i,el) => {(el.textContent.trim() === "") && el.remove();});
+            //REMPLACEMENT DU H3 CONSENTEMENT MAPBOX
+            $('.uc-embedding-wrapper h3').each(function(i,t){$(this).replaceWith('<span>'+$(this).text()+'</span>');});
+            // REMPLACEMENT DU H3 GENERE PAR LE WIDGET OPEN HOURS
+            $('h3.dmwidget-title').each(function(){ $(this).replaceWith('<span class="cardTitle">' + $(this).text() + '</span>')});
+            //REMPLACEMENT DES H3 LIES AU WIDGET ACCORDION
+            $('h3.horizontal-label, h4.horizontal-label').each(function(){ $(this).replaceWith('<span class="horizontal-label">' + $(this).text() + '</span>')});
+            $('.accordion-title .title-text h3').each(function(){ $(this).replaceWith('<span>' + $(this).text() + '</span>')});
         }
     });
 </script>
