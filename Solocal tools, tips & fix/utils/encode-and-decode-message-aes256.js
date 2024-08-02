@@ -2,7 +2,7 @@ async function aes256(message, password) {
   const encoder = new TextEncoder();
   const data = encoder.encode(message);
   const salt = crypto.getRandomValues(new Uint8Array(16));
-  const key = await crypto.subtle.importKey(
+  const keyMaterial = await crypto.subtle.importKey(
     'raw',
     encoder.encode(password),
     { name: 'PBKDF2' },
@@ -16,7 +16,7 @@ async function aes256(message, password) {
       iterations: 100000,
       hash: 'SHA-256'
     },
-    key,
+    keyMaterial,
     { name: 'AES-GCM', length: 256 },
     true,
     ['encrypt']
@@ -27,20 +27,14 @@ async function aes256(message, password) {
     derivedKey,
     data
   );
-  const hash = await crypto.subtle.digest('SHA-256', ciphertext);
-  const view = new DataView(hash);
-  const bytes = new Uint8Array(hash.byteLength);
-  for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = view.getUint8(i);
-  }
-  const hex = bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+  const ciphertextArray = Array.from(new Uint8Array(ciphertext));
+  const ciphertextHex = ciphertextArray.map(b => b.toString(16).padStart(2, '0')).join('');
   return {
     iv: btoa(String.fromCharCode.apply(null, iv)),
-    ciphertext: hex,
+    ciphertext: ciphertextHex,
     salt: btoa(String.fromCharCode.apply(null, salt))
   };
 }
-
 
 async function aes256_decrypt(ciphertextHex, password, ivBase64, saltBase64) {
   try {
@@ -53,7 +47,7 @@ async function aes256_decrypt(ciphertextHex, password, ivBase64, saltBase64) {
     const ciphertext = new Uint8Array(ciphertextHex.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
 
     // Derive the key using PBKDF2
-    const key = await crypto.subtle.importKey(
+    const keyMaterial = await crypto.subtle.importKey(
       'raw',
       encoder.encode(password),
       { name: 'PBKDF2' },
@@ -68,7 +62,7 @@ async function aes256_decrypt(ciphertextHex, password, ivBase64, saltBase64) {
         iterations: 100000,
         hash: 'SHA-256'
       },
-      key,
+      keyMaterial,
       { name: 'AES-GCM', length: 256 },
       true,
       ['decrypt']
@@ -88,23 +82,24 @@ async function aes256_decrypt(ciphertextHex, password, ivBase64, saltBase64) {
   }
 }
 
+(async () => {
+  const message = 'exemple';
+  const password = 'motdepasse';
 
-const message = 'exemple';
-const password = 'motdepasse';
+  // Encryption part
+  const encryptedResult = await aes256(message, password);
+  console.log('Encrypted:', encryptedResult);
 
-// Encryption part
-const encryptedResult = await aes256(message, password);
-console.log('Encrypted:', encryptedResult);
-
-// Decryption part
-try {
-  const decryptedMessage = await aes256_decrypt(
-    encryptedResult.ciphertext,
-    password,
-    encryptedResult.iv,
-    encryptedResult.salt
-  );
-  console.log('Decrypted:', decryptedMessage);
-} catch (error) {
-  console.error('Error during decryption:', error);
-}
+  // Decryption part
+  try {
+    const decryptedMessage = await aes256_decrypt(
+      encryptedResult.ciphertext,
+      password,
+      encryptedResult.iv,
+      encryptedResult.salt
+    );
+    console.log('Decrypted:', decryptedMessage);
+  } catch (error) {
+    console.error('Error during decryption:', error);
+  }
+})();
