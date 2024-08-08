@@ -1,0 +1,18 @@
+/***
+Modifier le logo uniquement sur une page ciblée via son attribut de page en lien avec le body ->
+***/
+body[data-page-alias="desinfection-coronavirus"] .mini-header-show-row .dmRespColsWrapper .dmRespCol:first-child a{
+    position:relative;
+    display: block;
+}
+body[data-page-alias="desinfection-coronavirus"] .mini-header-show-row .dmRespColsWrapper .dmRespCol:first-child a:before{
+    content: "";
+    background-image: url(https://le-de.cdn-website.com/37a501b83f60413e9c7ddf45f0dc181b/dms3rep/multi/opt/logo-sas-bonny-thomas-1920w.png);
+    background-size:cover;
+    width: 100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:999;
+}
