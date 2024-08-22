@@ -1,11 +1,16 @@
 
-// Élément à intégrer en html, vous pouvez utiliser la fonction reverseEmail ci-dessous avec le each afin de récupérer vos e-mails en reverse
-//<span class="encodemail">moc.eniamod@tcatnoc</span>
+// Cet élément doit être intégré en html, vous pouvez utiliser la fonction reverseEmail ci-dessous avec le each afin de récupérer vos e-mails en reverse
+
+//Ici l'élément <a> avec la classe permettant d'afficher correctement l'adresse mail qui a été précédemment inversée >>.
+//<a class="encodemail">moc.eniamod@tcatnoc</a>
+
+
 (function($){
     function reverseEmail($mail){
         return ($mail) && $mail.split("").reverse().join("")
     }
-    //Ceci permet de récupérer les adresses mails inversé (avant intégration)
+    //Ceci permet de récupérer les adresses mails inversé (avant intégration). 
+    //Il faudra supprimer cette méthode qui ne sert qu'à convertir vos/votre adresse mail.
     $.each(["monadress1@gmail.com","monadress2@gmail.com","monadress3@gmail.com"],function(i,t){
         console.log(reverseEmail(t));//retourne : moc.liamg@1sserdano,moc.liamg@2sserdanom,moc.liamg@3sserdano
 
