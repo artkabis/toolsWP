@@ -1,3 +1,4 @@
+javascript:(()=>{
 const timeZoneOffsets = {
     971: { offset: -4, country: "Guadeloupe" },
     972: { offset: -4, country: "Martinique" },
@@ -81,3 +82,4 @@ document.querySelectorAll('.input-group').forEach(item => {
         }
     }
 });
+})();
