@@ -137,3 +137,10 @@ if($('.woocommerce').length ){
         createNav($(this),i);
     });
 }
+
+
+
+
+// Traduction contenue champ expédition du panier
+const contentExpedition = $('.woocommerce-shipping-totals td[data-title="Expédition"]');
+contentExpedition.text().includes('Shipping costs are calculated') && contentExpedition.text('Les frais de port sont calculés lors du paiement.');
