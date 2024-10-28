@@ -23,7 +23,6 @@ $(window).on("load", function () {
           });
         }
       };
-      setTimeout(changeOption, 500);
       // Gestion de la mutation du DOM
       const checkDOMMutation = () => {
         const handleMutation = (mutationsList, observer) => {
@@ -31,8 +30,9 @@ $(window).on("load", function () {
             if (mutation.type === "childList") {
               const addedElements = Array.from(mutation.addedNodes);
               addedElements.forEach((node) => {
+                //console.log('list class muted : ', String(node.classList), 'elem trie detected : ',String(node.classList).includes("ec-store__content-wrapper") || String(node.classList).includes("grid__sort"));
                 if (
-                  String(node.classList).includes("ec-store__content-wrapper")
+                  String(node.classList).includes("ec-store__content-wrapper") || String(node.classList).includes("grid__sort") || String(node.classList).includes("ec-store--medium-product-images")
                 ) {
                   changeOption();
                 }
