@@ -23,7 +23,6 @@ const mutationCallback = (mutationsList, observer) => {
                         : Array.from(addedNode.querySelectorAll(`.${targetClassName}`));
 
                     targetNodes.forEach((node) => {
-                        console.log(`Traitement de :`, node);
                         elementReplace({ targetClassName, targetChild, replaceNode, classe });
                     });
                 }
@@ -38,7 +37,6 @@ const mutationCallback = (mutationsList, observer) => {
 
 const elementReplace = (params) => {
     const { targetClassName, targetChild, replaceNode, classe } = params;
-    console.log('remplacement de :',$('.'+targetClassName)?.find(targetChild)); 
     $('.'+targetClassName)?.find(targetChild)?.each(function () {
         $(this).replaceWith(`<${replaceNode} class="${classe} processed">${$(this).text()}</${replaceNode}>`);
         startCheckMutation(params);
