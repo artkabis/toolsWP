@@ -6,6 +6,7 @@ export const randomMM = (min,max)=> Math.floor(Math.random() * (max - min + 1)) 
 export const isNumber = (n) => !isNaN(parseFloat(n)) && isFinite(n);
 export const checkInvalid= value => value === null || value === undefined;
 export const isNotUndefined = (n) => n === undefined ? false : true;
+export const matchesObjects = (obj, source) =>Object.keys(source).every(key => obj.hasOwnProperty(key) && obj[key] === source[key]);
 export const toNumber = (s) =>  (s) && +s;
 export const isEven = (n) => n % 2 === 0;
 export const isOdd = (n) => n % 2 === 1;
@@ -14,7 +15,7 @@ export const mailAddressIsValid = (mail) => {try {const emailRegEx = /(^[_A-Za-z
 export const getPercentage = (total, value) => (total && value) ? Math.round((value / total) * 100) : 0;
 export const convertDate2fr = (el) => el.split('-').reverse(el).join('/');
 export const hex2rgb = (hex) => {let r,g,b,result;(hex.length === 4) ? (r = hex.slice(1,2),g = hex.slice(2,3),b = hex.slice(3,4),r = parseInt(r+r, 16),g = parseInt(g+g, 16),b = parseInt(b+b, 16),result={ r, g, b}): (r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16), result={ r, g, b });return result;}
-export const noDuplcaArray = (a) =>  [...new Set(a)];
+export const noDuplicateValArray = (a) =>  [...new Set(a)];
 export const onlyValidValueArray = (a) =>a.filter(Boolean);
 export const generateToken = () =>{const shuffle = ()=>Math.random().toString(36).substr(2);let tokenA = [];[0,0,0].forEach((t)=>tokenA.push(shuffle()+shuffle()));return String(tokenA.join(''));}
 export const shuffleArray = (arr) => {let tabRange, randomiz;(arr && Array.isArray(arr)) && (tabRange = [...new Set(arr)].sort(),randomiz =  tabRange.sort(()=> Math.random()-0.5));return randomiz}
