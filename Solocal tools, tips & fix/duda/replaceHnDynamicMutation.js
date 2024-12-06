@@ -1,20 +1,40 @@
 /***** 
 Exemple de cas d'utilisation sur le media slider >>>https://solocaldudaadmin.eu-responsivesiteeditor.com/site/89d42e60376b4fd2bc8889771347e00a/home?preview=true&insitepreview=true&dm_device=desktop
 ******/
-export const replaceOrRemoveNodeHn = (params) => {
-    const { targetSelector, targetChild, replaceNode, classe, remove } = params;
+const replaceOrRemoveNodeHn = (params) => {
+    const { targetSelector, targetChild, replaceNode, classe, remove, textTransform } = params;
+    const queue = [];
 
+    const elementReplace = (params) => {
+        const { targetSelector, targetChild, replaceNode, classe, remove, textTransform } = params;
+        document.querySelectorAll(targetSelector)?.forEach((targetNode) => {
+            targetNode.querySelectorAll(targetChild)?.forEach((childNode) => {
+                if (!remove) {
+                    const newNode = replaceNode ? document.createElement(replaceNode) : document.createElement("div");
+                    newNode.className = `${classe ? classe : "SOMS_replace-title"}`;
+                    const originalText = childNode?.textContent;
+                    newNode.textContent = textTransform?.length && typeof textTransform === "string"
+                        ? textTransform
+                        : originalText;
+                    childNode.replaceWith(newNode);
+                } else {
+                    childNode.remove();
+                }
+            });
+        });
+    };
     const checkInitialNodes = () => {
         const nodes = document.querySelectorAll(targetSelector);
         nodes.forEach((node) => {
-            elementReplace({ targetSelector, targetChild, replaceNode, classe, remove });
+            elementReplace({ targetSelector, targetChild, replaceNode, classe, remove, textTransform });
         });
     };
-
-    checkInitialNodes();
-
-    const mutationCallback = (mutationsList, observer) => {
-        for (const mutation of mutationsList) {
+    const mutationCallback = (mutationsList) => {
+        if (!queue.length) requestAnimationFrame(processQueue);
+        queue.push(...mutationsList);
+    };
+    const processQueue = () => {
+        queue.forEach((mutation) => {
             if (mutation.type === 'childList') {
                 mutation.addedNodes.forEach((addedNode) => {
                     if (addedNode.nodeType === Node.ELEMENT_NODE) {
@@ -23,56 +43,82 @@ export const replaceOrRemoveNodeHn = (params) => {
                             ? [addedNode]
                             : Array.from(addedNode.querySelectorAll(targetSelector));
                         targetNodes.forEach((node) => {
-                            elementReplace({ targetSelector, targetChild, replaceNode, classe, remove });
+                            elementReplace({ targetSelector, targetChild, replaceNode, classe, remove, textTransform });
                         });
                     }
                 });
             }
-        }
-    };
-
-
-    const observer = new MutationObserver(mutationCallback);
-    observer.observe(document.body, { childList: true, subtree: true });
-};
-
-const elementReplace = (params) => {
-    const { targetSelector, targetChild, replaceNode, classe, remove } = params;
-    document.querySelectorAll(targetSelector).forEach((targetNode) => {
-        targetNode.querySelectorAll(targetChild)?.forEach((childNode) => {
-            if (!remove) {
-                const newNode = document.createElement(replaceNode);
-                newNode.className = `${classe} processed`;
-                newNode.textContent = childNode.textContent;
-                childNode.replaceWith(newNode);
-            } else {
-                childNode.remove();
-            }
         });
+        queue.length = 0;
+    };
+    const targets = document.querySelectorAll(targetSelector);
+    const observers = [];
+
+    targets.forEach(target => {
+        const targetParent = target.parentElement;
+        if (targetParent) {
+            const observer = new MutationObserver(mutationCallback);
+            observer.observe(targetParent, { childList: true, subtree: true });
+            observers.push(observer);
+        }
     });
+
+    checkInitialNodes();
+    return observers;
 };
+
+export const initializeObservers = (config) => {
+    const allObservers = config.map(params => {
+        return replaceOrRemoveNodeHn(params);
+    });
+    return allObservers.flat();
+};
+
 
 
 /************ Mis en place et utilisation du script (depuis un module ESM importé) ***********/
 
 
 /*
-<script type="module" async>
-    import * as RHN from 'https://de.cdn-website.com/12fb6ded409c4e3489847c649d17e9f6/files/uploaded/replaceOrRemoveNodesHn-1.03.mjs';
-        const env = dmAPI.getCurrentEnvironment();
-        if(env !== 'editor') {
-           //Remplacement des h3 du widget "accordion"
-            RHN.replaceOrRemoveNodeHn({targetSelector: '[data-auto="runtime-accordion-widget"]',targetChild: 'h3',
-            replaceNode: 'div',classe: 'SoMS-accordion-item-title',remove: false});
+<script type="module" async >
 
-            //Remplacement des h3 du widget "slider"
-            RHN.replaceOrRemoveNodeHn({targetSelector: '[data-auto="slider-filmRole"]',targetChild: 'h3',
-            replaceNode: 'div',classe: 'SoMS-slideSlot-item-title',remove: false});
+    import * as RHN from 'https://de.cdn-website.com/12fb6ded409c4e3489847c649d17e9f6/files/uploaded/replaceOrRemoveNodesHn-1.06.mjs';
+    // Exemple d'utilisation :
+    const config = [
+        {
+            targetSelector: '[data-auto="runtime-accordion-widget"]',
+            targetChild: 'h3',
+            replaceNode: 'div',
+            classe: 'SoMS-accordion-item-title',
+            remove: false
+        },
+        {
+            targetSelector: '[data-auto="slider-wrapper"]',
+            targetChild: 'h3[data-auto="title"]',
+            replaceNode: 'div',
+            classe: 'SoMS-slideSlot-item-title',
+            remove: false
+        },
+        {
+            targetSelector: '.dmPhotoGallery',
+            targetChild: 'h3',
+            classe: 'SoMS-caption-title',
+            remove: false,
+            textTransform: "Texte modifié dynamiquement"
+        },
+        {
+          targetSelector: '.flexslider ',
+            targetChild: 'h3.slide-title',
+            classe: 'SoMS-slide-title',
+            remove: false,
 
-            //Remplacement des h3.caption-title du widget "galerie de photos"
-            RHN.replaceOrRemoveNodeHn({targetSelector: '.dmPhotoGallery ',targetChild: 'h3',
-            replaceNode: 'span',classe: 'SoMS-caption-title',remove: false});
         }
+    ];
+     const env = dmAPI.getCurrentEnvironment();
+    if(env !== 'editor') {
+        const handlers = RHN.initializeObservers(config);
+    }
 </script>
+ 
 
 */
