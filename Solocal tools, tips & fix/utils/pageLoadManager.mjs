@@ -100,5 +100,5 @@ class PageLoadManager {
     });
   }
 }
-const loadManager = new PageLoadManager();
-export default PageLoadManager;
+export const loadManager = new PageLoadManager();
+export { PageLoadManager };
