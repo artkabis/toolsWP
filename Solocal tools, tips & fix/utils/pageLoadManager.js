@@ -102,3 +102,24 @@ class PageLoadManager {
 }
 export const loadManager = new PageLoadManager();
 export { PageLoadManager };
+
+/*** Usage >>>
+
+console.log(PageLoadManager)
+      
+const loadManager = new PageLoadManager();
+loadManager.initNetworkTracking();
+loadManager.initMutationObserver();
+
+// Track existing resources
+document.querySelectorAll('img, script, link[rel="stylesheet"]')
+  .forEach(element => loadManager.trackResource(element));
+
+// Wait for full load
+loadManager.waitForComplete().then(() => {
+  console.log('Tout est vraiment chargé !');
+});
+// Add custom promises if needed
+//loadManager.addCustomPromise(customAsyncOperation());
+
+***/
