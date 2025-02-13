@@ -1,14 +1,10 @@
 const utilsFunction = (nodesArray) =>{
     console.log({nodesArray});
         nodesArray.each(function(i,t){
-            console.log('all node replace : ',$(this));
-            const h5TitlesTransform = $(this).html().replaceAll('h5','h3');
-            $(this).html(h5TitlesTransform);
-            console.log('new html h3 : ',$(this).html());
+            const h5TitlesTransform = $(this).find('button.accordion').html().replaceAll('h5','p');
+            $(this).find('button.accordion').html(h5TitlesTransform);
         });
- 
 };
- 
 // Gestion de la mutation du DOM
 const checkDOMMutation = (classListen) => {
   let nodesToObserve = document.querySelectorAll("." + classListen).length; // Nombre total d'éléments à observer
@@ -21,7 +17,6 @@ const checkDOMMutation = (classListen) => {
           if (String(node.classList).includes(classListen)) {
               console.log(node + ' checked');
               cmp++;
-              //console.log({cmp}, 'nb items : ',document.querySelectorAll("." + classListen).length);
             (cmp === document.querySelectorAll("." + classListen).length)&& utilsFunction($("." + classListen)),observer.disconnect();
           }
         });
@@ -36,7 +31,6 @@ const checkDOMMutation = (classListen) => {
   };
   observer.observe(parentElement, observerOptions);
 };
- 
- 
-// Sur la page ayant le pathname "actualites", nous écoutons l'ajout des classes "accordion-item", une fois le dernier élément chargé, nous lançons la fonction "utilsDunction.
+
+// Sur la page ayant le pathname "/" (ici home), nous écoutons l'ajout des classes "accordion-item", une fois le dernier élément chargé, nous lançons la fonction "utilsDunction.
 window.location.pathname=== "/" && checkDOMMutation("accordion-item");
