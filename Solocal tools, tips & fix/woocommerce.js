@@ -144,3 +144,45 @@ if($('.woocommerce').length ){
 // Traduction contenue champ expédition du panier
 const contentExpedition = $('.woocommerce-shipping-totals td[data-title="Expédition"]');
 contentExpedition.text().includes('Shipping costs are calculated') && contentExpedition.text('Les frais de port sont calculés lors du paiement.');
+
+
+
+
+
+
+
+
+
+
+/********************* Gestion de l'affichage des options du formulaire de la page rideaux en fonction du lien cliqué - récupération du type de rideaux pour afficher la bonne option dans le select et simuler le changement pour la prise en compte des conditions logique Gforms *****/
+$(window).on('load',function(){
+    $('.SOMS_bloc-surmesure_ul li').each(function(i,t){
+        const liValue = $(this).text();
+        console.log(liValue);
+        switch(liValue){
+            case "Rideaux chenilles (devis)" : 
+                $(this).find('a').addClass('liForm-chenilles');
+            break;
+            case "Rideaux perles (devis)": 
+                $(this).find('a').addClass('liForm-perles');
+            break;
+        }
+    });
+    $('.liForm-chenilles').on('click',function(me){me.preventDefault;window.sessionStorage.setItem('form_rideaux_type','form_chenilles')});
+    $('.liForm-perles').on('click',function(me){me.preventDefault;window.sessionStorage.setItem('form_rideaux_type','form_perles')});
+    const hrefPage = window.location.href;
+    console.log(hrefPage);
+    if(hrefPage.includes('/rideaux/#form-rideaux') ){
+        console.log('page form target');
+        if(window.sessionStorage.getItem('form_rideaux_type') === 'form_chenilles'){
+            $('select#input_11_18 option').each(function(i,t){
+                ($(this).val().includes('Rideaux Chenilles')) && $(this).attr('selected','selected').trigger('change');
+            });
+        }
+        if(window.sessionStorage.getItem('form_rideaux_type') === 'form_perles'){
+            $('select#input_11_18 option').each(function(i,t){
+                ($(this).val().includes('Rideaux Perles')) && $(this).attr('selected','selected').trigger('change');
+                });
+        }
+    }
+});
