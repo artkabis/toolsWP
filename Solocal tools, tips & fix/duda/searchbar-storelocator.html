@@ -3,26 +3,87 @@
   <span class="icon hasFontIconstar hasFontIcon dm-icon-location">
   </span>
   <input type="text" placeholder="Ville ou Code postal">
-  <div class="align-center dmWidget SOMS_customBtnSearch" id="1896477560">
+  <div class="align-center dmWidget SOMS_customBtnSearch">
    <span class="text">
     Rechercher
    </span>
   </div>
  </div>
+<style>
+  *#dm #site_content div.SOMS_customInputSearchContainer {
+      display: flex;
+      position: relative;
+      gap: 16px;
+  }
+  *#dm #site_content div.SOMS_customInputSearchContainer > input[type="text"] {
+      height: 48px;
+      font-size: 16px;
+      font-family: "Segoe UI", "Segoe UI Fallback";
+      border: solid 1px #bfbfbf;
+      border-radius: 5px;
+      background-color: transparent;
+      padding: 8px 16px 8px 42px;
+      margin: 0;
+      align-self: stretch;
+      flex-grow: 1;
+  }
+  *#dm #site_content div.SOMS_customInputSearchContainer > div.SOMS_customBtnSearch {
+      width: fit-content;
+      min-width: 20%;
+      font-size: 16px;
+      padding: 0 16px;
+      margin: 0;
+      height: 48px;
+      background-color: gold;
+      color: black;
+  }
+  *#dm #site_content div.SOMS_customInputSearchContainer > span.icon {
+      color: var(--color_1);
+      font-size: 24px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 8px;
+  }
+  .dm-icon-location:before {
+      content: '\ea1c';
+  }
 
+</style>
 <script>
-    const btnSearch = $('div.SOMS_customInputSearchContainer div.SOMS_customBtnSearch')
-    if (btnSearch) {
-        const inputForSearch = $('div.SOMS_customInputSearchContainer input[type="text"]');
-        btnSearch.on('click', () => {
-            const urlTarget = "https://agence.europcar-sudouest.fr/search?query=" + inputForSearch.val().toString().replace(' ', '+')
-            console.log(urlTarget)
-            window.open(urlTarget, "_blank")
-        })
-        inputForSearch.on('keypress',function(e){
-            console.log(e,e.key);
-            (e.which === 13) && btnSearch.trigger('click');
-            
-        });
-    }
+const SUBDOMAIN = 'agence'; // Stockage du sous-domaine dans une constante (à midifier en fonction du sous domaine du Storelocator)
+const SEARCH_PATH = '/search?query=';
+
+const btnSearch = $('div.SOMS_customInputSearchContainer div.SOMS_customBtnSearch');
+const inputForSearch = $('div.SOMS_customInputSearchContainer input[type="text"]');
+
+const generateTargetUrl = (inputValue) => {
+    const origin = window.location.origin; // ex: https://domain.fr
+    // Extraction du protocole et du domaine
+    const protocol = origin.split('://')[0]; // ex: https
+    const domainPart = origin.split('://')[1];// ex: europcar-sudouest.fr ou www.europcar-sudouest.fr
+    const domain = origin.split('://')[1];   // ex: europcar-sudouest.fr
+    let targetDomain = `${protocol}://${SUBDOMAIN}.${domain}`;
+    const formattedQuery = inputValue.toString().replace(/\s+/g, '+');
+    targetDomain = (domainPart.startsWith('www.')) ? `${protocol}://www.${SUBDOMAIN}.${domainPart.substring(4)}` : `${protocol}://${SUBDOMAIN}.${domainPart}`;
+    // Construction de l'URL complète
+    const finalDomain = `${targetDomain}${SEARCH_PATH}${formattedQuery}`;
+    console.log({origin},{protocol},{domainPart},{domain},{targetDomain},{formattedQuery},'---->',{finalDomain});
+    return finalDomain;
+}
+
+if (btnSearch?.length) {
+    btnSearch.on('click', () => {
+        if (inputForSearch.val().trim()) {
+            const urlTarget = generateTargetUrl(inputForSearch.val());
+            window.open(urlTarget, "_blank");
+        }
+    });
+    // Événement d'appui sur la touche Entrée dans le champ de recherche
+    inputForSearch.on('keypress', function(e) {
+        if (e.which === 13 && inputForSearch.val().trim()) {
+            btnSearch.trigger('click');
+        }
+    });
+}
 </script>
