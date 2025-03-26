@@ -68,10 +68,15 @@ init();
 
 /****************************************************** Version pour Widget +18 *******************************************************/
 window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function (element, data, api) {
-    // Configuration
+   
+
+/***** version qui me semble optimisé :  */
+  // Configuration
     const CONFIG = {
         POPUP_DELAY: 1000,
         MODAL_ID: '#myModal',
+        WIDGET_IN_EDITOR: '#ineditorplusde18',
+        TARGET_WIDGET: '.sgpb-popup',
         YES_BUTTON: '#sgpb-yes-button',
         NO_BUTTON: '#sgpb-no-button',
         SESSION_KEY: 'first_visit',
@@ -80,7 +85,7 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
 
     // En mode éditeur, simplement afficher l'élément pour plus de 18 ans
     if (data.inEditor) {
-        const ineditorplusde18 = document.getElementById('ineditorplusde18');
+        const ineditorplusde18 = document.querySelector(CONFIG.WIDGET_IN_EDITOR);
         if (ineditorplusde18) {
             ineditorplusde18.style.display = 'block';
         }
@@ -91,7 +96,8 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
      * Gère les interactions avec le popup de vérification d'âge
      */
     const setupAgeVerificationPopup = () => {
-        const modal = document.querySelector(".sgpb-popup")?.closest(CONFIG.MODAL_ID);
+        const modal = document.querySelector(CONFIG.TARGET_WIDGET)?.closest(CONFIG.MODAL_ID);
+        console.log('modal +18 detected : ',modal);
         if (!modal) return;
 
         // Gestion du bouton "Oui"
@@ -112,10 +118,12 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
      */
     const hasValidConsent = () => {
         const appConsent = localStorage.getItem(CONFIG.CONSENT_KEY);
+        console.log({appConsent});
         if (!appConsent) return false;
 
         try {
             const consentData = JSON.parse(appConsent);
+            console.log({consentData});
             return consentData && consentData.consentstring !== null;
         } catch (e) {
             return false;
@@ -131,6 +139,7 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
         
         try {
             const referrerDomain = new URL(document.referrer).hostname;
+            console.log({referrerDomain}, 'isrefererSameDomaine : ',referrerDomain === window.location.hostname);
             return referrerDomain === window.location.hostname;
         } catch (e) {
             return false;
@@ -141,12 +150,14 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
      * Affiche le popup de vérification d'âge
      */
     const displayWidget = () => {
-        const modal = document.getElementById('myModal');
+        const modal = document.querySelector(CONFIG.TARGET_WIDGET)?.closest(CONFIG.MODAL_ID);
+        console.log('displayWidget modal : ',{modal});
         if (!modal) return;
         
         modal.style.display = "block";
         
         // Configurer les interactions avec le popup
+        console.log('start 18ans setup widget runondeady !!!!');
         dmAPI.runOnReady('18ans', setupAgeVerificationPopup);
     };
 
@@ -155,9 +166,12 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
      */
     const checkConditionsAndDisplay = () => {
         // Si l'utilisateur vient du même domaine, ne pas afficher
+
+        console.log('isFromSameDomain() ? :::: ', isFromSameDomain());
         if (isFromSameDomain()) {
-            const modal = document.getElementById('myModal');
-            if (modal) modal.style.visibility = "hidden";
+            const modal = document.querySelector(CONFIG.TARGET_WIDGET)?.closest(CONFIG.MODAL_ID);
+            console.log('checkConditionsAndDisplay modal value : ', modal);
+            if (modal) modal.style.display = "none";
             return;
         }
 
@@ -171,6 +185,7 @@ window.customWidgetsFunctions["57cddaab00c44187ad2e28244e2bf518~15"] = function 
         // Première visite et consentement valide, afficher le popup après un délai
         setTimeout(() => {
             sessionStorage.setItem(CONFIG.SESSION_KEY, "1");
+            console.log('session viqsite number key :',sessionStorage.getItem(CONFIG.SESSION_KEY));
             displayWidget();
         }, CONFIG.POPUP_DELAY);
     };
