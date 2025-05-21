@@ -1308,7 +1308,7 @@ function displayLinkRelevanceReport() {
       </div>
       
       <!-- Liste des résultats -->
-      <div id="results-container" style="max-height: 400px; overflow-y: auto; padding-right: 5px;"></div>
+      <div id="results-container" style="max-height: 210px; overflow-y: auto; padding-right: 5px;"></div>
     </div>
   `;
   
