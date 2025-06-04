@@ -8,6 +8,60 @@ const MAX_SIZE_MB = 20; // Limite Google Gemini (20MB)
 const MAX_WORDS = 20; // Nombre de mots maximum par description (impact sur vitesse)
 const DESCRIPTION_LANGUAGE = 'French'; // Langue des descriptions
 const DESCRIPTION_STYLE = 'detailed and comprehensive'; // Style de description
+/*** 10 exemples d'utilisation de "DESCRIPTION_STYLE" ->>>>
+// ===== 10 EXEMPLES DE DESCRIPTION_STYLE =====
+
+// 1. 🎯 OPTIMAL POUR ATTRIBUT ALT (RECOMMANDÉ)
+const DESCRIPTION_STYLE = 'concise, functional and accessible for screen readers';
+// Résultat: "Logo rouge et bleu de peinture Huet sur fond blanc"
+// ✅ Court, précis, fonctionnel pour l'accessibilité
+
+// 2. 📝 STYLE DESCRIPTIF DÉTAILLÉ
+const DESCRIPTION_STYLE = 'detailed, precise and descriptive';
+// Résultat: "Logo coloré de l'entreprise Huet Peinture avec éventail de couleurs vives incluant rouge, orange, jaune et bleu disposés en demi-cercle"
+// ✅ Riche en détails, bon pour le contenu
+
+// 3. ⚡ STYLE ULTRA-CONCIS
+const DESCRIPTION_STYLE = 'extremely brief and to the point';
+// Résultat: "Logo Huet Peinture coloré"
+// ✅ Minimal, ultra-rapide
+
+// 4. 🎨 STYLE CRÉATIF ET ENGAGEANT
+const DESCRIPTION_STYLE = 'creative, engaging and vivid';
+// Résultat: "Logo dynamique Huet Peinture explosant de couleurs arc-en-ciel comme une palette d'artiste"
+// ✅ Attractif pour marketing
+
+// 5. 🔍 STYLE TECHNIQUE ET PRÉCIS
+const DESCRIPTION_STYLE = 'technical, specific and factual';
+// Résultat: "Logo vectoriel Huet Peinture dimensions carrées avec gradient radial rouge-orange-jaune-bleu, typographie sans-serif"
+// ✅ Précis pour documentation
+
+// 6. 👥 STYLE CONVERSATIONNEL
+const DESCRIPTION_STYLE = 'natural, conversational and friendly';
+// Résultat: "Voici le joli logo de Huet Peinture avec ses belles couleurs qui rappellent un coucher de soleil"
+// ✅ Humain, chaleureux
+
+// 7. 📊 STYLE INFORMATIF STRUCTURÉ
+const DESCRIPTION_STYLE = 'structured, informative and organized';
+// Résultat: "Logo Huet Peinture: élément central avec nom, couleurs primaires rouge et bleu, couleurs secondaires orange et jaune"
+// ✅ Organisé, clair
+
+// 8. 🌟 STYLE ÉMOTIONNEL
+const DESCRIPTION_STYLE = 'expressive, emotional and impactful';
+// Résultat: "Logo vibrant Huet Peinture évoquant la joie et la créativité avec ses couleurs éclatantes et son design moderne"
+// ✅ Engageant émotionnellement
+
+// 9. 🎯 STYLE AXÉE ACTION/CONTEXTE
+const DESCRIPTION_STYLE = 'action-focused and contextual';
+// Résultat: "Logo Huet Peinture présentant les services de peinture avec palette colorée pour attirer les clients"
+// ✅ Orienté but/usage
+
+// 10. 🏢 STYLE PROFESSIONNEL FORMEL
+const DESCRIPTION_STYLE = 'professional, formal and business-oriented';
+// Résultat: "Identité visuelle de l'entreprise Huet Peinture représentant leur expertise en travaux de peinture résidentielle et commerciale"
+// ✅ Corporatif, sérieux
+
+*/
 
 // 2. CONVERSION RAPIDE SANS COMPRESSION
 async function fastImageToBase64(imageUrl) {
