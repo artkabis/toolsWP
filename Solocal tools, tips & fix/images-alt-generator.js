@@ -1,6 +1,6 @@
 // 1. CONFIGURATION - AJOUTEZ VOTRE CLÉ ICI
 const GOOGLE_API_KEY = 'VOTRE_VRAIE_CLE_API'; // ⚠️ REMPLACEZ PAR VOTRE VRAIE CLÉ !
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
 const REQUEST_DELAY = 40; // Délai entre requêtes en millisecondes
 const MAX_SIZE_MB = 20; // Limite Google Gemini (20MB)
 
