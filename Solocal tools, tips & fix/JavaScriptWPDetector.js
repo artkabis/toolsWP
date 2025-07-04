@@ -240,7 +240,8 @@ javascript: (function () {
             }
             if (document.querySelector('.gform_wrapper')) {
                 const hasSteps = document.querySelector('.gf_progressbar_wrapper, .gf_progressbar');
-                const hasConditionalLogic = document.querySelector('.gform_wrapper [style*="display: none"]');
+                const hasConditionalLogic = document.documentElement.innerHTML.includes('gf_form_conditional_logic') &&
+                    document.documentElement.innerHTML.includes('logic:');
 
                 let details = 'Plugin de formulaire Gravity Forms actif';
                 let features = [];
